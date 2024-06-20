@@ -124,7 +124,8 @@ public class CustomerController {
                 
             } catch (Exception e) {
                 e.printStackTrace();
+                return "redirect:/error";
             }
         }
-    }
+    
 }
