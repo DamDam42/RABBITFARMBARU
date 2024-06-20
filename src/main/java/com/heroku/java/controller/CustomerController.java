@@ -96,7 +96,7 @@ public class CustomerController {
         }
 
 
-    @PostMapping("/customerLogin")
+    @PostMapping("/customerLogins")
         public String customerLogin(HttpSession session,@RequestParam("custEmail") String custemail,@RequestParam("custPassword") String custpassword, Model model,Customer customer){
             try {
                 Connection connection = dataSource.getConnection();
