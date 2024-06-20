@@ -8,11 +8,15 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heroku.java.model.Customer;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class CustomerController {
@@ -84,5 +88,43 @@ public class CustomerController {
     } 
 
 
-    
+
+    @GetMapping("/customerLogin")
+        public String customerLogin(){
+            
+            return "Customer/customerLogin";
+        }
+
+
+    @PostMapping("/customerLogin")
+        public String customerLogin(HttpSession session,@RequestParam("custEmail") String custemail,@RequestParam("custPassword") String custpassword, Model model,Customer customer){
+            try {
+                Connection connection = dataSource.getConnection();
+                String sql = "SELECT custid,custname,custemail,custphonenum,custaddress,custpassword FROM public.customer WHERE custemail=?";
+                final var statement = connection.prepareStatement(sql);
+                statement.setString(1,custemail);
+
+                final var resultSet = statement.executeQuery();
+
+                if (resultSet.next()){
+
+                    Long custId = resultSet.getLong("custid");
+                    String custName = resultSet.getString("custname");
+                    String custEmail = resultSet.getString("custemail");
+                    String custPassword = resultSet.getString("custpassword");
+
+                    if (custEmail.equals(custemail)&&custPassword.equals(custpassword)){
+                        session.setAttribute("custname", custName);
+                        session.setAttribute("custid", custId);
+
+                        return "redirect:/index";
+                    }
+
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
