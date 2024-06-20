@@ -120,8 +120,11 @@ public class CustomerController {
                         return "redirect:/index";
                     }
 
+                   
+
                 }
-                
+                 connection.close();
+                 return "redirect:/error2";
             } catch (Exception e) {
                 e.printStackTrace();
                 return "redirect:/error";
