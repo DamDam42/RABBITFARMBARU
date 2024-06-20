@@ -100,7 +100,7 @@ public class CustomerController {
         public String customerLogin(HttpSession session,@RequestParam("custEmail") String custemail,@RequestParam("custPassword") String custpassword, Model model,Customer customer){
             try {
                 Connection connection = dataSource.getConnection();
-                String sql = "SELECT custid,custname,custemail,custphonenum,custaddress,custpassword FROM public.customer WHERE custemail=?";
+                String sql = "SELECT custid,custname,custemail,custphonenum,custaddress,custpassword FROM public.customers WHERE custemail=?";
                 final var statement = connection.prepareStatement(sql);
                 statement.setString(1,custemail);
 
