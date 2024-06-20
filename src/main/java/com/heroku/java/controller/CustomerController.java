@@ -92,7 +92,7 @@ public class CustomerController {
     @GetMapping("/customerLogin")
         public String customerLogin(){
             
-            return "Customer/customerLogin";
+            return "Customer/CustomerLogin";
         }
 
 
