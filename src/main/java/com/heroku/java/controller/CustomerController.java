@@ -117,7 +117,7 @@ public class CustomerController {
                         session.setAttribute("custname", custName);
                         session.setAttribute("custid", custId);
 
-                        return "redirect:/index";
+                        return "redirect:/accLogin";
                     }
 
                    
@@ -169,6 +169,11 @@ public class CustomerController {
             return "redirect:/error";
         }
         return "Customer/CustomerProfile";
+    }
+
+    @GetMapping("/accLogin")
+    public String index(){
+        return "redirect:/indexLogin";
     }
     
     
