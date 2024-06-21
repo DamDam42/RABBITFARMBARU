@@ -139,7 +139,7 @@ public class CustomerController {
             Connection connection = dataSource.getConnection();
             String sql = "SELECT custname,custemail,custaddress,custphonenum,custpassword FROM public.customers WHERE custid=?";
             final var statement= connection.prepareStatement(sql);
-            statement.setString(1, "custid");
+            statement.setLong(1, custId);
             final var resultSet = statement.executeQuery();
 
             if (resultSet.next()){
