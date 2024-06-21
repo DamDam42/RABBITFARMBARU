@@ -173,7 +173,7 @@ public class CustomerController {
 
     @GetMapping("/accLogin")
     public String index(){
-        return "redirect:/indexLogin";
+        return "indexLogin";
     }
     
     
