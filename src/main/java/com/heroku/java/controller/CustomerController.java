@@ -132,7 +132,7 @@ public class CustomerController {
         }
 
     @GetMapping("/customerProfile")
-    public String customerProfile(HttpSession session, @RequestParam('custId') String custId, Model model) {
+    public String customerProfile(HttpSession session, @RequestParam("custid") Long custid, Model model) {
         Long custId = (Long) session.getAttribute("custid");
 
         try {
