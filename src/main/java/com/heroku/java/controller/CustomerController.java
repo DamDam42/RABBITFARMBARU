@@ -143,7 +143,7 @@ public class CustomerController {
 
             if (resultSet.next()){
                 
-                String custName = resultSet.getString("custid");
+                String custName = resultSet.getString("custname");
                 String custEmail = resultSet.getString("custemail");
                 String custAddress = resultSet.getString("custaddress");
                 String custphonenum= resultSet.getString("custphonenum");
@@ -151,7 +151,7 @@ public class CustomerController {
 
                 Customer customer = new Customer();
 
-                customer.setCustID(custId);
+                
                 customer.setCustName(custName);
                 customer.setCustEmail(custEmail);
                 customer.setcustAddress(custAddress);
