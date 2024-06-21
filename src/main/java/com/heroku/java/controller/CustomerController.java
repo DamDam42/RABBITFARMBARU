@@ -137,7 +137,7 @@ public class CustomerController {
 
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT custid,custname,custemail,custaddress,custphonenum,custpassword FROM public.customer WHERE custid=?";
+            String sql = "SELECT custid,custname,custemail,custaddress,custphonenum,custpassword FROM public.customers WHERE custid=?";
             final var statement= connection.prepareStatement(sql);
             statement.setString(1, "custid");
             final var resultSet = statement.executeQuery();
