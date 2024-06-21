@@ -130,5 +130,46 @@ public class CustomerController {
                 return "redirect:/error";
             }
         }
+
+    @GetMapping("/customerProfile")
+    public String customerProfile(HttpSession session, @RequestParam('custId') String custId, Model model) {
+        Long custId = (Long) session.getAttribute("custid");
+
+        try {
+            Connection connection = dataSource.getConnection();
+            String sql = "SELECT custid,custname,custemail,custaddress,custphonenum,custpassword FROM public.customer WHERE custid=?";
+            final var statement= connection.prepareStatement(sql);
+            final var resultSet = statement.executeQuery();
+
+            if (resultSet.next()){
+                
+                String custName = resultSet.getString("custid");
+                String custEmail = resultSet.getString("custemail");
+                String custAddress = resultSet.getString("custaddress");
+                String custphonenum= resultSet.getString("custphonenum");
+                String custPassword = resultSet.getString("custpassword");
+
+                Customer customer = new Customer();
+
+                customer.setCustID(custId);
+                customer.setCustName(custName);
+                customer.setCustEmail(custEmail);
+                customer.setcustAddress(custAddress);
+                customer.setCustPassword(custPassword);
+                customer.setCustPhoneNum(custphonenum);
+
+                model.addAttribute("customer",customer);
+
+                connection.close();
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/error";
+        }
+        return "Customer/CustomerProfile";
+    }
+    
     
 }
