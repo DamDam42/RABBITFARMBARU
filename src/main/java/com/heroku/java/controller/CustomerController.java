@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heroku.java.model.Citizen;
 import com.heroku.java.model.Customer;
-import com.heroku.java.model.Customer.Citizen;
 import com.heroku.java.model.NonCitizen;
 
 import jakarta.servlet.http.HttpSession;
