@@ -11,10 +11,18 @@ public class Customer{
     private String custaddress;
     private String custpassword;
     private Long custid;
-    private String custicnum;
-    private String custpassport;
+
     
     public Customer(){}
+
+    public Customer(String custname, String custemail, String custphonenum, String custaddress, String custpassword, Long custid) {
+        this.custname = custname;
+        this.custemail = custemail;
+        this.custphonenum = custphonenum;
+        this.custaddress = custaddress;
+        this.custpassword = custpassword;
+        this.custid = custid;
+    }
 
     public String getCustName(){
         return this.custname;
@@ -64,20 +72,6 @@ public class Customer{
         this.custpassword=custpassword;
     }
 
-    public String getCustIcNum(){
-        return this.custicnum;
-    }
 
-    public void setCustIcNum(String custicnum){
-        this.custicnum=custicnum;
-    }
-
-    public String getCustPassport(){
-        return this.custpassport;
-    }
-
-    public void setCustPassport(String custpassport){
-        this.custpassport=custpassport;
-    }
-
+    
 }

@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.heroku.java.model.Citizen;
 import com.heroku.java.model.Customer;
+import com.heroku.java.model.Customer.Citizen;
+import com.heroku.java.model.NonCitizen;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -152,18 +155,21 @@ public class CustomerController {
                 String custPassword = resultSet.getString("custpassword");
                 String custic = resultSet.getString("custicnum");
                 String custPassport = resultSet.getString("custpassport");
+                
+                
 
                 Customer customer = new Customer();
 
-                
-                customer.setCustName(custName);
-                customer.setCustEmail(custEmail);
-                customer.setcustAddress(custAddress);
-                customer.setCustPassword(custPassword);
-                customer.setCustPhoneNum(custphonenum);
-                customer.setCustIcNum(custic);
-                customer.setCustPassport(custPassport);
+                if (custic != null){
 
+                customer = new Citizen(custName, custEmail, custphonenum, custAddress, custPassword, custId, custic);
+               
+                } else if (custPassport!= null){
+                    customer = new NonCitizen(custName, custEmail, custphonenum, custAddress, custPassword, custId, custPassport);
+                }
+                
+                
+                
                 model.addAttribute("customer",customer);
 
                 connection.close();
