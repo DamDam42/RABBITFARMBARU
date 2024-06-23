@@ -217,19 +217,19 @@
 
            
             
-                <div class="user-details hidden-input-box" id="citizenBox" onload="toggleInputBox()">
+                <div class="user-details" th:if="${customer instanceof T(com.heroku.java.model.Citizen)}">
                     <div class="input-box">
                         <label for="custIC" class="details">IC Number</label>
-                        <input type="text" id="custIC" name="custIcNum" th:value = "${customer.custIcNum}">
+                        <input type="text" id="custIC" name="custIcNum" th:value="${customer.custIcNum}" disabled>
                     </div>
-                </div> 
+                </div>
 
-                <div class="user-details hidden-input-box" id="nonCitizenBox" onload="toggleInputBox()">
+                <div class="user-details" th:if="${customer instanceof T(com.heroku.java.model.NonCitizen)}">
                     <div class="input-box">
                         <label for="passportNumber" class="details">Passport Number</label>
-                        <input type="text" id="passportNumber" name="custPassport">
+                        <input type="text" id="passportNumber" name="custPassport" th:value="${customer.custPassport}" disabled>
                     </div>
-                </div> 
+                </div>
 
                 <div class="button">
                         <input type="submit" value="Sign Up">

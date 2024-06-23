@@ -139,7 +139,11 @@ public class CustomerController {
 
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT custname,custemail,custaddress,custphonenum,custpassword,public.citizen.custicnum,public.noncitizen.custpassport FROM public.customers JOIN public.citizen ON public.customers.custid=public.citizen.custid JOIN public.noncitizen ON public.customers.custid=public.noncitizen.custid WHERE public.customers.custid=?";
+            String sql = "SELECT c.custname, c.custemail, c.custaddress, c.custphonenum, c.custpassword, ct.custicnum, nc.custpassport " +
+                     "FROM public.customers c " +
+                     "LEFT JOIN public.citizen ct ON c.custid = ct.custid " +
+                     "LEFT JOIN public.noncitizen nc ON c.custid = nc.custid " +
+                     "WHERE c.custid = ?";
 
             final var statement= connection.prepareStatement(sql);
             statement.setLong(1, custId);
