@@ -21,7 +21,7 @@ public class GettingStartedApplication {
     public GettingStartedApplication(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
+a
     @GetMapping("/")
     public String index() {
         return "index";
@@ -32,7 +32,7 @@ public class GettingStartedApplication {
             return "Ticket/createTicket";
         }
 
-        @g
+        
         
         @GetMapping("/customer")    
 public String customerRegister() {
