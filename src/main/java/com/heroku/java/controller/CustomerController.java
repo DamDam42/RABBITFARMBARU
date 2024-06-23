@@ -156,7 +156,7 @@ public class CustomerController {
                 String custic = resultSet.getString("custicnum");
                 String custPassport = resultSet.getString("custpassport");
                 
-                a
+                
 
                 Customer customer = null;
 
