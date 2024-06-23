@@ -216,15 +216,15 @@
 
 
            
-
-                <div class="user-details hidden-input-box" id="citizenBox">
+            
+                <div class="user-details hidden-input-box" id="citizenBox" onload="toggleInputBox()">
                     <div class="input-box">
                         <label for="custIC" class="details">IC Number</label>
                         <input type="text" id="custIC" name="custIcNum" th:value = "${customer.custIcNum}">
                     </div>
                 </div> 
 
-                <div class="user-details hidden-input-box" id="nonCitizenBox">
+                <div class="user-details hidden-input-box" id="nonCitizenBox" onload="toggleInputBox()">
                     <div class="input-box">
                         <label for="passportNumber" class="details">Passport Number</label>
                         <input type="text" id="passportNumber" name="custPassport">
@@ -235,14 +235,36 @@
                         <input type="submit" value="Sign Up">
                 </div>
                 
-
+       
 
             </form>
         
         </div>
     </main>
 
-    
+    <script>
+        function toggleInputBox() {
+           var citizen = document.getElementById('custIC');
+           var nonCitizen = document.getElementById('passportNumber');
+           var citizenBox = document.getElementById('citizenBox');
+           var nonCitizenBox = document.getElementById('nonCitizenBox');
+           
+           if (citizen != null ) {
+               citizenBox.style.display = 'block';
+               nonCitizenBox.style.display = 'none';
+           } else if (nonCitizen != null ) {
+               nonCitizenBox.style.display = 'block';
+               citizenBox.style.display = 'none';
+           } else {
+               citizenBox.style.display = 'none';
+               nonCitizenBox.style.display = 'none';
+           }
+       }
+
+       window.onload = function() {
+           toggleInputBox();
+       }
+   </script>
 
 </body>
 </html>
