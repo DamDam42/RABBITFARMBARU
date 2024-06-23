@@ -156,9 +156,9 @@ public class CustomerController {
                 String custic = resultSet.getString("custicnum");
                 String custPassport = resultSet.getString("custpassport");
                 
-                
+                a
 
-                Customer customer = new Customer();
+                Customer customer = null;
 
                 if (custic != null){
 
