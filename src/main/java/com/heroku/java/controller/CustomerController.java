@@ -73,6 +73,7 @@ public class CustomerController {
                         citizenStatement.setString(2, citizen.getCustIcNum());
                         citizenStatement.executeUpdate();
                     }
+                    
                 } else if ("Non-Citizen".equals(citizenStatus)) {
                     NonCitizen noncitizen = new NonCitizen();
                     noncitizen.setCustID(custid);
