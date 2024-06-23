@@ -32,6 +32,7 @@ public class GettingStartedApplication {
             return "Ticket/createTicket";
         }
 
+        @g
         
         @GetMapping("/customer")    
 public String customerRegister() {
