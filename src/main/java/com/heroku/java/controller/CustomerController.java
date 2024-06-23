@@ -62,19 +62,25 @@ public class CustomerController {
                 Long custid =  resultSet.getLong("custid");
 
                 if ("Citizen".equals(citizenStatus)) {
-                    customer = new Citizen();
+                    Citizen citizen = new Citizen();
+                    citizen.setCustID(custid);
+                    citizen.setCustIcNum(custIC);
+
+                    
                     String citizenSql = "INSERT INTO public.citizen(custid,custicnum) VALUES (?, ?)";
                     try (PreparedStatement citizenStatement = connection.prepareStatement(citizenSql)) {
-                        citizenStatement.setLong(1, custid);
-                        citizenStatement.setString(2, custIC);
+                        citizenStatement.setLong(1, citizen.getCustID());
+                        citizenStatement.setString(2, citizen.getCustIcNum());
                         citizenStatement.executeUpdate();
                     }
                 } else if ("Non-Citizen".equals(citizenStatus)) {
-                    customer=new NonCitizen();
+                    NonCitizen noncitizen = new NonCitizen();
+                    noncitizen.setCustID(custid);
+                    noncitizen.setCustPassport(passportNumber);
                     String nonCitizenSql = "INSERT INTO public.noncitizen(custid, custpassport) VALUES (?, ?)";
                     try (PreparedStatement nonCitizenStatement = connection.prepareStatement(nonCitizenSql)) {
-                        nonCitizenStatement.setLong(1, custid);
-                        nonCitizenStatement.setString(2, passportNumber);
+                        nonCitizenStatement.setLong(1, noncitizen.getCustID());
+                        nonCitizenStatement.setString(2, noncitizen.getCustPassport());
                         nonCitizenStatement.executeUpdate();
                     }
                 }
