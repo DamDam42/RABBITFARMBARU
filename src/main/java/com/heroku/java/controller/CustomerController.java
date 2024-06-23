@@ -137,7 +137,7 @@ public class CustomerController {
 
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT custname,custemail,custaddress,custphonenum,custpassword,public.citizen.custicnum FROM public.customers JOIN public.citizen ON public.customers.custid=public.citizen.custid WHERE custid=?";
+            String sql = "SELECT custname,custemail,custaddress,custphonenum,custpassword,public.citizen.custicnum FROM public.customers JOIN public.citizen ON public.customers.custid=public.citizen.custid WHERE public.customers.custid=?";
             final var statement= connection.prepareStatement(sql);
             statement.setLong(1, custId);
             final var resultSet = statement.executeQuery();
