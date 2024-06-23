@@ -137,7 +137,7 @@ public class CustomerController {
 
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT custname,custemail,custaddress,custphonenum,custpassword FROM public.customers WHERE custid=?";
+            String sql = "SELECT custname,custemail,custaddress,custphonenum,custpassword,public.citizen.custicnum FROM public.customers JOIN public.citizen ON public.customers.custid=public.citizen.custid WHERE custid=?";
             final var statement= connection.prepareStatement(sql);
             statement.setLong(1, custId);
             final var resultSet = statement.executeQuery();
@@ -149,6 +149,7 @@ public class CustomerController {
                 String custAddress = resultSet.getString("custaddress");
                 String custphonenum= resultSet.getString("custphonenum");
                 String custPassword = resultSet.getString("custpassword");
+                String custic = resultSet.getString("custicnum");
 
                 Customer customer = new Customer();
 
@@ -158,6 +159,7 @@ public class CustomerController {
                 customer.setcustAddress(custAddress);
                 customer.setCustPassword(custPassword);
                 customer.setCustPhoneNum(custphonenum);
+                customer.setCustIcNum(custic);
 
                 model.addAttribute("customer",customer);
 
