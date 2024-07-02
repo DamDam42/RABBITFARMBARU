@@ -254,7 +254,7 @@ public class CustomerController {
             Customer customer = new Customer();
             try {
                 Connection conn = dataSource.getConnection();
-                String sql = "Update public.customer set custname=?,custemail=?,custaddress=?,custphonenum=?,custpassword=? WHERE custid=?";
+                String sql = "Update public.customers set custname=?,custemail=?,custaddress=?,custphonenum=?,custpassword=? WHERE custid=?";
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setLong(6, custId);
                 statement.setString(1,customer.getCustName());
