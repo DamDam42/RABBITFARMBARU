@@ -254,7 +254,7 @@ public class CustomerController {
             Customer customer = new Customer();
             try {
                 Connection conn = dataSource.getConnection();
-                String sql = "Update Customer set custname=?,custemail=?,custaddress=?,custphonenum=?,custpassword=? WHERE custid=?";
+                String sql = "Update public.customer set custname=?,custemail=?,custaddress=?,custphonenum=?,custpassword=? WHERE custid=?";
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setLong(6, custId);
                 statement.setString(1,customer.getCustName());
@@ -265,13 +265,13 @@ public class CustomerController {
                 statement.executeUpdate();
                 
                 if (customer instanceof Citizen citizen) {
-                    sql = "UPDATE citizen SET custicnum = ? WHERE custid = ?";
+                    sql = "UPDATE public.citizen SET custicnum = ? WHERE custid = ?";
                     statement = conn.prepareStatement(sql);
                     statement.setString(1, citizen.getCustIcNum());
                     statement.setLong(2, citizen.getCustID());
                     statement.executeUpdate();
                 } else if (customer instanceof NonCitizen nonCitizen) {
-                    sql = "UPDATE noncitizen SET custpassportnum = ? WHERE custid = ?";
+                    sql = "UPDATE public.noncitizen SET custpassportnum = ? WHERE custid = ?";
                     statement = conn.prepareStatement(sql);
                     statement.setString(1, nonCitizen.getCustPassport());
                     statement.setLong(2, nonCitizen.getCustID());
