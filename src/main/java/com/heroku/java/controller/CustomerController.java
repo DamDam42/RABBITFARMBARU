@@ -194,6 +194,99 @@ public class CustomerController {
         }
         return "Customer/CustomerProfile";
     }
+    
+    //CUSTOMER UPDATE PROFILE
+
+    @GetMapping("/customerUpdate")
+    public String customerUpdate(HttpSession session, Model model) {
+        Long custId = (Long) session.getAttribute("custid");
+
+        try {
+            Connection connection = dataSource.getConnection();
+            String sql = "SELECT c.custname, c.custemail, c.custaddress, c.custphonenum, c.custpassword, ct.custicnum, nc.custpassport " +
+                     "FROM public.customers c " +
+                     "LEFT JOIN public.citizen ct ON c.custid = ct.custid " +
+                     "LEFT JOIN public.noncitizen nc ON c.custid = nc.custid " +
+                     "WHERE c.custid = ?";
+
+            final var statement= connection.prepareStatement(sql);
+            statement.setLong(1, custId);
+            final var resultSet = statement.executeQuery();
+
+            if (resultSet.next()){
+                
+                String custName = resultSet.getString("custname");
+                String custEmail = resultSet.getString("custemail");
+                String custAddress = resultSet.getString("custaddress");
+                String custphonenum= resultSet.getString("custphonenum");
+                String custPassword = resultSet.getString("custpassword");
+                String custic = resultSet.getString("custicnum");
+                String custPassport = resultSet.getString("custpassport");
+                
+                
+
+                Customer customer = null;
+
+                if (custic != null){
+
+                customer = new Citizen(custName, custEmail, custphonenum, custAddress, custPassword, custId, custic);
+               
+                } else if (custPassport!= null){
+                    customer = new NonCitizen(custName, custEmail, custphonenum, custAddress, custPassword, custId, custPassport);
+                }
+                
+                
+                
+                model.addAttribute("customer",customer);
+
+                connection.close();
+
+            }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return "Customer/CustomerUpdate";
+        }
+
+        @PostMapping("/customerUpdate")
+        public String customerUpdate(Model model,Long custid,HttpSession session) {
+            Long custId = (Long) session.getAttribute("custid");
+            Customer customer = new Customer();
+            try {
+                Connection conn = dataSource.getConnection();
+                String sql = "Update Customer set custname=?,custemail=?,custaddress=?,custphonenum=?,custpassword=? WHERE custid=?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setLong(6, custId);
+                statement.setString(1,customer.getCustName());
+                statement.setString(2, customer.getCustEmail());
+                statement.setString(3, customer.getCustAddress());
+                statement.setString(4, customer.getCustPhoneNum());
+                statement.setString(5, customer.getCustPassword());
+                statement.executeUpdate();
+                
+                if (customer instanceof Citizen citizen) {
+                    sql = "UPDATE citizen SET custicnum = ? WHERE custid = ?";
+                    statement = conn.prepareStatement(sql);
+                    statement.setString(1, citizen.getCustIcNum());
+                    statement.setLong(2, citizen.getCustID());
+                    statement.executeUpdate();
+                } else if (customer instanceof NonCitizen nonCitizen) {
+                    sql = "UPDATE noncitizen SET custpassportnum = ? WHERE custid = ?";
+                    statement = conn.prepareStatement(sql);
+                    statement.setString(1, nonCitizen.getCustPassport());
+                    statement.setLong(2, nonCitizen.getCustID());
+                    statement.executeUpdate();
+                }
+
+                model.addAttribute("customer",customer);
+
+                conn.close();
+                
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+            return "Customer/CustomerUpdate";
+        }
 
     @GetMapping("/accLogin")
     public String index(){
