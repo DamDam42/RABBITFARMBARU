@@ -147,7 +147,7 @@ public class CustomerController {
         Long custId = (Long) session.getAttribute("custid");
 
         if (custId == null) {
-            return "redirect:/login"; // redirect to login if custId is not in session
+            return "redirect:/customerLogins"; // redirect to login if custId is not in session
         }
         try {
             Connection connection = dataSource.getConnection();
@@ -295,7 +295,7 @@ public class CustomerController {
         }
 
         @GetMapping("/customerDelete")
-        public void customerDelete(HttpSession session,@RequestParam("customerType") String custType) {
+        public String customerDelete(HttpSession session,@RequestParam("customerType") String custType) {
 
             Long custId = (Long) session.getAttribute("custid");
             try {
@@ -329,14 +329,19 @@ public class CustomerController {
                 
             }catch(Exception e) {
                 e.printStackTrace();
-            }
+            } return "redirect:/deleteAccountSuccess";
         }
+                
 
     @GetMapping("/accLogin")
     public String index(HttpSession session){
         session.getAttribute("custid");
         return "indexLogin";
     }
-    
+
+    @GetMapping("/deleteAccountSuccess")
+    public String deleteAccSuccess(){
+        return "Customer/DeleteAccountSuccess";
+    }    
     
 }
