@@ -95,7 +95,7 @@ public class CustomerController {
             e.printStackTrace();
             return "redirect:/error";
         }
-        return "redirect:/index";
+        return "redirect:/createAccountSuccess";
     } 
 
 
@@ -347,5 +347,10 @@ public class CustomerController {
     @GetMapping("/customerLoginError")
     public String customerLoginError(){
         return "Customer/customerLoginError";
+    }    
+
+    @GetMapping("createAccountSuccess")
+    public String createAccountSuccess(){
+        return "Customer/createAccountSuccess";
     }    
 }
