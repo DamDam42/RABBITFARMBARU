@@ -149,7 +149,7 @@ public String staffProfile(HttpSession session,Model model){
                         managerid = null;
                     }
 
-                Staff staff= null;
+                Staff staff= new Staff();
                 
                 staff.setStaffName(staffname);
                 staff.setStaffEmail(staffemail);
