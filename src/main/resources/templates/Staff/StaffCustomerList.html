@@ -265,10 +265,10 @@
                     <td th:text="${customer.custPhoneNum}"></td>
                     <td th:text="${customer.custAddress}"></td>
                     <td>
-                    <a th:href="@{/staffUpdateCustomer?custId=}+${customer.custID}" th:value="${ticket.ticketId}">
+                    <a th:href="@{/staffUpdateCustomer?custId=}+${customer.custID}">
                         <button class="update-button">Edit</button>
                     </a>
-                    <a th:href="@{/deleteTicket?ticketId=}+${ticket.ticketId}" class ="deleteTicketButton">
+                    <a th:href="@{/deleteTicket}" class ="deleteTicketButton">
                         <button class="delete-button">Delete</button>
                     </a>
 
