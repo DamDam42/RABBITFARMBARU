@@ -3,6 +3,9 @@ package com.heroku.java.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -353,4 +356,83 @@ public class CustomerController {
     public String createAccountSuccess(){
         return "Customer/createAccountSuccess";
     }    
+
+    @GetMapping("/staffCustomerList")
+    public String customerList(HttpSession session,Model model){
+        List<Customer> customers = new ArrayList<>();
+        session.getAttribute("staffid");
+
+        try {
+            Connection conn = dataSource.getConnection();
+            String sql = "SELECT * from public.customers Order By custid";
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                Customer customer = new Customer();
+
+                customer.setCustID(resultSet.getLong("custid"));
+                customer.setCustName(resultSet.getString("custname"));
+                customer.setCustEmail(resultSet.getString("custemail"));
+                customer.setCustPhoneNum(resultSet.getString("custphonenum"));
+                customer.setcustAddress(resultSet.getString("custaddress"));
+                customer.setCustPassword(resultSet.getString("custpassword"));
+
+                customers.add(customer);
+            }
+            model.addAttribute("customer",customers);
+
+        } catch (SQLException e) {
+        } return "Staff/StaffCustomerList";
+
+    }
+
+    @GetMapping("/staffUpdateCustomer")
+    public String staffUpdateCustomer(HttpSession session,@RequestParam("custId") Long custId, Model model){
+        session.getAttribute("staffid");
+
+        try {
+            Connection conn = dataSource.getConnection();
+            Connection connection = dataSource.getConnection();
+            String sql = "SELECT c.custid,c.custname, c.custemail, c.custaddress, c.custphonenum, c.custpassword, ct.custicnum, nc.custpassport " +
+                     "FROM public.customers c " +
+                     "LEFT JOIN public.citizen ct ON c.custid = ct.custid " +
+                     "LEFT JOIN public.noncitizen nc ON c.custid = nc.custid " +
+                     "WHERE c.custid = ?";
+
+            final var statement= connection.prepareStatement(sql);
+            statement.setLong(1, custId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+                String custname = resultSet.getString("custname");
+                String custemail = resultSet.getString("custemail");
+                String custaddress = resultSet.getString("custaddress");
+                String custphonenum = resultSet.getString("custphonenum");
+                String custpassword = resultSet.getString("custpassword");
+                String custicnum = resultSet.getString("custicnum");
+                String custpassport = resultSet.getString("custpassport");
+                
+                Customer customer = null;
+                String customerType = null;
+                if (custicnum != null){
+                customer = new Citizen(custname, custemail, custphonenum, custaddress, custpassword, custId, custicnum);
+                customerType = "Citizen";
+                } else if (custpassport!= null){
+                    customer = new NonCitizen(custname, custemail, custphonenum, custaddress, custpassword, custId, custpassport);
+                    customerType = "NonCitizen";
+                }
+
+                model.addAttribute("customer",customer);
+                model.addAttribute("customerType",customerType);
+                
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+        } return "Staff/StaffUpdateCustomer";
+
+    }
 }
