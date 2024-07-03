@@ -230,7 +230,7 @@ public class CustomerController {
                 
 
                 Customer customer = null;
-
+                String customerType = null;
                 if (custic != null){
 
                 customer = new Citizen(custName, custEmail, custphonenum, custAddress, custPassword, custId, custic);
@@ -242,7 +242,7 @@ public class CustomerController {
                 
                 
                 model.addAttribute("customer",customer);
-
+                model.addAttribute("customerType", customerType);
                 
 
             }
