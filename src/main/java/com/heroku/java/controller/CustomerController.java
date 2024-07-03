@@ -189,7 +189,7 @@ public class CustomerController {
 
                 
             }
-            
+
             connection.close();
 
         } catch (Exception e) {
@@ -219,13 +219,13 @@ public class CustomerController {
 
             if (resultSet.next()){
                 
-                String custName = resultSet.getString("custname");
-                String custEmail = resultSet.getString("custemail");
-                String custAddress = resultSet.getString("custaddress");
-                String custphonenum= resultSet.getString("custphonenum");
-                String custPassword = resultSet.getString("custpassword");
-                String custic = resultSet.getString("custicnum");
-                String custPassport = resultSet.getString("custpassport");
+                String custName = resultSet.getString("custName");
+                String custEmail = resultSet.getString("custEmail");
+                String custAddress = resultSet.getString("custAddress");
+                String custphonenum= resultSet.getString("custPhoneNum");
+                String custPassword = resultSet.getString("custPassword");
+                String custic = resultSet.getString("custIcNum");
+                String custPassport = resultSet.getString("custPassport");
                 
                 
 
@@ -290,7 +290,7 @@ public class CustomerController {
             }catch(Exception e) {
                 e.printStackTrace();
             }
-            return "Customer/CustomerUpdate";
+            return "Customer/CustomerProfile";
         }
 
     @GetMapping("/accLogin")
