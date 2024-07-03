@@ -128,7 +128,7 @@ public class CustomerController {
                         session.setAttribute("custname", custName);
                         session.setAttribute("custid", custId);
 
-                        return "indexLogin";
+                        return "redirect:/accLogin";
                     }
 
                    
@@ -184,7 +184,7 @@ public class CustomerController {
                 
                 model.addAttribute("customer",customer);
 
-
+                
             }
             connection.close();
 
@@ -291,7 +291,7 @@ public class CustomerController {
 
     @GetMapping("/accLogin")
     public String index(HttpSession session){
-        session.getAttribute("custid");
+        session.getAttribute("custid");s
         return "indexLogin";
     }
     
