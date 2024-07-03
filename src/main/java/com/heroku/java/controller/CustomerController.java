@@ -301,29 +301,29 @@ public class CustomerController {
             try {
                 Connection conn= dataSource.getConnection();
                 String sql = "Delete From Customer WHERE custid=?";
-                PreparedStatement statement = conn.prepareStatement(sql);
+                PreparedStatement statementcust = conn.prepareStatement(sql);
                 
                 
                 
-                statement.setLong(1, custId);
+                statementcust.setLong(1, custId);
                 
                 
                 if(custType.equalsIgnoreCase("Citizen")) {
                     String sqlD = "DELETE FROM public.citizen WHERE custid=?";
-                    statement = conn.prepareStatement(sqlD);
-                    statement.setLong(1, custId);
-                    statement.executeUpdate();
+                    PreparedStatement statementcitizen = conn.prepareStatement(sqlD);
+                    statementcitizen.setLong(1, custId);
+                    statementcitizen.executeUpdate();
                 }
         
                 else if(custType.equalsIgnoreCase("NonCitizen")) {
                     String sqlDe = "DELETE FROM public.noncitizen WHERE custid=?";
-                    statement = conn.prepareStatement(sqlDe);
-                    statement.setLong(1, custId);
-                    statement.executeUpdate();
+                    PreparedStatement statementnon = conn.prepareStatement(sqlDe);
+                    statementnon.setLong(1, custId);
+                    statementnon.executeUpdate();
                 }
                 
                 
-                statement.executeUpdate();
+                statementcust.executeUpdate();
                 
                 conn.close();
                 
