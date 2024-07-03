@@ -294,7 +294,43 @@ public class CustomerController {
             return "redirect:/customerProfile";
         }
 
+        @GetMapping("/customerDelete")
+        public void customerDelete(HttpSession session,@RequestParam("customerType") String custType) {
 
+            Long custId = (Long) session.getAttribute("custid");
+            try {
+                Connection conn= dataSource.getConnection();
+                String sql = "Delete From Customer WHERE custid=?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                
+                
+                
+                statement.setLong(1, custId);
+                
+                
+                if(custType.equalsIgnoreCase("Citizen")) {
+                    String sqlD = "DELETE FROM public.citizen WHERE custid=?";
+                    statement = conn.prepareStatement(sqlD);
+                    statement.setLong(1, custId);
+                    statement.executeUpdate();
+                }
+        
+                else if(custType.equalsIgnoreCase("NonCitizen")) {
+                    String sqlDe = "DELETE FROM public.noncitizen WHERE custid=?";
+                    statement = conn.prepareStatement(sqlDe);
+                    statement.setLong(1, custId);
+                    statement.executeUpdate();
+                }
+                
+                
+                statement.executeUpdate();
+                
+                conn.close();
+                
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
 
     @GetMapping("/accLogin")
     public String index(HttpSession session){
