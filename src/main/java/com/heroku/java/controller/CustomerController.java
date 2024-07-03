@@ -120,9 +120,9 @@ public class CustomerController {
                 if (resultSet.next()){
 
                     Long custId = resultSet.getLong("custid");
-                    String custName = resultSet.getString("custname");
-                    String custEmail = resultSet.getString("custemail");
-                    String custPassword = resultSet.getString("custpassword");
+                    String custName = resultSet.getString("custName");
+                    String custEmail = resultSet.getString("custEmail");
+                    String custPassword = resultSet.getString("custPassword");
 
                     if (custEmail.equals(custemail)&&custPassword.equals(custpassword)){
                         session.setAttribute("custname", custName);
