@@ -184,9 +184,9 @@ public class CustomerController {
                 
                 model.addAttribute("customer",customer);
 
-                connection.close();
 
             }
+            connection.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -239,9 +239,10 @@ public class CustomerController {
                 
                 model.addAttribute("customer",customer);
 
-                connection.close();
+                
 
             }
+            connection.close();
             }catch (Exception e){
                 e.printStackTrace();
             }
