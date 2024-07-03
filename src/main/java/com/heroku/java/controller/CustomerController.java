@@ -290,7 +290,7 @@ public class CustomerController {
             }catch(Exception e) {
                 e.printStackTrace();
             }
-            return "Customer/CustomerProfile";
+            return "redirect:/CustomerProfile";
         }
 
     @GetMapping("/accLogin")
