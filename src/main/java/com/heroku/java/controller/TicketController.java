@@ -90,7 +90,7 @@ public class TicketController {
     }
 
 
-@GetMapping("/updateTickets")
+@GetMapping("/updateTicketGet")
 public String updateTicket(@RequestParam("ticketId") Long ticketId, Model model) {
 
     try {
