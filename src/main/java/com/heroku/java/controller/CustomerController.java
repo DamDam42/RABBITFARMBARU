@@ -291,7 +291,7 @@ public class CustomerController {
 
     @GetMapping("/accLogin")
     public String index(HttpSession session){
-        session.getAttribute("custid");s
+        session.getAttribute("custid");
         return "indexLogin";
     }
     
