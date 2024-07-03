@@ -259,13 +259,13 @@
             </thead>
             <tbody>
                 <tr th:each="customer : ${customer}">
-                    <td th:text="${customer.custId}"></td>
-                    <td th:text="${customer.custName}"></td>
-                    <td th:text="${customer.custEmail}"></td>
-                    <td th:text="${customer.custPhoneNum}"></td>
-                    <td th:text="${customer.custAddress}"></td>
+                    <td th:text="${customer.custid}"></td>
+                    <td th:text="${customer.custname}"></td>
+                    <td th:text="${customer.custemail}"></td>
+                    <td th:text="${customer.custphonenum}"></td>
+                    <td th:text="${customer.custaddress}"></td>
                     <td>
-                    <a th:href="@{/staffUpdateCustomer?custId=}+${customer.custtId}" th:value="${ticket.ticketId}">
+                    <a th:href="@{/staffUpdateCustomer?custId=}+${customer.custid}" th:value="${ticket.ticketId}">
                         <button class="update-button">Edit</button>
                     </a>
                     <a th:href="@{/deleteTicket?ticketId=}+${ticket.ticketId}" class ="deleteTicketButton">
