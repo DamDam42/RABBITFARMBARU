@@ -219,11 +219,11 @@ public class CustomerController {
 
             if (resultSet.next()){
                 
-                String custName = resultSet.getString("custName");
-                String custEmail = resultSet.getString("custEmail");
-                String custAddress = resultSet.getString("custAddress");
-                String custphonenum= resultSet.getString("custPhoneNum");
-                String custPassword = resultSet.getString("custPassword");
+                String custName = resultSet.getString("custname");
+                String custEmail = resultSet.getString("custemail");
+                String custAddress = resultSet.getString("custaddress");
+                String custphonenum= resultSet.getString("custphonenum");
+                String custPassword = resultSet.getString("custpassword");
                 String custic = resultSet.getString("custIcNum");
                 String custPassport = resultSet.getString("custPassport");
                 
@@ -254,9 +254,9 @@ public class CustomerController {
         }
 
         @PostMapping("/customerUpdate")
-        public String customerUpdate(Model model,Long custid,HttpSession session) {
+        public String customerUpdate(Model model,Long custid,HttpSession session,@ModelAttribute("customerUpdate") Customer customer) {
             Long custId = (Long) session.getAttribute("custid");
-            Customer customer = new Customer();
+            
             try {
                 Connection conn = dataSource.getConnection();
                 String sql = "Update public.customers set custname=?,custemail=?,custaddress=?,custphonenum=?,custpassword=? WHERE custid=?";
