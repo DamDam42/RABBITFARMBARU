@@ -233,11 +233,11 @@ public class CustomerController {
                 Customer customer = null;
                 String customerType = null;
                 if (custic != null){
-
                 customer = new Citizen(custName, custEmail, custphonenum, custAddress, custPassword, custId, custic);
-               
+                customerType = "Citizen";
                 } else if (custPassport!= null){
                     customer = new NonCitizen(custName, custEmail, custphonenum, custAddress, custPassword, custId, custPassport);
+                    customerType = "NonCitizen";
                 }
                 
                 
