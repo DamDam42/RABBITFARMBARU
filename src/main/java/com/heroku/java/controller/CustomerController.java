@@ -174,7 +174,7 @@ public class CustomerController {
                 
 
                 Customer customer = null;
-
+                String customerType = null;
                 if (custic != null){
 
                 customer = new Citizen(custName, custEmail, custphonenum, custAddress, custPassword, custId, custic);
@@ -186,7 +186,7 @@ public class CustomerController {
                 
                 
                 model.addAttribute("customer",customer);
-
+                model.addAttribute("customerType", customerType);
                 
             }
 
@@ -292,6 +292,8 @@ public class CustomerController {
             }
             return "redirect:/customerProfile";
         }
+
+
 
     @GetMapping("/accLogin")
     public String index(HttpSession session){
