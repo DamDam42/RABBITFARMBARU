@@ -300,7 +300,7 @@ public class CustomerController {
             Long custId = (Long) session.getAttribute("custid");
             try {
                 Connection conn= dataSource.getConnection();
-                String sql = "Delete From public.customer WHERE custid=?";
+                String sql = "Delete From public.customers WHERE custid=?";
                 PreparedStatement statementcust = conn.prepareStatement(sql);
                 
                 
