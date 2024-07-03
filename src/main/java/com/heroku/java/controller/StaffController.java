@@ -113,7 +113,7 @@ public class StaffController {
 @GetMapping("/indexStaff")
 public String indexStaff(HttpSession session) {
     session.getAttribute("staffid");
-    return "Staff/indexStaff";
+    return "indexStaff";
 }
 
 @GetMapping("/staffLoginError")
