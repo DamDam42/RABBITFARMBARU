@@ -128,7 +128,7 @@ public class CustomerController {
                         session.setAttribute("custname", custName);
                         session.setAttribute("custid", custId);
 
-                        return "redirect:/accLogin";
+                        return "indexLogin";
                     }
 
                    
