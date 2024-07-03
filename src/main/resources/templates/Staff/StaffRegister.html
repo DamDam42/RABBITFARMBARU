@@ -86,7 +86,7 @@
         max-width: 1000px;
         max-height: 800px;
         height: 100%;
-        width: 100%;
+        width: 200%;
         background: #fff;
         padding: 25px 30px;
         border-radius: 5px;
@@ -101,7 +101,7 @@
         font-weight: 500;
     }
     .container form {
-        width: 100%;
+        width: 200%;
     }
     .container form .user-details {
         display: flex;
@@ -176,95 +176,66 @@
     <main>
 
         <div class="container">
-            <h2>Customer Profile</h2>
-            
-           
+            <h2>Sign Up</h2>
+            <form th:action="@{/staffRegisters}" modelAttribute="staffRegisters" th:object = "${staffRegisters}" method="post">
+
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custName" class="details">Name</label>
-                        <input type="text" id="custName" name="custName" th:value = "${customer.custName}" disabled>
+                        <input type="text" id="staffName" name="staffName">
                     </div>
                 </div>
 
                     <div class="user-details">
                     <div class="input-box">
                         <label for="custEmail" class="details">Email</label>
-                        <input type="text" id="custEmail" name="custEmail" th:value = "${customer.custEmail}" disabled>
+                        <input type="email" id="staffEmail" name="staffEmail">
                     </div>
                     </div>
 
                     <div class="user-details">
                     <div class="input-box">
                         <label for="custPhone" class="details">Phone No.</label>
-                        <input type="text" id="custPhone" name="custPhoneNum" th:value = "${customer.custPhoneNum}" disabled>
+                        <input type="text" id="staffPhoneNum" name="staffPhoneNum">
                     </div>
                 </div> 
 
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custAddress" class="details">Address</label>
-                        <input type="text" id="custAddress" name="custAddress" th:value = "${customer.custAddress}" disabled>
+                        <input type="text" id="staffAddress" name="staffAddress">
                     </div>
                 </div> 
 
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custPassword" class="details">Password</label>
-                        <input type="password" id="custPassword" name="custPassword" th:value = "${customer.custPassword}" disabled>
+                        <input type="password" id="staffPassword" name="staffPassword">
                     </div>
                 </div> 
 
-
-           
-            
-                <div class="user-details" th:if="${customer instanceof T(com.heroku.java.model.Citizen)}">
-                    <div class="input-box">
-                        <label for="custIC" class="details">IC Number</label>
-                        <input type="text" id="custIC" name="custIcNum" th:value="${customer.custIcNum}" disabled>
-                    </div>
+                <div class="input-box">
+                    <label for="custName" class="details">Name</label>
+                    <input type="text" id="custName" name="managerId">
                 </div>
+            </div>
 
-                <div class="user-details" th:if="${customer instanceof T(com.heroku.java.model.NonCitizen)}">
-                    <div class="input-box">
-                        <label for="passportNumber" class="details">Passport Number</label>
-                        <input type="text" id="passportNumber" name="custPassport" th:value="${customer.custPassport}" disabled>
-                    </div>
-                </div>
 
+               
                 <div class="button">
-                    <a th:href="@{/customerUpdate}">Update Profile</a>
+                        <input type="submit" value="Sign Up">
                 </div>
                 
-      
 
-           
+
+            </form>
         
         </div>
     </main>
 
     <script>
-        function toggleInputBox() {
-           var citizen = document.getElementById('custIC');
-           var nonCitizen = document.getElementById('passportNumber');
-           var citizenBox = document.getElementById('citizenBox');
-           var nonCitizenBox = document.getElementById('nonCitizenBox');
-           
-           if (citizen != null ) {
-               citizenBox.style.display = 'block';
-               nonCitizenBox.style.display = 'none';
-           } else if (nonCitizen != null ) {
-               nonCitizenBox.style.display = 'block';
-               citizenBox.style.display = 'none';
-           } else {
-               citizenBox.style.display = 'none';
-               nonCitizenBox.style.display = 'none';
-           }
-       }
-
-       window.onload = function() {
-           toggleInputBox();
-       }
-   </script>
+  
+    </script>
 
 </body>
 </html>

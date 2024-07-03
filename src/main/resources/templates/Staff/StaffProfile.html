@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Management</title>
+    <title>Staff Profile</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <style>
@@ -162,7 +162,7 @@
 <header>
     <h2 class="logo">Iman's Rabbit Farm</h2>
     <nav class="navigation">
-        <a href="#">Home</a>
+        <a th:href="@{/indexStaff}">Home</a>
         <a href="Account.html">Account</a>
         <a href="createBooking.html">Booking</a>
         <a href="#">Ticket</a>
@@ -176,94 +176,63 @@
     <main>
 
         <div class="container">
-            <h2>Customer Profile</h2>
+            <h2>Staff Profile</h2>
             
            
-                <div class="user-details">
-                    <div class="input-box">
-                        <label for="custName" class="details">Name</label>
-                        <input type="text" id="custName" name="custName" th:value = "${customer.custName}" disabled>
-                    </div>
-                </div>
+            div class="user-details">
+            <div class="input-box">
+                <label for="staffName" class="details">Name</label>
+                <input type="text" id="staffName" name="staffName" th:value="${staff.staffName}" disabled>
+            </div>
+        </div>
 
-                    <div class="user-details">
-                    <div class="input-box">
-                        <label for="custEmail" class="details">Email</label>
-                        <input type="text" id="custEmail" name="custEmail" th:value = "${customer.custEmail}" disabled>
-                    </div>
-                    </div>
+            <div class="user-details">
+            <div class="input-box">
+                <label for="custEmail" class="details">Email</label>
+                <input type="text" id="staffEmail" name="staffEmail"  th:value="${staff.staffEmail}" disabled>
+            </div>
+            </div>
 
-                    <div class="user-details">
-                    <div class="input-box">
-                        <label for="custPhone" class="details">Phone No.</label>
-                        <input type="text" id="custPhone" name="custPhoneNum" th:value = "${customer.custPhoneNum}" disabled>
-                    </div>
-                </div> 
+            <div class="user-details">
+            <div class="input-box">
+                <label for="custPhone" class="details">Phone No.</label>
+                <input type="text" id="staffPhone" name="staffPhoneNum"  th:value="${staff.staffPhoneNum}" disabled>
+            </div>
+        </div> 
 
-                <div class="user-details">
-                    <div class="input-box">
-                        <label for="custAddress" class="details">Address</label>
-                        <input type="text" id="custAddress" name="custAddress" th:value = "${customer.custAddress}" disabled>
-                    </div>
-                </div> 
+        <div class="user-details">
+            <div class="input-box">
+                <label for="custAddress" class="details">Address</label>
+                <input type="text" id="staffAddress" name="staffAddress" th:value="${staff.staffAddress}" disabled>
+            </div>
+        </div> 
 
-                <div class="user-details">
-                    <div class="input-box">
-                        <label for="custPassword" class="details">Password</label>
-                        <input type="password" id="custPassword" name="custPassword" th:value = "${customer.custPassword}" disabled>
-                    </div>
-                </div> 
+        <div class="user-details">
+            <div class="input-box">
+                <label for="custPassword" class="details">Password</label>
+                <input type="password" id="staffPassword" name="staffPassword"  th:value="${staff.staffPassword}"  disabled>
+            </div>
+        </div> 
 
-
-           
-            
-                <div class="user-details" th:if="${customer instanceof T(com.heroku.java.model.Citizen)}">
-                    <div class="input-box">
-                        <label for="custIC" class="details">IC Number</label>
-                        <input type="text" id="custIC" name="custIcNum" th:value="${customer.custIcNum}" disabled>
-                    </div>
-                </div>
-
-                <div class="user-details" th:if="${customer instanceof T(com.heroku.java.model.NonCitizen)}">
-                    <div class="input-box">
-                        <label for="passportNumber" class="details">Passport Number</label>
-                        <input type="text" id="passportNumber" name="custPassport" th:value="${customer.custPassport}" disabled>
-                    </div>
-                </div>
+          <div class="user-details">
+            <div class="input-box">
+                <label for="custPassword" class="details">Manager ID</label>
+                <input type="number" id="managerid" name="managerId"  th:value="${staff.managerId}"  disabled>
+            </div>
+        </div> 
+   
 
                 <div class="button">
-                    <a th:href="@{/customerUpdate}">Update Profile</a>
+                    <a th:href="@{/staffUpdate}">Update Profile</a>
                 </div>
                 
       
-
-           
         
         </div>
     </main>
 
     <script>
-        function toggleInputBox() {
-           var citizen = document.getElementById('custIC');
-           var nonCitizen = document.getElementById('passportNumber');
-           var citizenBox = document.getElementById('citizenBox');
-           var nonCitizenBox = document.getElementById('nonCitizenBox');
-           
-           if (citizen != null ) {
-               citizenBox.style.display = 'block';
-               nonCitizenBox.style.display = 'none';
-           } else if (nonCitizen != null ) {
-               nonCitizenBox.style.display = 'block';
-               citizenBox.style.display = 'none';
-           } else {
-               citizenBox.style.display = 'none';
-               nonCitizenBox.style.display = 'none';
-           }
-       }
-
-       window.onload = function() {
-           toggleInputBox();
-       }
+   
    </script>
 
 </body>
