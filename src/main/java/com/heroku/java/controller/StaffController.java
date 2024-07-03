@@ -121,6 +121,8 @@ public String staffLoginError(){
     return "Staff/StaffLoginError";
 }
 
+//STAFF VIEW PROFILE
+
 @GetMapping("/staffProfile")
 public String staffProfile(HttpSession session,Model model){
     Long staffId = (Long) session.getAttribute("staffid");
@@ -164,9 +166,104 @@ public String staffProfile(HttpSession session,Model model){
             conn.close();
   
 }catch(SQLException e){
-
 } 
 return "Staff/StaffProfile";
+}
+
+@GetMapping("/staffUpdate")
+public String staffUpdate(HttpSession session,Model model){
+    Long staffId = (Long) session.getAttribute("staffid");
+
+    if (staffId == null) {
+            return "redirect:/staffLogin"; // redirect to login if staffId is not in session
+        }
+
+        try {
+            Connection conn = dataSource.getConnection();
+            String sql = "Select staffname,staffemail,staffphonenum,staffaddress,staffpassword,managerid FROM public.staff WHERE staffid=? ";
+            
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(1, staffId);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if(resultSet.next()) {
+                String staffname = resultSet.getString("staffname");
+                String staffemail = resultSet.getString("staffemail");
+                String staffphonenum = resultSet.getString("staffphonenum");
+                String staffaddress = resultSet.getString("staffaddress");
+                String staffpassword = resultSet.getString("staffpassword");
+                Integer managerid = resultSet.getInt("managerid");
+                
+                 if (resultSet.wasNull()) {
+                        managerid = null;
+                    }
+
+                Staff staff= new Staff();
+                
+                staff.setStaffName(staffname);
+                staff.setStaffEmail(staffemail);
+                staff.setStaffPhoneNum(staffphonenum);
+                staff.setStaffAddress(staffaddress);
+                staff.setStaffPassword(staffpassword);
+                staff.setManagerId(managerid);
+
+                 model.addAttribute("staff",staff);
+            }
+
+            conn.close();
+  
+}catch(SQLException e){
+} 
+return "Staff/StaffUpdate";
+}
+
+@PostMapping("/staffUpdate")
+public String staffUpdate(HttpSession session,@ModelAttribute("staffUpdate") Staff staff, Model model){
+    Long staffId = (Long) session.getAttribute("staffid");
+
+    if (staffId == null) {
+            return "redirect:/staffLogin"; // redirect to login if staffId is not in session
+        }
+
+        try {
+            Connection conn = dataSource.getConnection();
+            String sql = "UPDATE public.staff SET staffname=?,staffemail=?,staffphonenum=?,staffaddress=?,staffpassword=?,managerid=? WHERE staffid=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(7,staffId);
+            statement.setString(1, staff.getStaffName());
+            statement.setString(2, staff.getStaffEmail());
+            statement.setString(3, staff.getStaffPhoneNum());
+            statement.setString(4, staff.getStaffAddress());
+            statement.setString(5, staff.getStaffPassword());
+            statement.setInt(6, staff.getManagerId());
+            statement.executeUpdate();
+            
+            conn.close();
+
+        } catch (SQLException e) {
+        } return "redirect:/staffProfile";
+}
+
+@GetMapping("/staffDelete")
+public String staffDelete(HttpSession session){
+    Long custId = (Long) session.getAttribute("staffid");
+
+    try {
+        Connection conn= dataSource.getConnection();
+        String sql = "Delete From public.staff WHERE staffid=?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+
+        statement.setLong(1, custId);
+
+        statement.executeUpdate();
+    } catch (SQLException e) {
+    } return "redirect:/deleteStaffSuccess";
+
+}
+
+@GetMapping("/deleteStaffSuccess")
+public String deleteStaffSuccess(){
+    return "Staff/DeleteStaffSuccess";
 }
 
 }

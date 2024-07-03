@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Profile</title>
+    <title>Update Staff</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <style>
@@ -163,7 +163,7 @@
     <h2 class="logo">Iman's Rabbit Farm</h2>
     <nav class="navigation">
         <a th:href="@{/indexStaff}">Home</a>
-        <a  th:href="@{/staffProfile}">Account</a>
+        <a th:href="@{/staffProfile}">Account</a>
         <a href="createBooking.html">Booking</a>
         <a href="#">Ticket</a>
         <a href="AboutUS.html">About Us</a>
@@ -176,9 +176,9 @@
     <main>
 
         <div class="container">
-            <h2>Staff Profile</h2>
+            <h2>Update Staff</h2>
             
-           
+           <form th:action = "@{/staffUpdate}" modelAttribute="staffUpdate" th:object="${staff}" method ="post">
             <div class="user-details"> 
             <div class="input-box">
                 <label for="staffName" class="details">Name</label>
@@ -222,17 +222,48 @@
         </div> 
    
 
-                <div class="button">
-                    <a th:href="@{/staffUpdate}">Update Profile</a>
+        <div class="button">
+            <input type="submit" value="Save">
+        </div>
+
+        <a class="button" href="#" onclick="showPopup()">
+            <button type="button">Delete</button>
+        </a>
+        
+        <!-- Confirmation Popup -->
+        <div class="overlay">
+            <div class="popup">
+                <h3>Are you sure you want to delete your account?</h3>
+                <div class="btn-container">
+                    <a class="button" th:href="@{/staffDelete}}"> <button type="button">Delete</button>
+            </a>
+                    <button onclick="hidePopup()" class="secondary">Cancel</button>
                 </div>
+            </div>
+        </div>
                 
-      
+        </form>
         
         </div>
     </main>
 
     <script>
-   
+   function showPopup() {
+        var overlay = document.querySelector('.overlay');
+        overlay.style.display = 'flex'; // Display overlay
+
+        // Disable scroll when popup is open
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Function to hide the confirmation popup
+    function hidePopup() {
+        var overlay = document.querySelector('.overlay');
+        overlay.style.display = 'none'; // Hide overlay
+
+        // Enable scroll when popup is closed
+        document.body.style.overflow = 'auto';
+    }
    </script>
 
 </body>
