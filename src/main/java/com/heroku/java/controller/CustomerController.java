@@ -145,7 +145,9 @@ public class CustomerController {
     @GetMapping("/customerProfile")
     public String customerProfile(HttpSession session, Model model) {
         Long custId = (Long) session.getAttribute("custid");
-
+        if (custId == null) {
+            return "redirect:/login"; // redirect to login if custId is not in session
+        }
         try {
             Connection connection = dataSource.getConnection();
             String sql = "SELECT c.custname, c.custemail, c.custaddress, c.custphonenum, c.custpassword, ct.custicnum, nc.custpassport " +
