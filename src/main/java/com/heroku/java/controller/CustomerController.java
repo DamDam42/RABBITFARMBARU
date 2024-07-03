@@ -135,7 +135,7 @@ public class CustomerController {
 
                 }
                  connection.close();
-                 return "redirect:/error2";
+                 return "redirect:/customerLoginError";
             } catch (Exception e) {
                 e.printStackTrace();
                 return "redirect:/error";
@@ -147,7 +147,7 @@ public class CustomerController {
         Long custId = (Long) session.getAttribute("custid");
 
         if (custId == null) {
-            return "redirect:/customerLogins"; // redirect to login if custId is not in session
+            return "redirect:/customerLogin"; // redirect to login if custId is not in session
         }
         try {
             Connection connection = dataSource.getConnection();
@@ -343,5 +343,9 @@ public class CustomerController {
     public String deleteAccSuccess(){
         return "Customer/DeleteAccountSuccess";
     }    
-    
+
+    @GetMapping("/customerLoginError")
+    public String customerLoginError(){
+        return "Customer/customerLoginError";
+    }    
 }
