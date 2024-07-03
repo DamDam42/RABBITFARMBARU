@@ -254,7 +254,7 @@ public class CustomerController {
         }
 
         @PostMapping("/customerUpdate")
-        public String customerUpdate(Model model,Long custid,HttpSession session,@ModelAttribute("customerUpdate") Customer customer) {
+        public String customerUpdate(HttpSession session,@ModelAttribute("customerUpdate") Customer customer,Model model) {
             Long custId = (Long) session.getAttribute("custid");
             
             try {
@@ -283,7 +283,7 @@ public class CustomerController {
                     statement.executeUpdate();
                 }
 
-                model.addAttribute("customer",customer);
+                
 
                 conn.close();
                 
