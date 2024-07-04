@@ -167,6 +167,23 @@ form .user-details .input-box {
     background-color: #0a834e; /* Darker shade of green on hover */
 }
 
+.login-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1em;
+}
+
+.login-footer a {
+    color: green;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+
 </style>
 <header>
         <h2 class="logo">Iman's Rabbit Farm</h2>
@@ -201,10 +218,6 @@ form .user-details .input-box {
                 <input type="submit" value="Log In">
             </div>
 
-            <h3>Don't Have An Account?</h3>
-            <div class="button">
-                <a th:href="@{/staffRegister}">Staff Sign Up</a>
-            </div>
         </div>
     </form>
     <div class="login-footer">
