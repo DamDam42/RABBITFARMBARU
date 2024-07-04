@@ -438,7 +438,7 @@ public class CustomerController {
 
 
     @PostMapping("/staffUpdateCustomers")
-    public String  staffUpdateCustomers(HttpSession session,@RequestParam("custId") Long custId,@ModelAttribute("staffUpdateCustomers") Customer customer, Model model){
+    public String  staffUpdateCustomers(HttpSession session,@RequestParam("custId") Long custId, @ModelAttribute("staffUpdateCustomers") Customer customer, Model model){
         session.getAttribute("staffid");
 
         try {
