@@ -319,7 +319,7 @@
                     <div class="popup">
                         <h3>Are you sure you want to delete your account?</h3>
                         <div class="btn-container">
-                            <a class="button" th:href="@{/staffDeleteCustomer?customerType=}+${customerType}+&custId=+${customer.custID}"> <button type="button">Delete</button>
+                            <a class="button" th:href="@{/staffDeleteCustomer(custType=${customerType}, custId=${customer.custID})}"> <button type="button">Delete</button>
                     </a>
                             <button onclick="hidePopup()" class="secondary">Cancel</button>
                         </div>
