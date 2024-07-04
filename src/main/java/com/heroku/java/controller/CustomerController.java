@@ -484,15 +484,15 @@ public class CustomerController {
             statement.setLong(1, custId);
 
             if(custType.equalsIgnoreCase("Citizen")){
-                sql = "DELETE FROM public.citizen WHERE custid=?";
-                statement=conn.prepareStatement(sql);
-                statement.setLong(1, custId);
-                statement.executeUpdate();
+                String sqlc = "DELETE FROM public.citizen WHERE custid=?";
+                PreparedStatement statementC=conn.prepareStatement(sqlc);
+                statementC.setLong(1, custId);
+                statementC.executeUpdate();
             }else if(custType.equalsIgnoreCase("NonCitizen")){
-                sql= "DELETE FROM public.noncitizen WHERE custid=?";
-                statement=conn.prepareStatement(sql);
-                statement.setLong(1, custId);
-                statement.executeUpdate();
+                String sqlnc= "DELETE FROM public.noncitizen WHERE custid=?";
+                PreparedStatement statementnc=conn.prepareStatement(sqlnc);
+                statementnc.setLong(1, custId);
+                statementnc.executeUpdate();
             }
 
             statement.executeUpdate();
