@@ -456,13 +456,13 @@ public class CustomerController {
             if(customer instanceof Citizen citizen){
                 sql = "UPDATE public.citizen SET custicnum=? Where custid=?";
                 statement = conn.prepareStatement(sql);
-                statement.setLong(2, custId);
+                statement.setLong(2, citizen.getCustID());
                 statement.setString(1, citizen.getCustIcNum());
                 statement.executeUpdate();
             } else if (customer instanceof NonCitizen noncitizen){
                 sql = "Update public.noncitizen SET custpassportnum=? WHERE custid=?";
                 statement = conn.prepareStatement(sql);
-                statement.setLong(2, custId);
+                statement.setLong(2, noncitizen.getCustID());
                 statement.setString(1, noncitizen.getCustPassport());
                 statement.executeUpdate();
             }
