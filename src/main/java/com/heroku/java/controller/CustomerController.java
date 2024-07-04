@@ -435,4 +435,78 @@ public class CustomerController {
         } return "Staff/StaffUpdateCustomer";
 
     }
+
+
+    @PostMapping("/staffUpdateCustomers")
+    public String  staffUpdateCustomers(HttpSession session,@RequestParam("custId") Long custId,@ModelAttribute("staffUpdateCustomers") Model model,Customer customer){
+        session.getAttribute("staffid");
+
+        try {
+            Connection conn = dataSource.getConnection();
+            String sql ="UPDATE public.customers SET custname=?,custemail=?,custphonenum=?,custaddress=?,custpassword=? WHERE custid=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(6, custId);
+            statement.setString(1,customer.getCustName());
+            statement.setString(2, customer.getCustEmail());
+            statement.setString(3, customer.getCustAddress());
+            statement.setString(4, customer.getCustPhoneNum());
+            statement.setString(5, customer.getCustPassword());
+            statement.executeUpdate();
+
+            if(customer instanceof Citizen citizen){
+                sql = "UPDATE public.citizen SET custicnum=? Where custid=?";
+                statement = conn.prepareStatement(sql);
+                statement.setLong(2, custId);
+                statement.setString(1, citizen.getCustIcNum());
+                statement.executeUpdate();
+            } else if (customer instanceof NonCitizen noncitizen){
+                sql = "Update public.noncitizen SET custpassportnum=? WHERE custid=?";
+                statement = conn.prepareStatement(sql);
+                statement.setLong(2, custId);
+                statement.setString(1, noncitizen.getCustPassport());
+                statement.executeUpdate();
+            }
+            conn.close();
+
+        } catch (SQLException e) {
+        }return "redirect:/staffCustomerList";
+
+    }
+
+    @GetMapping("/staffDeleteCustomer")
+    public String staffDeleteCustomer(HttpSession session,@RequestParam("custId") Long custId,@RequestParam("custType") String custType){
+        session.getAttribute("staffid");
+
+        try {
+            Connection conn = dataSource.getConnection();
+            String sql ="DELETE FROM public.customers WHERE custid=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(1, custId);
+
+            if(custType.equalsIgnoreCase("Citizen")){
+                sql = "DELETE FROM public.citizen WHERE custid=?";
+                statement=conn.prepareStatement(sql);
+                statement.setLong(1, custId);
+                statement.executeUpdate();
+            }else if(custType.equalsIgnoreCase("NonCitizen")){
+                sql= "DELETE FROM public.noncitizen WHERE custid=?";
+                statement=conn.prepareStatement(sql);
+                statement.setLong(1, custId);
+                statement.executeUpdate();
+            }
+
+            statement.executeUpdate();
+
+            conn.close();
+        } catch (SQLException e) {
+        } return "redirect:/staffDeleteCustSuccess";
+    }
+
+    @GetMapping("/staffDeleteCustSuccess")
+    public String staffDeleteAccSuccess(HttpSession session){
+        session.getAttribute("staffid");
+        return "Staff/StaffDeleteCustSuccess";
+    }
+
+
 }
