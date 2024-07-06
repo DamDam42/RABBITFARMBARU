@@ -317,7 +317,7 @@ public String checkAvailability(HttpSession session,
 
     @GetMapping("/customerViewBooking")
     public String customerViewBooking(HttpSession session, Model model){
-        Long custid = session.getAttribute("custid");
+        Long custid = (Long) session.getAttribute("custid");
         List<Booking> bookingCustomer = new ArrayList<>();
 
         try {
