@@ -119,24 +119,27 @@ public String checkAvailability(HttpSession session,
         return "Booking/BookingNotAvailable";
     }
 
+   
+
+    // other imports
+    
     @GetMapping("/customerBooking")
-    public String customerBooking(HttpSession session,Model model){
+    public String customerBooking(HttpSession session, Model model) {
         Long custid = (Long) session.getAttribute("custid");
         int ticketQuantity = (int) session.getAttribute("ticketQuantity");
-        Date bookingDate = (Date) session.getAttribute("bookingDate");
-        String ticketType = (String) session.getAttribute("ticketQuantity");
-
-
+        LocalDate bookingDate = (LocalDate) session.getAttribute("bookingDate");
+        String ticketType = (String) session.getAttribute("ticketType");
+    
         model.addAttribute("bookingDate", bookingDate);
         model.addAttribute("ticketQuantity", ticketQuantity);
         model.addAttribute("ticketType", ticketType);
-
-        double totalPrice= calculateTotalPrice(custid,ticketType, ticketQuantity);
+    
+        double totalPrice = calculateTotalPrice(custid, ticketType, ticketQuantity);
         model.addAttribute("totalPrice", totalPrice);
-
+    
         return "Booking/CreateBooking";
     }
-
+    
 
     //retrieve price from ticket table
     public double retrieveTicketPrice(String tickettype){
