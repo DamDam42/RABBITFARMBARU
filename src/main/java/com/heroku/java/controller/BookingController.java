@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -233,67 +232,78 @@ public String checkAvailability(HttpSession session,
     
     
     @PostMapping("/createBooking")
-    public String createBooking(HttpSession session,@ModelAttribute("createBooking") Booking booking,
-    @RequestParam("ticketType")String tickettype,@RequestParam("bookingDate") Date bookingDate,
-    @RequestParam("ticketQuantity") int ticketQuantity, Long custid){
-
-        custid = (Long) session.getAttribute("custid");
+    public String createBooking(HttpSession session, @ModelAttribute("createBooking") Booking booking,
+                                @RequestParam("ticketType") String tickettype,
+                                @RequestParam("bookingDate") LocalDate bookingDate,
+                                @RequestParam("ticketQuantity") int ticketQuantity) {
+    
+        Long custid = (Long) session.getAttribute("custid");
         ResultSet resultSet = null;
-		PreparedStatement statement = null;
-		PreparedStatement statementCreate = null;
-		PreparedStatement statementInsert = null;
+        PreparedStatement statement = null;
+        PreparedStatement statementCreate = null;
+        PreparedStatement statementInsert = null;
         PreparedStatement statementUpdate = null;
+    
         try {
-
-
-            //RETRIEVE TICKET ID
+            // RETRIEVE TICKET ID
             Connection conn = dataSource.getConnection();
-            String sqlTicketId = "SELECT ticketid From Ticket Where tickettype=?";
-			 statement = conn.prepareStatement(sqlTicketId);
-			
-			statement.setString(1, tickettype);
-			resultSet = statement.executeQuery();
-			int ticketid = -1;
-			
-			if(resultSet.next()) {
-				ticketid = resultSet.getInt("ticketid");
-			}
-
-            //CREATE BOOKING (INSERT TO DATABASE)
-            String sql = "INSERT INTO public.booking(custid,bookingdate,totalprice,bookingstatus) VALUES (?,?,?) returning bookingid";
+            String sqlTicketId = "SELECT ticketid FROM Ticket WHERE tickettype=?";
+            statement = conn.prepareStatement(sqlTicketId);
+            statement.setString(1, tickettype);
+            resultSet = statement.executeQuery();
+            int ticketid = -1;
+    
+            if (resultSet.next()) {
+                ticketid = resultSet.getInt("ticketid");
+            }
+    
+            // CREATE BOOKING (INSERT TO DATABASE)
+            String sql = "INSERT INTO public.booking(custid, bookingdate, totalprice, bookingstatus) VALUES (?, ?, ?, ?) RETURNING bookingid";
             statementCreate = conn.prepareStatement(sql);
             statementCreate.setLong(1, custid);
-            statementCreate.setDate(2, (java.sql.Date) bookingDate);
-            statementCreate.setDouble(3, 0.0);
+            statementCreate.setObject(2, bookingDate);
+            statementCreate.setDouble(3, 0.0); // Initial total price, adjust as needed
             statementCreate.setString(4, "Unpaid");
-
-            resultSet= statementCreate.executeQuery();
-
-            if (resultSet.next()){
-
+            resultSet = statementCreate.executeQuery();
+    
+            if (resultSet.next()) {
                 int bookingid = resultSet.getInt("bookingid");
-            //INSERT INTO BRIDGE
-
-            String sqlInsert ="INSERT INTO public.booking_ticket(bookingid,ticketid,ticketquantity)";
-            statementInsert = conn.prepareStatement(sqlInsert);
-            statementInsert.setInt(1, bookingid);
-            statementInsert.setLong(2, ticketid);
-            statementInsert.setInt(3, ticketQuantity);
-            statementInsert.executeUpdate();
-
-            //update totalprice
-
-            double totalPrice = calculateTotalPrice(custid, tickettype, ticketQuantity);
-            String sqlPrice ="UPDATE public.booking SET totalprice=?";
-            statementUpdate = conn.prepareStatement(sqlPrice);
-            statementUpdate.setDouble(1, totalPrice);
-            statementUpdate.executeUpdate();
-            
-
-
-        }
+    
+                // INSERT INTO BRIDGE
+                String sqlInsert = "INSERT INTO public.booking_ticket(bookingid, ticketid, ticketquantity) VALUES (?, ?, ?)";
+                statementInsert = conn.prepareStatement(sqlInsert);
+                statementInsert.setInt(1, bookingid);
+                statementInsert.setInt(2, ticketid);
+                statementInsert.setInt(3, ticketQuantity);
+                statementInsert.executeUpdate();
+    
+                // Update total price
+                double totalPrice = calculateTotalPrice(custid, tickettype, ticketQuantity);
+                String sqlPrice = "UPDATE public.booking SET totalprice=? WHERE bookingid=?";
+                statementUpdate = conn.prepareStatement(sqlPrice);
+                statementUpdate.setDouble(1, totalPrice);
+                statementUpdate.setInt(2, bookingid);
+                statementUpdate.executeUpdate();
+            }
+    
         } catch (SQLException e) {
-        } return "redirect:/bookingSuccess";
+            // Handle SQL exceptions
+            e.printStackTrace();
+            return "redirect:/error"; // Redirect to error page or handle error as needed
+        } finally {
+            // Close resources in finally block
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (statementCreate != null) statementCreate.close();
+                if (statementInsert != null) statementInsert.close();
+                if (statementUpdate != null) statementUpdate.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    
+        return "redirect:/bookingSuccess";
     }
 
     @GetMapping("/bookingSuccess")
