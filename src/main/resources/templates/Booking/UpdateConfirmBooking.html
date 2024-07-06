@@ -214,6 +214,7 @@
     <p>Ticket Price: <span th:text="${totalPrice}"></span></p>
 
     <form th:action="@{/customerUpdateBooking}" method="post">
+        <input type="hidden" name="bookingId" th:value="${bookingId}">
         <input type="hidden" name="bookingDate" th:value="${bookingDate}">
         <input type="hidden" name="ticketQuantity" th:value="${ticketQuantity}">
         <input type="hidden" name="ticketType" th:value="${ticketType}">

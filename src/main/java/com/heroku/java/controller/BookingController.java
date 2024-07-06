@@ -488,7 +488,7 @@ public String checkAvailability(HttpSession session,
     @GetMapping("/customerBookingUpdate")
     public String customerBookingUpdate(HttpSession session, Model model) {
         Long custid = (Long) session.getAttribute("custid");
-        session.getAttribute("bookingId");
+        int bookingId = (int) session.getAttribute("bookingId");
         int ticketQuantity = (int) session.getAttribute("ticketQuantity");
         LocalDate bookingDate = (LocalDate) session.getAttribute("bookingDate");
         String ticketType = (String) session.getAttribute("ticketType");
@@ -496,6 +496,7 @@ public String checkAvailability(HttpSession session,
         model.addAttribute("bookingDate", bookingDate);
         model.addAttribute("ticketQuantity", ticketQuantity);
         model.addAttribute("ticketType", ticketType);
+        model.addAttribute("bookingId", bookingId);
     
         double totalPrice = calculateTotalPrice(custid, ticketType, ticketQuantity);
         model.addAttribute("totalPrice", totalPrice);
