@@ -1,6 +1,5 @@
 package com.heroku.java.controller;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.naming.spi.DirStateFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +48,7 @@ public class BookingController {
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
-            While (resultSet.next()){
+            while (resultSet.next()){
                 String ticketType = resultSet.getString("tickettype");
                 double ticketPrice = resultSet.getDouble("ticketprice");
                 ticket ticket = new ticket();
