@@ -44,7 +44,7 @@ public class BookingController {
 
         try {
             Connection conn = dataSource.getConnection();
-            String sql = "SELECT tickettype,ticketprice from ticket";
+            String sql = "SELECT tickettype,ticketprice from public.ticket";
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
