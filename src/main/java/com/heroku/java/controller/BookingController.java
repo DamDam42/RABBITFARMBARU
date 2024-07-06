@@ -500,7 +500,7 @@ public String checkAvailability(HttpSession session,
     //PROCESS UPDATE
 
     @PostMapping("/customerUpdateBooking")
-    public String customerUpdateBooking(HttpSession session,
+    public String customerUpdateBooking(HttpSession session,@ModelAttribute("customerUpdateBooking") Booking booking,
                                     @RequestParam("ticketType") String ticketType,
                                     @RequestParam("bookingDate") LocalDate bookingDate,
                                     @RequestParam("ticketQuantity") int ticketQuantity,
