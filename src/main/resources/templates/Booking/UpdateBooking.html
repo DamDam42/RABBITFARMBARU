@@ -209,29 +209,29 @@
 <div class="container">
     <div class="title">Update Your Booking</div>
     <form th:action="@{/checkAvailabilityUpdate}" method="post">
-        <input type="hidden" name="action" value="create">
         <div class="user-details">
             <div class="input-box">
                 <label for="ticketType" class="details">Ticket Type</label>
                 <select id="ticketType" name="ticketType" required>
-                    <th:block th:each="ticket : ${ticket}">
-                        <option th:value="${ticket.ticketType}" th:text="${ticket.ticketType} + ' (RM' + ${ticket.ticketPrice} + ')'"></option>
-                    </th:block>
+                    <option th:each="ticket : ${tickets}" th:value="${ticket.ticketType}" 
+                        th:text="${ticket.ticketType} + ' (RM' + ${ticket.ticketPrice} + ')'"
+                        th:selected="${ticket.ticketType == booking.ticketType}">
+                    </option>
                 </select>
             </div>
 
             <div class="input-box">
-                <label for="bookingQuantity" class="details">Quantity</label>
-                <input type="number" id="ticketQuantity" name="ticketQuantity" th:value="${ticketQuantity}" placeholder="No. of Tickets" required>
+                <label for="ticketQuantity" class="details">Quantity</label>
+                <input type="number" id="ticketQuantity" name="ticketQuantity" th:value="${booking.ticketQuantity}" placeholder="No. of Tickets" required>
             </div>
 
             <div class="input-box">
                 <label for="bookingDate" class="details">Date :</label>
-                <input type="date" id="bookingDate" name="bookingDate" th:value="${bookingDate}" required>
+                <input type="date" id="bookingDate" name="bookingDate" th:value="${#dates.format(booking.bookingDate, 'yyyy-MM-dd')}" required>
             </div>
 
             <div class="button">
-                <input type="submit" value="Add Booking">
+                <input type="submit" value="Check Availability">
             </div>
         </div>
     </form>
