@@ -358,7 +358,7 @@ public String checkAvailability(HttpSession session,
 
    // CUSTOMER UPDATE BOOKING
 
-    @GetMapping("/customerUpdate")
+    @GetMapping("/customerUpdateBookingMap")
     public String customerUpdate(HttpSession session,Model model,@RequestParam("bookingId") int bookingid){
     session.getAttribute("custid");
     List<ticket> tickets = new ArrayList<>();
