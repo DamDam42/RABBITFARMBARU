@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,40 +69,42 @@ public class BookingController {
 
     //CHECK AVAILABILITY OF TICKET ON THE DATE
     @PostMapping("/checkAvailability")
-    public String checkAvailability(HttpSession session,@RequestParam("bookingDate") Date bookingDate,
-    @RequestParam("ticketQuantity")int ticketQuantity,
-    @RequestParam("ticketType") String ticketType){
+public String checkAvailability(HttpSession session,
+                                @RequestParam("bookingDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate,
+                                @RequestParam("ticketQuantity") int ticketQuantity,
+                                @RequestParam("ticketType") String ticketType) {
+    session.getAttribute("custid");
 
-        session.getAttribute("custid");
-            
-        try {
-            Connection conn = dataSource.getConnection();
-            String sql = "SELECT sum(bt.ticketquantity) FROM public.booking_ticket bt"
-            + "JOIN public.booking b ON b.bookingid=bt.bookingid WHERE b.bookingdate=?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setDate(1, (java.sql.Date) bookingDate);
-            ResultSet resultSet = statement.executeQuery();
+    try {
+        Connection conn = dataSource.getConnection();
+        String sql = "SELECT sum(bt.ticketquantity) FROM public.booking_ticket bt "
+                   + "JOIN public.booking b ON b.bookingid = bt.bookingid WHERE b.bookingdate = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setDate(1, java.sql.Date.valueOf(bookingDate));
+        ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()){
-                int numBooking=resultSet.getInt("sum(ticketquantity)");
+        if (resultSet.next()) {
+            int numBooking = resultSet.getInt("sum");
 
-                if(numBooking + ticketQuantity < 80){
-                    session.setAttribute("bookingDate", bookingDate);
-                    session.setAttribute("tickettype", ticketType);
-                    session.setAttribute("ticketQuantity", ticketQuantity);
+            if (numBooking + ticketQuantity < 80) {
+                session.setAttribute("bookingDate", bookingDate);
+                session.setAttribute("ticketType", ticketType);
+                session.setAttribute("ticketQuantity", ticketQuantity);
 
-                    return "redirect:/bookingAvailable";
-                    
-                }else if (numBooking + ticketQuantity >= 80){
-                    return "redirect:/bookingNotAvailable";
-                }
+                return "redirect:/bookingAvailable";
+            } else if (numBooking + ticketQuantity >= 80) {
+                return "redirect:/bookingNotAvailable";
             }
+        }
 
-            conn.close();
+        conn.close();
 
-        } catch (SQLException e) {
-        } return "redirect:/error";
+    } catch (SQLException e) {
+        e.printStackTrace(); // Log the exception
     }
+
+    return "redirect:/error";
+}
 
     @GetMapping("/bookingAvailable")
     public String bookingAvailable(HttpSession session){
