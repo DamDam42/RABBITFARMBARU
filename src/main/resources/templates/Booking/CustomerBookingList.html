@@ -271,7 +271,7 @@
                     <td th:text="${booking.totalPrice}"></td>
                     <td th:text="${booking.bookingStatus}"></td>
                     <td>
-                    <a th:href="@{/updateTicketGet}" th:value="">
+                    <a th:href="@{/updateTicketGet}">
                         <button class="update-button">Edit</button>
                     </a>
                     
@@ -279,7 +279,7 @@
                 </tr>
             </tbody>
         </table>
-        <a th:href="@{/updateTicketGet}" th:value="">
+        <a th:href="@{/updateTicketGet}">
             <button class="update-button">Make Payment</button>
         </a>
     </main>
