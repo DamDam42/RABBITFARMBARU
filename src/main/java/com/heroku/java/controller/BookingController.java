@@ -325,7 +325,7 @@ public String checkAvailability(HttpSession session,
             String sql ="SELECT b.bookingid,b.bookingdate,b.totalprice,b.bookingstatus,bt.ticketquantity,t.tickettype"
             + " FROM public.booking b JOIN public.booking_ticket bt "
             + " ON b.bookingid=bt.bookingid JOIN public.ticket t"
-            + " ON bt.ticketid = bt.ticketid WHERE custid=?";
+            + " ON bt.ticketid = t.ticketid WHERE custid=?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setLong(1, custid);
             ResultSet resultSet = statement.executeQuery();
