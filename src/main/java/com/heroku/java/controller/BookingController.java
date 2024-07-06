@@ -355,7 +355,228 @@ public String checkAvailability(HttpSession session,
     }
 
 
+
+   // CUSTOMER UPDATE BOOKING
+
+    @GetMapping("/customerUpdate")
+    public String customerUpdate(HttpSession session,Model model,@RequestParam("bookingId") int bookingid){
+    session.getAttribute("custid");
+    List<ticket> tickets = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+            String sql = "SELECT tickettype,ticketprice from public.ticket";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                String ticketType = resultSet.getString("tickettype");
+                double ticketPrice = resultSet.getDouble("ticketprice");
+                ticket ticket = new ticket();
+                ticket.setTicketType(ticketType);
+                ticket.setTicketPrice(ticketPrice);
+                tickets.add(ticket);
+                
+            }
+            model.addAttribute("ticket", tickets);
+            
+            
+        } catch (SQLException e) {
+        }
+   
+    Booking booking = new Booking();
+    
+		
+		try {
+			Connection conn= dataSource.getConnection();
+			String sql = "SELECT b.bookingid,b.custid, bt.ticketquantity,b.bookingDate,b.bookingstatus,b.totalprice,t.tickettype"
+					   + " FROM public.booking b"
+					   + " Join public.booking_ticket bt ON bt.bookingid=b.bookingid"
+					   + " Join public.ticket t ON bt.ticketid=t.ticketid "
+					   + "WHERE b.bookingid=?";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, bookingid);
+			ResultSet resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				
+				booking.setBookingId(resultSet.getInt("bookingid"));
+				booking.setCustId(resultSet.getInt("custid"));
+                booking.setTicketQuantity(resultSet.getInt("ticketquantity"));
+                booking.setTotalPrice(resultSet.getDouble("totalprice"));
+                booking.setBookingDate(resultSet.getDate("bookingDate"));
+                booking.setTicketType(resultSet.getString("tickettype"));
+                booking.setBookingStatus(resultSet.getString("bookingstatus"));
+
+                model.addAttribute("booking", booking);
+                
+			}
+			conn.close();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+    return "Booking/UpdateBooking";
+		
+	} 
+
+
+
+    //CHECK TICKETS AVAILABILITY FOR UPDATE
+
+    @PostMapping("/checkAvailabilityUpdate")
+    public String checkAvailabilityUpdate(HttpSession session,
+                                @RequestParam("bookingDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate,
+                                @RequestParam("ticketQuantity") int ticketQuantity,
+                                @RequestParam("ticketType") String ticketType) {
+    session.getAttribute("custid");
+
+    try {
+        Connection conn = dataSource.getConnection();
+        String sql = "SELECT sum(bt.ticketquantity) FROM public.booking_ticket bt "
+                   + "JOIN public.booking b ON b.bookingid = bt.bookingid WHERE b.bookingdate = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setDate(1, java.sql.Date.valueOf(bookingDate));
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            int numBooking = resultSet.getInt("sum");
+
+            if (numBooking + ticketQuantity < 80) {
+                session.setAttribute("bookingDate", bookingDate);
+                session.setAttribute("ticketType", ticketType);
+                session.setAttribute("ticketQuantity", ticketQuantity);
+
+                return "redirect:/updateAvailable";
+            } else if (numBooking + ticketQuantity >= 80) {
+                return "redirect:/updateNotAvailable";
+            }
+        }
+
+        conn.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace(); // Log the exception
+    }
+
+    return "redirect:/error";
 }
+
+    @GetMapping("/updateAvailable")
+    public String updateAvailable(HttpSession session){
+        session.getAttribute("custid");
+        return "Booking/UpdateAvailable";
+
+    }
+
+    @GetMapping("/updateNotAvailable")
+    public String updateNotAvailable(HttpSession session){
+        session.getAttribute("custid");
+        return "Booking/UpdateNotAvailable";
+    }
+
+
+
+    //OPEN CONFIRMATION PAGE
+
+    @GetMapping("/customerBookingUpdate")
+    public String customerBookingUpdate(HttpSession session, Model model) {
+        Long custid = (Long) session.getAttribute("custid");
+        int ticketQuantity = (int) session.getAttribute("ticketQuantity");
+        LocalDate bookingDate = (LocalDate) session.getAttribute("bookingDate");
+        String ticketType = (String) session.getAttribute("ticketType");
+    
+        model.addAttribute("bookingDate", bookingDate);
+        model.addAttribute("ticketQuantity", ticketQuantity);
+        model.addAttribute("ticketType", ticketType);
+    
+        double totalPrice = calculateTotalPrice(custid, ticketType, ticketQuantity);
+        model.addAttribute("totalPrice", totalPrice);
+    
+        return "Booking/UpdateConfirmBooking";
+    }
+
+    //PROCESS UPDATE
+
+    @PostMapping("/customerUpdateBooking")
+    public String customerUpdateBooking(HttpSession session, 
+                                    @ModelAttribute("createBooking") Booking booking,
+                                    @RequestParam("ticketType") String ticketType,
+                                    @RequestParam("bookingDate") LocalDate bookingDate,
+                                    @RequestParam("ticketQuantity") int ticketQuantity,
+                                    @RequestParam("bookingId") int bookingId, 
+                                    Model model) {
+
+    Long custid = (Long) session.getAttribute("custid");
+
+
+    try (Connection conn = dataSource.getConnection()) {
+        // RETRIEVE TICKET ID
+        String sqlTicketId = "SELECT ticketid FROM public.ticket WHERE tickettype = ?";
+        int ticketId;
+        try (PreparedStatement statement = conn.prepareStatement(sqlTicketId)) {
+            statement.setString(1, ticketType);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    ticketId = resultSet.getInt("ticketid");
+                } else {
+                    throw new SQLException("Ticket ID not found for ticket type: " + ticketType);
+                }
+            }
+        }
+
+        // UPDATE BOOKING
+        String sqlUpdateBooking = "UPDATE public.booking SET bookingdate = ?, bookingstatus = ? WHERE custid = ? AND bookingid = ?";
+        try (PreparedStatement statement = conn.prepareStatement(sqlUpdateBooking)) {
+            statement.setObject(1, bookingDate);
+            statement.setString(2, "Unpaid");
+            statement.setLong(3, custid);
+            statement.setInt(4, bookingId);
+            statement.executeUpdate();
+        }
+
+        // UPDATE BOOKING_TICKET
+        String sqlUpdateBookingTicket = "UPDATE public.booking_ticket SET ticketid = ?, ticketquantity = ? WHERE bookingid = ?";
+        try (PreparedStatement statement = conn.prepareStatement(sqlUpdateBookingTicket)) {
+            statement.setInt(1, ticketId);
+            statement.setInt(2, ticketQuantity);
+            statement.setInt(3, bookingId);
+            statement.executeUpdate();
+        }
+
+        // UPDATE TOTAL PRICE
+        double totalPrice = calculateTotalPrice(custid, ticketType, ticketQuantity);
+        String sqlUpdateTotalPrice = "UPDATE public.booking SET totalprice = ? WHERE bookingid = ?";
+        try (PreparedStatement statement = conn.prepareStatement(sqlUpdateTotalPrice)) {
+            statement.setDouble(1, totalPrice);
+            statement.setInt(2, bookingId);
+            statement.executeUpdate();
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return "redirect:/error"; // Redirect to error page or handle error as needed
+    }
+
+    return "redirect:/customerUpdateSuccess";
+}
+
+@GetMapping("/customerUpdateSuccess")
+    public String customerUpdateSuccess(HttpSession session){
+        session.getAttribute("custid");
+        return "Booking/UpdateSuccess";
+    }
+
+
+
+
+
+
+    
+}
+
+
+
 
 
 
