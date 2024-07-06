@@ -59,6 +59,7 @@ public class BookingController {
             }
             model.addAttribute("ticket", tickets);
             
+            
         } catch (SQLException e) {
         } return "Booking/CustomerBooking";
     }
