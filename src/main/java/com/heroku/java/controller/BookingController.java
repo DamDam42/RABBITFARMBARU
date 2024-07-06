@@ -1,6 +1,7 @@
 package com.heroku.java.controller;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -311,6 +312,48 @@ public String checkAvailability(HttpSession session,
         session.getAttribute("custid");
         return "Booking/BookingSuccess";
     }
+
+    //VIEW BOOKING BY CUSTID
+
+    @GetMapping("/customerViewBooking")
+    public String customerViewBooking(HttpSession session, Model model){
+        Long custid = session.getAttribute("custid");
+        List<Booking> bookingCustomer = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+            String sql ="SELECT b.bookingid,b.bookingdate,b.totalprice,b.bookingstatus,bt.ticketquantity,t.tickettype"
+            + " FROM public.booking b JOIN public.booking_ticket bt "
+            + " ON b.bookingid=bt.bookingid JOIN public.ticket t"
+            + " ON bt.ticketid = bt.ticketid WHERE custid=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(1, custid);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                int bookingid = resultSet.getInt("bookingid");
+                Date bookingDate = resultSet.getDate("bookingdate");
+                double totalPrice = resultSet.getDouble("totalprice");
+                int ticketQuantity = resultSet.getInt("ticketquantity");
+                String ticketType = resultSet.getString("tickettype");
+                String bookingStatus = resultSet.getString("bookingstatus");
+
+                Booking booking = new Booking();
+                booking.setBookingId(bookingid);
+                booking.setBookingDate(bookingDate);
+                booking.setTotalPrice(totalPrice);
+                booking.setTicketQuantity(ticketQuantity);
+                booking.setBookingStatus(bookingStatus);
+                booking.setTicketType(ticketType);
+
+                bookingCustomer.add(booking);
+                
+                model.addAttribute("booking", bookingCustomer);
+            }
+        } catch (Exception e) {
+        } return "Booking/CustomerBookingList";
+    }
+
 
 }
 

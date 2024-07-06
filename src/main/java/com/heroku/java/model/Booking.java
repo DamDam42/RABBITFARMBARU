@@ -14,10 +14,11 @@ public class Booking{
 	private Date bookingDate;
     private String bookingStatus;
 	private String ticketType;
+    private int ticketQuantity;
 	
 	public Booking() {}
 	
-	public Booking(int bookingId,int custId,int staffId,double totalPrice,Date bookingDate,String ticketType) {
+	public Booking(int bookingId,int custId,int staffId,double totalPrice,Date bookingDate,String ticketType,int ticketQuantity) {
 		
 		this.bookingId=bookingId;
 		this.custId=custId;
@@ -25,6 +26,7 @@ public class Booking{
 		this.totalPrice=totalPrice;
 		this.bookingDate=bookingDate;
 		this.ticketType=ticketType;
+        this.ticketQuantity=ticketQuantity;
 	}
 	
 	
@@ -76,6 +78,14 @@ public class Booking{
 
     public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public int getTicketQuantity() {
+        return ticketQuantity;
+    }
+
+    public void setTicketQuantity(int ticketQuantity) {
+        this.ticketQuantity = ticketQuantity;
     }
 	
 	
