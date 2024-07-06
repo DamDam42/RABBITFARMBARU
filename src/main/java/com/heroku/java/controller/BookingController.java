@@ -410,6 +410,7 @@ public String checkAvailability(HttpSession session,
                 booking.setBookingStatus(resultSet.getString("bookingstatus"));
 
                 model.addAttribute("booking", booking);
+                session.setAttribute("bookingId", bookingid);
                 
 			}
 			conn.close();
@@ -429,8 +430,10 @@ public String checkAvailability(HttpSession session,
     public String checkAvailabilityUpdate(HttpSession session,
                                 @RequestParam("bookingDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate,
                                 @RequestParam("ticketQuantity") int ticketQuantity,
-                                @RequestParam("ticketType") String ticketType) {
+                                @RequestParam("ticketType") String ticketType
+                                ) {
     session.getAttribute("custid");
+    session.getAttribute("bookingId");
 
     try {
         Connection conn = dataSource.getConnection();
@@ -466,6 +469,7 @@ public String checkAvailability(HttpSession session,
     @GetMapping("/updateAvailable")
     public String updateAvailable(HttpSession session){
         session.getAttribute("custid");
+        session.getAttribute("bookingId");
         return "Booking/UpdateAvailable";
 
     }
@@ -473,6 +477,7 @@ public String checkAvailability(HttpSession session,
     @GetMapping("/updateNotAvailable")
     public String updateNotAvailable(HttpSession session){
         session.getAttribute("custid");
+        session.getAttribute("bookingId");
         return "Booking/UpdateNotAvailable";
     }
 
@@ -483,6 +488,7 @@ public String checkAvailability(HttpSession session,
     @GetMapping("/customerBookingUpdate")
     public String customerBookingUpdate(HttpSession session, Model model) {
         Long custid = (Long) session.getAttribute("custid");
+        session.getAttribute("bookingId");
         int ticketQuantity = (int) session.getAttribute("ticketQuantity");
         LocalDate bookingDate = (LocalDate) session.getAttribute("bookingDate");
         String ticketType = (String) session.getAttribute("ticketType");
@@ -508,7 +514,7 @@ public String checkAvailability(HttpSession session,
                                     Model model) {
 
     Long custid = (Long) session.getAttribute("custid");
-
+    bookingId = (int) session.getAttribute("bookingId");
 
     try (Connection conn = dataSource.getConnection()) {
         // RETRIEVE TICKET ID
