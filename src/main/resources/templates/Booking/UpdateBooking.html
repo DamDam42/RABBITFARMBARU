@@ -213,7 +213,7 @@
             <div class="input-box">
                 <label for="ticketType" class="details">Ticket Type</label>
                 <select id="ticketType" name="ticketType" required>
-                    <option th:each="ticket : ${tickets}" th:value="${ticket.ticketType}" 
+                    <option th:each="ticket : ${ticket}" th:value="${ticket.ticketType}" 
                         th:text="${ticket.ticketType} + ' (RM' + ${ticket.ticketPrice} + ')'"
                         th:selected="${ticket.ticketType == booking.ticketType}">
                     </option>
