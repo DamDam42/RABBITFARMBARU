@@ -168,23 +168,8 @@
             background-color: #d32f2f;
         }
 
-        .popup {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            display: none; /* Hide popup by default */
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 100;
-        }
-
         .overlay {
-            display: none; /* Hide overlay by default */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -193,7 +178,16 @@
             background: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
-            z-index: 99;
+            z-index: 100;
+        }
+
+        .popup {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
         .popup h3 {
@@ -301,21 +295,17 @@
 
     <script>
         function showPopup(bookingId) {
-            var overlay = document.getElementById('overlay');
-            var deleteLink = document.getElementById('deleteLink');
-            deleteLink.href = '/customerDeleteBooking?bookingId=' + bookingId;
-            overlay.style.display = 'flex'; // Display overlay
-
-            // Disable scroll when popup is open
-            document.body.style.overflow = 'hidden';
+            console.log("Showing popup for booking ID: " + bookingId); // Debugging line
+            var overlay = document.getElementById("overlay");
+            var popup = document.getElementById("popup");
+            var deleteLink = document.getElementById("deleteLink");
+            deleteLink.href = "/customerDeleteBooking?bookingId=" + bookingId;
+            overlay.style.display = "flex";
         }
 
         function hidePopup() {
-            var overlay = document.getElementById('overlay');
-            overlay.style.display = 'none'; // Hide overlay
-
-            // Enable scroll when popup is closed
-            document.body.style.overflow = 'auto';
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "none";
         }
     </script>
 </body>
