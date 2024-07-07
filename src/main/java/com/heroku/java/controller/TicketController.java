@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heroku.java.model.ticket;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class TicketController {
     private final DataSource dataSource;
@@ -29,7 +31,8 @@ public class TicketController {
 
 
     @PostMapping("/addTickets")
-    public String addTicket(@ModelAttribute("addTickets") ticket tickets) {
+    public String addTicket(HttpSession session,@ModelAttribute("addTickets") ticket tickets) {
+        session.getAttribute("staffid");
         try {
             System.out.println("Ticket Type: " + tickets.getTicketType());
             System.out.println("Ticket Price: " + tickets.getTicketPrice());
@@ -58,7 +61,8 @@ public class TicketController {
 
 
     @GetMapping("/ticketList")
-    public String ticketList(Model model) {
+    public String ticketList(HttpSession session,Model model) {
+        session.getAttribute("staffid");
         List<ticket> tickets = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
@@ -91,8 +95,8 @@ public class TicketController {
 
 
 @GetMapping("/updateTicketGet")
-public String updateTicket(@RequestParam("ticketId") Long ticketId, Model model) {
-
+public String updateTicket(HttpSession session,@RequestParam("ticketId") Long ticketId, Model model) {
+    session.getAttribute("staffid");
     try {
         Connection connection = dataSource.getConnection();
         String sql = "SELECT ticketid,tickettype,ticketprice FROM public.ticket WHERE ticketid=?";
@@ -121,8 +125,8 @@ public String updateTicket(@RequestParam("ticketId") Long ticketId, Model model)
 }
 
 @PostMapping("/updateTickets")
-public String updateTicket(@ModelAttribute("updateTickets") ticket ticket, Model model){
- 
+public String updateTicket(HttpSession session,@ModelAttribute("updateTickets") ticket ticket, Model model){
+    session.getAttribute("staffid");
     try {
         Connection connection = dataSource.getConnection();
         String sql = "UPDATE ticket SET tickettype=? , ticketprice=? WHERE ticketid=?";
@@ -149,7 +153,8 @@ public String updateTicket(@ModelAttribute("updateTickets") ticket ticket, Model
 }
 
 @PostMapping("/deleteTicket")
-public String deleteTicket(@RequestParam("ticketId") Long ticketId){
+public String deleteTicket(HttpSession session,@RequestParam("ticketId") Long ticketId){
+    session.getAttribute("staffid");
     try {
         Connection connection = dataSource.getConnection();
         String sql = "DELETE FROM public.ticket WHERE ticketid=?";
