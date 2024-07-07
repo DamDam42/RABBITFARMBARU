@@ -211,23 +211,41 @@
                 </div>
             </div>
         </div>
-
-     
-   
-
-                <div class="button">
-                    <a th:href="@{/verifyPayment?bookingId=}+${payments.bookingId}">Verify Payment</a>
-                </div>
+    
+                <button class="delete-button" th:onclick="'showPopup(' + ${payments.bookingId} + ')'">Verify</button>
                 
                 <div class="button">
                     <a th:href="@{/staffUpdate}">Cancel Payment</a>
                 </div>
         
         </div>
+
+        <!-- Confirmation Popup -->
+        <div class="overlay" id="overlay">
+            <div class="popup" id="popup">
+                <h3>Are you sure you want to verify the payment?</h3>
+                <div class="btn-container">
+                    <a id="deleteLink" class="button primary">Verify</a>
+                    <button onclick="hidePopup()" class="button secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script>
-   
+        function showPopup(bookingId) {
+            console.log("Showing popup for booking ID: " + bookingId); // Debugging line
+            var overlay = document.getElementById("overlay");
+            var popup = document.getElementById("popup");
+            var deleteLink = document.getElementById("deleteLink");
+            deleteLink.href = "/verifyPayment?bookingId=" + bookingId;
+            overlay.style.display = "flex";
+        }
+
+        function hidePopup() {
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "none";
+        }
    </script>
 
 </body>
