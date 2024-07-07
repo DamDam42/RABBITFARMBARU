@@ -189,8 +189,6 @@
                 <tr th:each="booking : ${bookings}">
                     <td th:text="${booking.bookingId}"></td>
                     <td th:text="${booking.bookingDate}"></td>
-                    <td th:text="${booking.ticketQuantity}"></td>
-                    <td th:text="${booking.ticketType}"></td>
                     <td th:text="${booking.totalPrice}"></td>
                 </tr>
             </tbody>
