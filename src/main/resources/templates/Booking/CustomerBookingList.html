@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
-</head>
-<body>
     <style>
-         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins',sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -23,76 +21,75 @@
             justify-content: center;
             min-height: 100vh; /* Ensure full viewport height */
             margin: 0;
-            font-family: Arial, sans-serif;
             background-color: #fff;
         }
 
         header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 100px;
-    background: green;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 99;
-}
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 100px;
+            background: green;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 99;
+        }
 
-.logo {
-    font-size: 2em;
-    color: white;
-    user-select: none;
-}
+        .logo {
+            font-size: 2em;
+            color: white;
+            user-select: none;
+        }
 
-.navigation a {
-    position: relative;
-    font-size: 1.1em;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    margin-left: 40px;
-}
+        .navigation a {
+            position: relative;
+            font-size: 1.1em;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 40px;
+        }
 
-.navigation a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 100%;
-    height: 3px;
-    background: #fff;
-    border-radius: 5px;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform 0.5s;
-}
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 3px;
+            background: #fff;
+            border-radius: 5px;
+            transform-origin: right;
+            transform: scaleX(0);
+            transition: transform 0.5s;
+        }
 
-.navigation a:hover::after {
-    transform-origin: left;
-    transform: scaleX(1);
-}
+        .navigation a:hover::after {
+            transform-origin: left;
+            transform: scaleX(1);
+        }
 
-.navigation .btnlogin-popup {
-    width: 130px;
-    height: 50px;
-    background: transparent;
-    border: 2px solid #fff;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1em;
-    color: #fff;
-    font-weight: 500;
-    margin-left: 40px;
-    transition: 0.5s;
-}
+        .navigation .btnlogin-popup {
+            width: 130px;
+            height: 50px;
+            background: transparent;
+            border: 2px solid #fff;
+            outline: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            color: #fff;
+            font-weight: 500;
+            margin-left: 40px;
+            transition: 0.5s;
+        }
 
-.navigation .btnlogin-popup:hover {
-    background: #fff;
-    color: #162938;
-}
+        .navigation .btnlogin-popup:hover {
+            background: #fff;
+            color: #162938;
+        }
 
         main {
             width: 100%;
@@ -101,6 +98,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            margin-top: 100px; /* Add margin to avoid header overlap */
         }
 
         h1 {
@@ -123,13 +121,11 @@
             border: 1px solid #000;
             padding: 15px;
             text-align: left;
-            
         }
 
         td a {
             margin-right: 10px; /* Adjust spacing between links */
         }
-
 
         th {
             background-color: #f2f2f2;
@@ -237,8 +233,8 @@
             background-color: #d32f2f; /* Darker shade of red on hover */
         }
     </style>
-
-
+</head>
+<body>
     <header>
         <h2 class="logo">Iman's Rabbit Farm</h2>
         <nav class="navigation">
@@ -252,8 +248,8 @@
     </header>
     <main>
         <div>
-        <h1>Booking List</h1>
-    </div>
+            <h1>Booking List</h1>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -279,12 +275,10 @@
                     <td th:text="${booking.totalPrice}"></td>
                     <td th:text="${booking.bookingStatus}"></td>
                     <td>
-                    <a th:href="@{/customerUpdateBookingMap?bookingId=}+${booking.bookingId}">
-                        <button class="update-button">Update Booking</button>
-                    </a>
-
-                    <button class="delete-button" onclick="showPopup(${booking.bookingId})">Delete</button>
-                    
+                        <a th:href="@{/customerUpdateBookingMap?bookingId=}+${booking.bookingId}">
+                            <button class="update-button">Update Booking</button>
+                        </a>
+                        <button class="delete-button" onclick="showPopup(${booking.bookingId})">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -292,8 +286,8 @@
         <a th:href="@{/updateTicketGet}">
             <button class="update-button">Make Payment</button>
         </a>
-        
-          <!-- Confirmation Popup -->
+
+        <!-- Confirmation Popup -->
         <div class="overlay">
             <div class="popup">
                 <h3>Are you sure you want to delete this booking?</h3>
@@ -303,11 +297,10 @@
                 </div>
             </div>
         </div>
-
-        </main>
+    </main>
 
     <script>
-      function showPopup(bookingId) {
+        function showPopup(bookingId) {
             var overlay = document.querySelector('.overlay');
             var deleteLink = document.getElementById('deleteLink');
             deleteLink.href = '/customerDeleteBooking?bookingId=' + bookingId;
@@ -324,8 +317,6 @@
             // Enable scroll when popup is closed
             document.body.style.overflow = 'auto';
         }
-   
-
     </script>
 </body>
 </html>
