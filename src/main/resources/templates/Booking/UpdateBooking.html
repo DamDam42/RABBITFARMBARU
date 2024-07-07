@@ -215,7 +215,7 @@
                 <select id="ticketType" name="ticketType" readonly>
                     <option th:each="ticket : ${ticket}" th:value="${ticket.ticketType}" 
                         th:text="${ticket.ticketType} + ' (RM' + ${ticket.ticketPrice} + ')'"
-                        th:selected="${ticket.ticketType == booking.ticketType}">
+                        th:selected="${ticket.ticketType == booking.ticketType}" readonly>
                     </option>
                 </select>
             </div>
@@ -227,7 +227,7 @@
 
             <div class="input-box">
                 <label for="bookingDate" class="details">Date :</label>
-                <input type="date" id="bookingDate" name="bookingDate" th:value="${#dates.format(booking.bookingDate, 'yyyy-MM-dd')}" readonly>
+                <input type="date" id="bookingDate" name="bookingDate" th:value="${#dates.format(booking.bookingDate, 'yyyy-MM-dd')}" >
             </div>
 
             <div class="button">
