@@ -150,6 +150,7 @@ public class PaymentController {
                 
                 
             } catch (SQLException e) {
+                e.printStackTrace();
             } return "Payment/StaffViewPayment";
         }
 
