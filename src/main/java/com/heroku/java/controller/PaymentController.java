@@ -74,6 +74,7 @@ public class PaymentController {
                     @RequestParam("selectedBookings") List<Integer> selectedBookings,
                     Model model)
         {
+            session.getAttribute("custid");
             byte[] receiptData = null;
 
             try {
