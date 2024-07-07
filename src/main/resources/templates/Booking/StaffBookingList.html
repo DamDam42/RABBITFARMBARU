@@ -275,7 +275,7 @@
                         <button class="delete-button" th:onclick="'showPopup(' + ${booking.bookingId} + ')'">Delete</button>
                     </td>
                     <td>
-                        <a th:href="@{/updateTicketGet}">
+                        <a th:href="@{/viewPayment?bookingId=}+${booking.bookingId}">
                         <button class="update-button">Verify Payment</button>
                         </a>
                     </td>
