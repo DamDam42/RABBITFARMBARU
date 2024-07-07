@@ -172,62 +172,53 @@
             background-color: #d32f2f;
         }
 
-        /* Popup styles */
+        
+
         .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
 
-        .popup-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
+    .popup h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
 
-        .popup-content p {
-            margin-bottom: 20px;
-        }
+    .popup .btn-container {
+        margin-top: 20px;
+    }
 
-        .popup-content button {
-            margin: 0 10px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
+    .popup .btn-container button {
+        padding: 10px 20px;
+        margin: 0 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
 
-        .popup-content button:hover {
-            background-color: #ddd;
-        }
+    .popup .btn-container button.primary {
+        background-color: #4CAF50; /* Green button */
+        color: white;
+    }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .navigation {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+    .popup .btn-container button.primary:hover {
+        background-color: #45a049; /* Darker shade of green on hover */
+    }
 
-            .navigation a {
-                margin: 10px 0;
-                margin-left: 0;
-            }
+    .popup .btn-container button.secondary {
+        background-color: #f44336; /* Red button */
+        color: white;
+    }
 
-            .navigation .btnlogin-popup {
-                margin: 10px 0;
-                margin-left: 0;
-            }
-        }
+    .popup .btn-container button.secondary:hover {
+        background-color: #d32f2f; /* Darker shade of red on hover */
+    }
     </style>
 
 
@@ -272,8 +263,14 @@
                     <td th:text="${booking.bookingStatus}"></td>
                     <td>
                     <a th:href="@{/customerUpdateBookingMap?bookingId=}+${booking.bookingId}">
-                        <button class="update-button">Edit</button>
+                        <button class="update-button">Update Booking</button>
                     </a>
+
+                    <a class="button" href="#" onclick="showPopup()">
+                        <button type="button">Delete</button>
+                    </a>
+                    
+                    
                     
                     </td>
                 </tr>
@@ -282,11 +279,38 @@
         <a th:href="@{/updateTicketGet}">
             <button class="update-button">Make Payment</button>
         </a>
+        
+        <!-- Confirmation Popup -->
+                    <div class="overlay">
+                        <div class="popup">
+                            <h3>Are you sure you want to delete your account?</h3>
+                            <div class="btn-container">
+                                <a class="button" th:href="@{/customerDeleteBooking?bookingId=}+${booking.bookingId}"> <button type="button">Delete</button>
+                        </a>
+                                <button onclick="hidePopup()" class="secondary">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
     </main>
 
 
     <script>
-        
+        function showPopup() {
+        var overlay = document.querySelector('.overlay');
+        overlay.style.display = 'flex'; // Display overlay
+
+        // Disable scroll when popup is open
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Function to hide the confirmation popup
+    function hidePopup() {
+        var overlay = document.querySelector('.overlay');
+        overlay.style.display = 'none'; // Hide overlay
+
+        // Enable scroll when popup is closed
+        document.body.style.overflow = 'auto';
+    }
    
 
     </script>
