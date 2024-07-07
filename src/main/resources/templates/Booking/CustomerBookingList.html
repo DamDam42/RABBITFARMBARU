@@ -277,9 +277,7 @@
                 </tr>
             </tbody>
         </table>
-        <a th:href="@{/updateTicketGet}">
-            <button class="update-button">Make Payment</button>
-        </a>
+        <button class="update-button" onclick="validateAndProceed()">Make Payment</button>
 
         <!-- Confirmation Popup -->
         <div class="overlay" id="overlay">
@@ -291,6 +289,18 @@
                 </div>
             </div>
         </div>
+
+         <!-- No Selection Popup -->
+    <div class="overlay" id="noSelectionOverlay">
+        <div class="popup" id="noSelectionPopup">
+            <h3>No bookings selected!</h3>
+            <div class="btn-container">
+                <button onclick="hideNoSelectionPopup()" class="button secondary">OK</button>
+            </div>
+        </div>
+    </div>
+
+
     </main>
 
     <script>
@@ -307,6 +317,35 @@
             var overlay = document.getElementById("overlay");
             overlay.style.display = "none";
         }
+
+        function validateAndProceed() {
+        var checkboxes = document.querySelectorAll('input[name="selectedBookings"]:checked');
+        if (checkboxes.length === 0) {
+            showNoSelectionPopup();
+        } else {
+            // Proceed with making payment
+            location.href = '/makePayment?selectedBookings=' + getSelectedBookingIds();
+        }
+    }
+
+    function showNoSelectionPopup() {
+        var overlay = document.getElementById("noSelectionOverlay");
+        overlay.style.display = "flex";
+    }
+
+    function hideNoSelectionPopup() {
+        var overlay = document.getElementById("noSelectionOverlay");
+        overlay.style.display = "none";
+    }
+
+    function getSelectedBookingIds() {
+        var selectedIds = [];
+        var checkboxes = document.querySelectorAll('input[name="selectedBookings"]:checked');
+        checkboxes.forEach(function(checkbox) {
+            selectedIds.push(checkbox.value);
+        });
+        return selectedIds.join(',');
+    }
     </script>
 </body>
 </html>
