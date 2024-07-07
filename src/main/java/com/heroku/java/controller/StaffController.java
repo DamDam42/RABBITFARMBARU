@@ -235,7 +235,11 @@ public String staffUpdate(HttpSession session,@ModelAttribute("staffUpdate") Sta
             statement.setString(3, staff.getStaffPhoneNum());
             statement.setString(4, staff.getStaffAddress());
             statement.setString(5, staff.getStaffPassword());
-            statement.setInt(6, staff.getManagerId());
+            if (staff.getManagerId() != null) {
+                statement.setInt(6, staff.getManagerId());
+            } else {
+                statement.setNull(6, java.sql.Types.INTEGER);
+            }
             statement.executeUpdate();
             
             conn.close();
