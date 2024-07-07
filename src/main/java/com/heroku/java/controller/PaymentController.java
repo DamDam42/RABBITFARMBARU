@@ -138,7 +138,7 @@ public class PaymentController {
                     Payment payment = new Payment();
                     payment.setPaymentId(resultSet.getInt("paymentid"));
                     payment.setBookingId(resultSet.getInt("bookingid"));
-                    payment.setPaymentReceipt(resultSet.getBlob("paymentreceipt"));
+                    payment.setPaymentReceipt(resultSet.getBytes("paymentreceipt"));
 
                     model.addAttribute("payments", payment);
 
