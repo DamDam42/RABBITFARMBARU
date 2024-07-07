@@ -220,8 +220,11 @@
         <h2>Upload Payment</h2>
         <form th:action="@{/makePayment}" method="post" enctype="multipart/form-data">
             <div class="section">
+                
+                <div class="details">
                 <div th:each="booking : ${bookings}">
-                    <input type="hidden" name="selectedBookings" th:value="${booking.bookingId}">
+                    <input type="number" name="selectedBookings" th:value="${booking.bookingId}" readonly>
+                </div>
                 </div>
                 <div class="details">
                     <label for="totalPaymentAmount">Total Payment Amount</label>
