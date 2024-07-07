@@ -67,6 +67,7 @@ public class PaymentController {
 
 
         } 
+        conn.close();
     
 
         model.addAttribute("bookings",bookingDetails);
@@ -110,6 +111,8 @@ public class PaymentController {
                 statementStatus.executeUpdate();
                     
             } 
+
+            conn.close();
             }catch (SQLException e) { 
                 e.printStackTrace();
                 return "Payment/PaymentError";
@@ -142,6 +145,10 @@ public class PaymentController {
                 }else{
                     return "Payment/PaymentNotMade";
                 }
+
+                conn.close();
+                
+                
             } catch (SQLException e) {
             } return "Payment/StaffViewPayment";
         }
