@@ -57,6 +57,7 @@ public class PaymentController {
                     if (bookingStatus.equalsIgnoreCase("Paid")||bookingStatus.equalsIgnoreCase("Approved")) {
                         return "Payment/PaymentExistError";
                     }
+                }
 
                 bookingDetails.add(booking);
                 totalPaymentAmount+= booking.getTotalPrice();
@@ -65,7 +66,7 @@ public class PaymentController {
 
 
         } 
-    }
+    
 
         model.addAttribute("bookings",bookingDetails);
         model.addAttribute("totalAmount", totalPaymentAmount);
