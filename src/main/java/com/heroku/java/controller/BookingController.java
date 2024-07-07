@@ -616,6 +616,8 @@ public String checkAvailability(HttpSession session,
             session.getAttribute("custid");
             return "Booking/DeleteBookingSuccess";
         }
+
+        
     }
 
 
@@ -624,7 +626,7 @@ public String checkAvailability(HttpSession session,
 
 
 
-}
+
 
 
 
