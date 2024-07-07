@@ -231,17 +231,17 @@
     </style>
 
 
-    <header>
-        <h2 class="logo">Iman's Rabbit Farm</h2>
-        <nav class="navigation">
-            <a href="#">Home</a>
-            <a href="ViewAccount.html">Account</a>
-            <a href="bookingView.html">Booking</a>
-            <a href="#">Ticket</a>
-            <a href="AboutUS.html">About Us</a>
-            <button class="btnlogin-popup">Login</button>
-        </nav>
-    </header>
+<header>
+    <h2 class="logo">Iman's Rabbit Farm</h2>
+    <nav class="navigation">
+        <a href="#">Home</a>
+        <a th:href="@{/staffProfile}">Account</a>
+        <a th:href="@{/staffCustomerList}">Customer</a>
+        <a th:href="@{/staffBookingList}">Booking</a>
+        <a th:href="@{/ticketList}">Ticket</a>
+        <button class="btnlogin-popup">Login</button>
+    </nav>
+</header>
     <main>
         <div>
         <h1>Customer List</h1>
