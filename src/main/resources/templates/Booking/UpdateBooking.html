@@ -212,12 +212,13 @@
         <div class="user-details">
             <div class="input-box">
                 <label for="ticketType" class="details">Ticket Type</label>
-                <select id="ticketType" name="ticketType" readonly>
+                <select id="ticketType" name="ticketTypeDisabled" disabled>
                     <option th:each="ticket : ${ticket}" th:value="${ticket.ticketType}" 
                         th:text="${ticket.ticketType} + ' (RM' + ${ticket.ticketPrice} + ')'"
-                        th:selected="${ticket.ticketType == booking.ticketType}" readonly>
+                        th:selected="${ticket.ticketType == booking.ticketType}">
                     </option>
                 </select>
+                <input type="hidden" id="ticketType" name="ticketType" th:value="${booking.ticketType}" />
             </div>
 
             <div class="input-box">
