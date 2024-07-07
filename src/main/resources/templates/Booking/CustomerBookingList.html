@@ -278,7 +278,7 @@
                         <a th:href="@{/customerUpdateBookingMap?bookingId=}+${booking.bookingId}">
                             <button class="update-button">Update Booking</button>
                         </a>
-                        <button class="delete-button" onclick="showPopup(${booking.bookingId})">Delete</button>
+                        <button class="delete-button" th:onclick="'showPopup(' + ${booking.bookingId} + ')'">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -288,12 +288,12 @@
         </a>
 
         <!-- Confirmation Popup -->
-        <div class="overlay">
-            <div class="popup">
+        <div class="overlay" id="overlay">
+            <div class="popup" id="popup">
                 <h3>Are you sure you want to delete this booking?</h3>
                 <div class="btn-container">
                     <a id="deleteLink" class="button primary">Delete</a>
-                    <button onclick="hidePopup()" class="secondary">Cancel</button>
+                    <button onclick="hidePopup()" class="button secondary">Cancel</button>
                 </div>
             </div>
         </div>
@@ -301,7 +301,7 @@
 
     <script>
         function showPopup(bookingId) {
-            var overlay = document.querySelector('.overlay');
+            var overlay = document.getElementById('overlay');
             var deleteLink = document.getElementById('deleteLink');
             deleteLink.href = '/customerDeleteBooking?bookingId=' + bookingId;
             overlay.style.display = 'flex'; // Display overlay
@@ -311,7 +311,7 @@
         }
 
         function hidePopup() {
-            var overlay = document.querySelector('.overlay');
+            var overlay = document.getElementById('overlay');
             overlay.style.display = 'none'; // Hide overlay
 
             // Enable scroll when popup is closed
