@@ -266,7 +266,7 @@
                         <button class="update-button">Update Booking</button>
                     </a>
 
-                    <a class="button" href="#" onclick="showPopup()">
+                    <a class="button" href="#" onclick="showPopup('${booking.bookingId}')">
                         <button type="button">Delete</button>
                     </a>
                     
@@ -280,37 +280,36 @@
             <button class="update-button">Make Payment</button>
         </a>
         
-        <!-- Confirmation Popup -->
-                    <div class="overlay">
-                        <div class="popup">
-                            <h3>Are you sure you want to delete your account?</h3>
-                            <div class="btn-container">
-                                <a class="button" th:href="@{/customerDeleteBooking?bookingId=}+${booking.bookingId}"> <button type="button">Delete</button>
-                        </a>
-                                <button onclick="hidePopup()" class="secondary">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-    </main>
+           <!-- Confirmation Popup -->
+           <div class="overlay">
+            <div class="popup">
+                <h3>Are you sure you want to delete this booking?</h3>
+                <div class="btn-container">
+                    <a id="deleteLink" class="button primary">Delete</a>
+                    <button onclick="hidePopup()" class="secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
 
 
     <script>
-        function showPopup() {
-        var overlay = document.querySelector('.overlay');
-        overlay.style.display = 'flex'; // Display overlay
+       function showPopup(bookingId) {
+            var overlay = document.querySelector('.overlay');
+            var deleteLink = document.getElementById('deleteLink');
+            deleteLink.href = '/customerDeleteBooking?bookingId=' + bookingId;
+            overlay.style.display = 'flex'; // Display overlay
 
-        // Disable scroll when popup is open
-        document.body.style.overflow = 'hidden';
-    }
+            // Disable scroll when popup is open
+            document.body.style.overflow = 'hidden';
+        }
 
-    // Function to hide the confirmation popup
-    function hidePopup() {
-        var overlay = document.querySelector('.overlay');
-        overlay.style.display = 'none'; // Hide overlay
+        function hidePopup() {
+            var overlay = document.querySelector('.overlay');
+            overlay.style.display = 'none'; // Hide overlay
 
-        // Enable scroll when popup is closed
-        document.body.style.overflow = 'auto';
-    }
+            // Enable scroll when popup is closed
+            document.body.style.overflow = 'auto';
+        }
    
 
     </script>
