@@ -52,12 +52,12 @@ public class PaymentController {
                 booking.setBookingDate(resultSet.getDate("bookingdate"));
                 booking.setTotalPrice(resultSet.getDouble("totalprice"));
                 booking.setBookingStatus(resultSet.getString("bookingstatus"));
-                if (resultSet.next()) {
-                    String bookingStatus = resultSet.getString("bookingstatus");
-                    if (bookingStatus.equalsIgnoreCase("Paid")||bookingStatus.equalsIgnoreCase("Approved")) {
-                        return "Payment/PaymentExistError";
-                    }
+                
+                String bookingStatus = resultSet.getString("bookingstatus");
+                if (bookingStatus.equalsIgnoreCase("Paid")||bookingStatus.equalsIgnoreCase("Approved")) {
+                    return "Payment/PaymentExistError";
                 }
+                
 
                 bookingDetails.add(booking);
                 totalPaymentAmount+= booking.getTotalPrice();
