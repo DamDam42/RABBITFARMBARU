@@ -52,6 +52,11 @@ public class PaymentController {
                 booking.setBookingDate(resultSet.getDate("bookingdate"));
                 booking.setTotalPrice(resultSet.getDouble("totalprice"));
                 booking.setBookingStatus(resultSet.getString("bookingstatus"));
+                if (resultSet.next()) {
+                    String bookingStatus = resultSet.getString("bookingstatus");
+                    if (bookingStatus.equalsIgnoreCase("Paid")||bookingStatus.equalsIgnoreCase("Approved")) {
+                        return "Payment/PaymentExistError";
+                    }
 
                 bookingDetails.add(booking);
                 totalPaymentAmount+= booking.getTotalPrice();
@@ -60,6 +65,7 @@ public class PaymentController {
 
 
         } 
+    }
 
         model.addAttribute("bookings",bookingDetails);
         model.addAttribute("totalAmount", totalPaymentAmount);
@@ -84,8 +90,10 @@ public class PaymentController {
 
             try {
                 Connection conn = dataSource.getConnection();
+                
                 String paymentSql = "INSERT INTO public.payment (paymentamount, paymentreceipt, bookingid) VALUES (?, ?, ?)";
                 for (int bookingId : selectedBookings) {
+
                     PreparedStatement paymentStatement = conn.prepareStatement(paymentSql);
                     paymentStatement.setDouble(1, totalAmount);
                     paymentStatement.setBytes(2, receiptData);
