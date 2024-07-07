@@ -1,6 +1,11 @@
 package com.heroku.java.model;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Base64;
 
 public class Payment {
     private int paymentId;
@@ -59,4 +64,24 @@ public class Payment {
 	public void setCustId(int custId) {
 		this.custId = custId;
 	}
+
+    public String getPaymentReceiptBase64() {
+        if (paymentReceipt == null) {
+            return null;
+        }
+        try {
+            InputStream inputStream = paymentReceipt.getBinaryStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

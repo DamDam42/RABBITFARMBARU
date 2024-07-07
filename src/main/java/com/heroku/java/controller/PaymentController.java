@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.heroku.java.model.Booking;
+import com.heroku.java.model.Payment;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -118,6 +119,32 @@ public class PaymentController {
 
         }   
 
+        //STAFF VIEW PAYMENT
+        @GetMapping("/viewPayment")
+        public String viewPayment(HttpSession session,@RequestParam("bookingId") int bookingId,Model model){
+            session.getAttribute("staffid");
+
+            try {
+                Connection conn = dataSource.getConnection();
+                String sql = "SELECT paymentid,paymentreceipt,bookingid FROM public.payment WHERE bookingid=?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, bookingId);
+                ResultSet resultSet = statement.executeQuery();
+
+                if(resultSet.next()){
+                    Payment payment = new Payment();
+                    payment.setPaymentId(resultSet.getInt("paymentid"));
+                    payment.setBookingId(resultSet.getInt("bookingid"));
+                    payment.setPaymentReceipt(resultSet.getBlob("paymentreceipt"));
+
+                    model.addAttribute("payments", payment);
+
+                }else{
+                    return "Payment/PaymentNotMade";
+                }
+            } catch (SQLException e) {
+            } return "Payment/StaffViewPayment";
+        }
 
 
         
