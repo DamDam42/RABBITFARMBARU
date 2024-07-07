@@ -156,6 +156,13 @@
         width: calc(80% - 10px);
     }
 
+    .receipt-image {
+            max-width: 100%;
+            max-height: 300px; /* Adjust this to your preferred max height */
+            width: auto;
+            height: auto;
+        }
+
     </style>
 
 
@@ -197,7 +204,7 @@
             <div class="input-box">
                 <label for="paymentReceipt" class="details">Receipt</label>
                 <div th:if="${payments.paymentReceiptBase64}">
-                    <img th:src="'data:image/jpeg;base64,' + ${payments.paymentReceiptBase64}" alt="Payment Receipt">
+                    <img th:src="'data:image/jpeg;base64,' + ${payments.paymentReceiptBase64}" alt="Payment Receipt" class="receipt-image">
                 </div>
                 <div th:if="${payments.paymentReceiptBase64 == null}">
                     <p>No receipt available</p>
