@@ -573,6 +573,51 @@ public String checkAvailability(HttpSession session,
         return "Booking/UpdateSuccess";
     }
 
+    @GetMapping("/customerDeleteBooking")
+        public String customerDeleteBooking(HttpSession session, @RequestParam("bookingId") int bookingId){
+            session.getAttribute("custid");
+            try {
+                Connection conn = dataSource.getConnection();
+                String sql = "SELECT bookingstatus from public.booking WHERE bookingid=?";
+                PreparedStatement statementcheck =conn.prepareStatement(sql);
+
+                statementcheck.setInt(1, bookingId);
+                ResultSet resultSet =statementcheck.executeQuery();
+
+                if(resultSet.next()){
+                    String status = resultSet.getString("bookingstatus");
+
+                    if(status.equalsIgnoreCase("paid")||status.equalsIgnoreCase("approved")){
+                        return "redirect:/deleteNotValid";
+                    }else{
+                        String sqlBridge = "DELETE FROM public.booking_ticket WHERE bookingid=?";
+                        PreparedStatement statementBridge = conn.prepareStatement(sqlBridge);
+                        statementBridge.setInt(1, bookingId);
+                        statementBridge.executeUpdate();
+
+                        String sqlDelete = "DELETE from public.booking WHERE bookingid=?";
+                        PreparedStatement statement = conn.prepareStatement(sqlDelete);
+                        statement.setInt(1, bookingId);
+                        statement.executeUpdate();
+                    }
+                }
+            } catch (Exception e) {
+            } return "redirect:/deleteBookingSuccess";
+        }
+
+        @GetMapping("/deleteNotValid")
+        public String deleteNotValid(HttpSession session){
+            session.getAttribute("custid");
+            return "Booking/DeleteNotValid";
+        }
+
+        @GetMapping("/deleteBookingSuccess")
+        public String deleteBookingSuccess(HttpSession session){
+            session.getAttribute("custid");
+            return "Booking/DeleteBookingSuccess";
+        }
+    }
+
 
 
 
