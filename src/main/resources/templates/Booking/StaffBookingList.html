@@ -247,33 +247,25 @@
         <table>
             <thead>
                 <tr>
-                    <th>Select</th>
+                    
                     <th>Booking ID</th>
                     <th>Booking Date</th>
                     <th>Ticket Type</th>
                     <th>Ticket Quantity</th>
                     <th>Total Price</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th>Verify</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="booking : ${booking}">
-                    <td>
-                        <input type="checkbox" name="selectedBookings" th:value="${booking.bookingId}">
-                    </td>
+                    
                     <td th:text="${booking.bookingId}"></td>
                     <td th:text="${booking.bookingDate}"></td>
                     <td th:text="${booking.ticketType}"></td>
                     <td th:text="${booking.ticketQuantity}"></td>
                     <td th:text="${booking.totalPrice}"></td>
                     <td th:text="${booking.bookingStatus}"></td>
-                    <td>
-                        <a th:href="@{/customerUpdateBookingMap?bookingId=}+${booking.bookingId}">
-                            <button class="update-button">Update Booking</button>
-                        </a>
-                        <button class="delete-button" th:onclick="'showPopup(' + ${booking.bookingId} + ')'">Delete</button>
-                    </td>
                     <td>
                         <a th:href="@{/viewPayment?bookingId=}+${booking.bookingId}">
                         <button class="update-button">Verify Payment</button>
