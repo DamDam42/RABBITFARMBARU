@@ -201,7 +201,9 @@
         <h2>Upload Payment</h2>
         <form action="/ICT502/PaymentController?action=paymentAdd" method="post" enctype="multipart/form-data">
             <div class="section">
-                <input type="hidden" id="bookingId" name="bookingId" th:value="${booking.bookingId}">
+                <div th:each="booking : ${bookings}">
+                    <input type="hidden" name="bookingIds" th:value="${booking.bookingId}">
+                </div>
                 <div class="details">
                     <label for="totalPaymentAmount">Total Payment Amount</label>
                     <input type="text" id="totalPaymentAmount" name="totalPaymentAmount" th:value="${totalAmount}" readonly>
