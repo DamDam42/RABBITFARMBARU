@@ -100,8 +100,10 @@ public class PaymentController {
                 statementStatus.executeUpdate();
                     
             } 
-            }catch (SQLException e) {
+            }catch (SQLException e) { 
+                e.printStackTrace();
                 return "Payment/PaymentError";
+               
             }
                 return "Payment/PaymentSuccessful";
 
