@@ -617,7 +617,47 @@ public String checkAvailability(HttpSession session,
             return "Booking/DeleteBookingSuccess";
         }
 
-        
+        @GetMapping("/staffBookingList")
+        public String staffBookingList(HttpSession session,Model model){
+            session.getAttribute("staffid");
+            List<Booking> bookings = new ArrayList<>();
+
+            try {
+                Connection conn = dataSource.getConnection();
+                String sql ="SELECT b.bookingid,b.bookingdate,b.totalprice,b.bookingstatus,bt.ticketquantity,t.tickettype"
+            + " FROM public.booking b JOIN public.booking_ticket bt "
+            + " ON b.bookingid=bt.bookingid JOIN public.ticket t"
+            + " ON bt.ticketid = t.ticketid";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                int bookingid = resultSet.getInt("bookingid");
+                Date bookingDate = resultSet.getDate("bookingdate");
+                double totalPrice = resultSet.getDouble("totalprice");
+                int ticketQuantity = resultSet.getInt("ticketquantity");
+                String ticketType = resultSet.getString("tickettype");
+                String bookingStatus = resultSet.getString("bookingstatus");
+
+                Booking booking = new Booking();
+                booking.setBookingId(bookingid);
+                booking.setBookingDate(bookingDate);
+                booking.setTotalPrice(totalPrice);
+                booking.setTicketQuantity(ticketQuantity);
+                booking.setBookingStatus(bookingStatus);
+                booking.setTicketType(ticketType);
+
+                bookings.add(booking);
+                model.addAttribute("booking", bookings);
+
+            }
+
+            } catch (SQLException e) {
+            }
+        return "Booking/StaffBookingList";
+        }
+
+
     }
 
 
