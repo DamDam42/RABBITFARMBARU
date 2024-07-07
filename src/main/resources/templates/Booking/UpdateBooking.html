@@ -212,7 +212,7 @@
         <div class="user-details">
             <div class="input-box">
                 <label for="ticketType" class="details">Ticket Type</label>
-                <select id="ticketType" name="ticketType" required>
+                <select id="ticketType" name="ticketType" readonly>
                     <option th:each="ticket : ${ticket}" th:value="${ticket.ticketType}" 
                         th:text="${ticket.ticketType} + ' (RM' + ${ticket.ticketPrice} + ')'"
                         th:selected="${ticket.ticketType == booking.ticketType}">
@@ -222,12 +222,12 @@
 
             <div class="input-box">
                 <label for="ticketQuantity" class="details">Quantity</label>
-                <input type="number" id="ticketQuantity" name="ticketQuantity" th:value="${booking.ticketQuantity}" placeholder="No. of Tickets" required>
+                <input type="number" id="ticketQuantity" name="ticketQuantity" th:value="${booking.ticketQuantity}" placeholder="No. of Tickets" readonly>
             </div>
 
             <div class="input-box">
                 <label for="bookingDate" class="details">Date :</label>
-                <input type="date" id="bookingDate" name="bookingDate" th:value="${#dates.format(booking.bookingDate, 'yyyy-MM-dd')}" required>
+                <input type="date" id="bookingDate" name="bookingDate" th:value="${#dates.format(booking.bookingDate, 'yyyy-MM-dd')}" readonly>
             </div>
 
             <div class="button">
