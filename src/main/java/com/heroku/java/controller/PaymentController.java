@@ -69,7 +69,7 @@ public class PaymentController {
     }
 
     @PostMapping("/makePayment")
-    public String makePayment(HttpSession session,@RequestParam("totalAmount") double totalAmount,
+    public String makePayment(HttpSession session,@RequestParam("totalPaymentAmount") double totalAmount,
                     @RequestParam("paymentReceipt") MultipartFile paymentReceipt,
                     @RequestParam("selectedBookings") List<Integer> selectedBookings,
                     Model model)
@@ -84,7 +84,7 @@ public class PaymentController {
 
             try {
                 Connection conn = dataSource.getConnection();
-                String paymentSql = "INSERT INTO public.payment (paymentAmount, paymentReceipt, bookingid) VALUES (?, ?, ?)";
+                String paymentSql = "INSERT INTO public.payment (paymentamount, paymentreceipt, bookingid) VALUES (?, ?, ?)";
                 for (int bookingId : selectedBookings) {
                     PreparedStatement paymentStatement = conn.prepareStatement(paymentSql);
                     paymentStatement.setDouble(1, totalAmount);
