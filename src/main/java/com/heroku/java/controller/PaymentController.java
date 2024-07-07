@@ -95,8 +95,8 @@ public class PaymentController {
                 //CHANGE PAYMENT STATUS
                 String sqlStatus = "UPDATE public.booking SET bookingStatus=? WHERE bookingid=?";
                 PreparedStatement statementStatus = conn.prepareStatement(sqlStatus);
-                statementStatus.setInt(1, bookingId);
-                statementStatus.setString(2, "Paid");
+                statementStatus.setInt(2, bookingId);
+                statementStatus.setString(1, "Paid");
                 statementStatus.executeUpdate();
                     
             } 
