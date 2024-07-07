@@ -1,5 +1,6 @@
 package com.heroku.java.controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.heroku.java.model.Booking;
 
@@ -64,6 +67,48 @@ public class PaymentController {
         } catch (SQLException e) {
         } return "Payment/PaymentPage";
     }
+
+    @PostMapping("/makePayment")
+    public String makePayment(HttpSession session,@RequestParam("totalAmount") double totalAmount,
+                    @RequestParam("paymentReceipt") MultipartFile paymentReceipt,
+                    @RequestParam("selectedBookings") List<Integer> selectedBookings,
+                    Model model)
+        {
+            byte[] receiptData = null;
+
+            try {
+                receiptData = paymentReceipt.getBytes();
+            } catch (IOException e) {
+            }
+
+            try {
+                Connection conn = dataSource.getConnection();
+                String paymentSql = "INSERT INTO public.payment (paymentAmount, paymentReceipt, bookingid) VALUES (?, ?, ?)";
+                for (int bookingId : selectedBookings) {
+                    PreparedStatement paymentStatement = conn.prepareStatement(paymentSql);
+                    paymentStatement.setDouble(1, totalAmount);
+                    paymentStatement.setBytes(2, receiptData);
+                    paymentStatement.setInt(3, bookingId);
+                    paymentStatement.executeUpdate();
+
+                //CHANGE PAYMENT STATUS
+                String sqlStatus = "UPDATE public.booking SET bookingStatus=? WHERE bookingid=?";
+                PreparedStatement statementStatus = conn.prepareStatement(sqlStatus);
+                statementStatus.setInt(1, bookingId);
+                statementStatus.setString(2, "Paid");
+                statementStatus.executeUpdate();
+                    
+            } 
+            }catch (SQLException e) {
+                return "Payment/PaymentError";
+            }
+                return "Payment/PaymentSuccessful";
+
+        }   
+
+
+
+        
 
 
 

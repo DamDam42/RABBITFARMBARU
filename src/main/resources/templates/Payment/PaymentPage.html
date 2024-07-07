@@ -218,7 +218,7 @@
 
     <div class="container right-container">
         <h2>Upload Payment</h2>
-        <form action="/ICT502/PaymentController?action=paymentAdd" method="post" enctype="multipart/form-data">
+        <form th:action="@{/customerUpdateBooking}" method="post" enctype="multipart/form-data">
             <div class="section">
                 <div th:each="booking : ${bookings}">
                     <input type="hidden" name="bookingIds" th:value="${booking.bookingId}">
