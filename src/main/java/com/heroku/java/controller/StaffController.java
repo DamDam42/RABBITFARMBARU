@@ -135,7 +135,7 @@ public String staffProfile(HttpSession session,Model model){
             String sql = "Select staffname,staffemail,staffphonenum,staffaddress,staffpassword,managerid FROM public.staff WHERE staffid=? ";
             
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setLong(1, (long) session.getAttribute("staffid"));
+            statement.setLong(1, (Long) session.getAttribute("staffid"));
             ResultSet resultSet = statement.executeQuery();
             
             if(resultSet.next()) {
