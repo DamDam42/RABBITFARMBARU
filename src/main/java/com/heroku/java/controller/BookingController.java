@@ -624,7 +624,7 @@ public String checkAvailability(HttpSession session,
 
         @GetMapping("/staffBookingList")
         public String staffBookingList(HttpSession session,Model model){
-            session.getAttribute("staffid");
+            
             List<Booking> bookings = new ArrayList<>();
 
             try {

@@ -127,7 +127,7 @@ public String staffLoginError(){
 public String staffProfile(HttpSession session,Model model){
     session.getAttribute("staffid");
     
-
+    
 
         try {
             
