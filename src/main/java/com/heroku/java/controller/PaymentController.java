@@ -181,6 +181,34 @@ public class PaymentController {
             } catch (SQLException e) {
             } return "Payment/VerifyPaymentSuccess";
         }
+
+        @GetMapping("/InvalidPayment")
+        public String InvalidPayment(HttpSession session,@RequestParam("bookingId") int bookingId){
+            session.getAttribute("staffid");
+
+            try {
+                Connection conn = dataSource.getConnection();
+                String sql ="SELECT bookingstatus FROM public.booking WHERE bookingid=?";
+                PreparedStatement statementcheck = conn.prepareStatement(sql);
+                statementcheck.setInt(1, bookingId);
+                ResultSet resultSet = statementcheck.executeQuery();
+
+                if(resultSet.next()){
+                    String status = resultSet.getString("bookingstatus");
+                    if(status.equalsIgnoreCase("Approved")){
+                        return "Payment/VerifyPaymentInvalid";
+                    }else{
+                        String sqlUpdate = "UPDATE public.booking SET bookingstatus=? WHERE bookingid=?";
+                        PreparedStatement statement = conn.prepareStatement(sqlUpdate);
+                        statement.setInt(2, bookingId);
+                        statement.setString(1, "Invalid");
+                        statement.executeUpdate();
+
+                    }
+                }
+            } catch (SQLException e) {
+            } return "Payment/InvalidPayment";
+        }
         
 
 
