@@ -125,7 +125,7 @@ public String staffLoginError(){
 
 @GetMapping("/staffProfile")
 public String staffProfile(HttpSession session,Model model){
-    session.getAttribute("staffid");
+    
     Long staffId = (Long) session.getAttribute("staffid");
 
     
