@@ -125,7 +125,7 @@ public String staffLoginError(){
 
 @GetMapping("/staffProfile")
 public String staffProfile(HttpSession session,Model model){
-    session.getAttribute("staffid");
+    Long staffId= (Long) session.getAttribute("staffid");
     
 
 
@@ -135,7 +135,7 @@ public String staffProfile(HttpSession session,Model model){
             String sql = "Select staffname,staffemail,staffphonenum,staffaddress,staffpassword,managerid FROM public.staff WHERE staffid=? ";
             
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setLong(1, (long) session.getAttribute("staffid"));
+            statement.setLong(1, staffId);
             ResultSet resultSet = statement.executeQuery();
             
             if(resultSet.next()) {
