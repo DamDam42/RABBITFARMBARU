@@ -127,9 +127,7 @@ public String staffLoginError(){
 public String staffProfile(HttpSession session,Model model){
     Long staffId = (Long) session.getAttribute("staffid");
 
-    if (staffId == null) {
-            return "redirect:/staffLogin"; // redirect to login if staffId is not in session
-        }
+    
 
         try {
             Connection conn = dataSource.getConnection();
