@@ -19,7 +19,7 @@
             left: 0;
             width: 100%;
             padding: 20px 100px;
-            background: green;
+            background: #4CAF50; /* Green background */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -39,6 +39,7 @@
             text-decoration: none;
             font-weight: 500;
             margin-left: 40px;
+            transition: color 0.3s;
         }
 
         .navigation a::after {
@@ -52,7 +53,7 @@
             border-radius: 5px;
             transform-origin: right;
             transform: scaleX(0);
-            transition: transform 0.5s;
+            transition: transform 0.3s;
         }
 
         .navigation a:hover::after {
@@ -72,12 +73,13 @@
             color: #fff;
             font-weight: 500;
             margin-left: 40px;
-            transition: 0.5s;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
         }
 
         .navigation .btnlogin-popup:hover {
             background: #fff;
-            color: #162938;
+            color: #4CAF50; /* Green text */
+            border-color: #4CAF50; /* Green border */
         }
 
         body {
@@ -85,14 +87,14 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: #fd2;
-            height: 130vh;
+            background: #fd2; /* Yellow background */
+            min-height: 100vh; /* Adjusted to minimum height */
             flex-direction: column;
         }
 
         h2, h3 {
             margin-bottom: 20px;
-            color: green;
+            color: #4CAF50; /* Green text */
             text-align: center;
         }
 
@@ -103,6 +105,7 @@
             padding: 30px 40px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px; /* Added margin */
         }
 
         .container .title {
@@ -110,7 +113,7 @@
             font-weight: 500;
             text-align: center;
             margin-bottom: 20px;
-            color: green;
+            color: #4CAF50; /* Green text */
         }
 
         .container form .user-details {
@@ -119,15 +122,15 @@
             justify-content: space-between;
         }
 
-        form .user-details .input-box {
-            margin: 10px 0;
-            width: calc(100% - 20px);
+        .user-details .input-box {
+            margin-bottom: 15px; /* Adjusted margin */
+            width: 100%;
         }
 
         .user-details .input-box .details {
-            display: block;
             font-weight: 500;
             margin-bottom: 5px;
+            display: block;
         }
 
         .user-details .input-box input,
@@ -137,14 +140,14 @@
             outline: none;
             border-radius: 5px;
             border: 1px solid #ccc;
-            padding-left: 15px;
+            padding: 0 15px;
             font-size: 16px;
-            transition: border 0.3s;
+            transition: border-color 0.3s;
         }
 
         .user-details .input-box input:focus,
         .user-details .input-box select:focus {
-            border: 1px solid green;
+            border-color: #4CAF50; /* Green border */
         }
 
         .container form .button {
@@ -156,7 +159,7 @@
         form .button input {
             width: 100%;
             padding: 10px;
-            background: green;
+            background: #4CAF50; /* Green background */
             color: white;
             border: none;
             outline: none;
@@ -167,13 +170,13 @@
         }
 
         form .button input:hover {
-            background: #0a834e;
+            background: #0a834e; /* Darker green on hover */
         }
 
         .update-button {
             width: 150px;
             padding: 10px;
-            background: green;
+            background: #4CAF50; /* Green background */
             color: white;
             border: none;
             outline: none;
@@ -184,12 +187,14 @@
             text-align: center;
             margin-top: 20px;
             display: block;
+            margin: 0 auto; /* Center the button */
         }
 
         .update-button:hover {
-            background: #0a834e;
+            background: #0a834e; /* Darker green on hover */
         }
     </style>
+
 </head>
 <body>
 <header>
@@ -231,7 +236,7 @@
             </div>
 
             <div class="button">
-                <input type="submit" value="Add Booking">
+                <input type="submit" value="Check Availability">
             </div>
         </div>
     </form>
