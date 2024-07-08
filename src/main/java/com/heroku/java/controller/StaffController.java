@@ -115,7 +115,7 @@ public class StaffController {
 
 @GetMapping("/indexStaff")
 public String indexStaff(HttpSession session) {
-    session.getAttribute("staffid");
+    Long staffId = (Long) session.getAttribute("staffid");
     return "indexStaff";
 }
 
