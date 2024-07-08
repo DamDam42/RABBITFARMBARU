@@ -270,6 +270,12 @@ public String deleteStaffSuccess(){
     return "Staff/DeleteStaffSuccess";
 }
 
+@GetMapping("/logoutConfirmationStaff")
+    public String logoutConfirmationStaff(HttpSession session){
+        session.getAttribute("staffid");
+        return "Staff/StaffLogout";
+    }   
+
 }
 
 

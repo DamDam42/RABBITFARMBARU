@@ -509,6 +509,12 @@ public class CustomerController {
         return "Staff/StaffDeleteCustSuccess";
     }
 
+    @GetMapping("/logoutConfirmation")
+    public String logoutConfirmation(HttpSession session){
+        session.getAttribute("custid");
+        return "Customer/CustomerLogout";
+    }   
+
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
