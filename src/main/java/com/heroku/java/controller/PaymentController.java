@@ -97,18 +97,45 @@ public class PaymentController {
                 String paymentSql = "INSERT INTO public.payment (paymentamount, paymentreceipt, bookingid) VALUES (?, ?, ?)";
                 for (int bookingId : selectedBookings) {
 
-                    PreparedStatement paymentStatement = conn.prepareStatement(paymentSql);
-                    paymentStatement.setDouble(1, totalAmount);
-                    paymentStatement.setBytes(2, receiptData);
-                    paymentStatement.setInt(3, bookingId);
-                    paymentStatement.executeUpdate();
+                    String invalidsql = "SELECT bookingstatus FROM public.booking WHERE bookingid=?";
+                    PreparedStatement statementInvalid = conn.prepareStatement(invalidsql);
+                    statementInvalid.setInt(1, bookingId);
+                    ResultSet resultSet = statementInvalid.executeQuery();
+                    if (resultSet.next()){
+                        String status = resultSet.getString("bookingstatus");
 
-                //CHANGE PAYMENT STATUS
-                String sqlStatus = "UPDATE public.booking SET bookingStatus=? WHERE bookingid=?";
-                PreparedStatement statementStatus = conn.prepareStatement(sqlStatus);
-                statementStatus.setInt(2, bookingId);
-                statementStatus.setString(1, "Paid");
-                statementStatus.executeUpdate();
+                        if(status.equalsIgnoreCase("Invalid")){
+                            String updateSQL = "UPDATE public.payment SET paymentreceipt=? WHERE bookingid=?";
+                            PreparedStatement statementUpdate = conn.prepareStatement(updateSQL);
+                            statementUpdate.setInt(2, bookingId);
+                            statementUpdate.setBytes(1, receiptData);
+                            statementUpdate.executeUpdate();
+
+                            //CHANGE PAYMENT STATUS
+                            String sqlStatus = "UPDATE public.booking SET bookingStatus=? WHERE bookingid=?";
+                            PreparedStatement statementStatus = conn.prepareStatement(sqlStatus);
+                            statementStatus.setInt(2, bookingId);
+                            statementStatus.setString(1, "Paid");
+                            statementStatus.executeUpdate();
+                        }else{  
+                            
+                            PreparedStatement paymentStatement = conn.prepareStatement(paymentSql);
+                            paymentStatement.setDouble(1, totalAmount);
+                            paymentStatement.setBytes(2, receiptData);
+                            paymentStatement.setInt(3, bookingId);
+                            paymentStatement.executeUpdate();
+
+                            //CHANGE PAYMENT STATUS
+                            String sqlStatus = "UPDATE public.booking SET bookingStatus=? WHERE bookingid=?";
+                            PreparedStatement statementStatus = conn.prepareStatement(sqlStatus);
+                            statementStatus.setInt(2, bookingId);
+                            statementStatus.setString(1, "Paid");
+                            statementStatus.executeUpdate();}
+
+                    }
+
+                    
+                  
                     
             } 
 
