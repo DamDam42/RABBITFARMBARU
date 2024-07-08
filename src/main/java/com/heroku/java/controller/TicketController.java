@@ -55,7 +55,7 @@ public class TicketController {
             return "redirect:/error";
         }
     
-        return "redirect:/index";
+        return "redirect:/indexStaff";
     }
 
 
