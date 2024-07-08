@@ -88,11 +88,14 @@ public class StaffController {
                     staff.setStaffPhoneNum(resultSet.getString("staffphonenum"));
                     staff.setStaffAddress(resultSet.getString("staffaddress"));
                     staff.setStaffPassword(resultSet.getString("staffpassword"));
+
+                    Long staffId = staff.getStaffId();
                     
                     if(staff.getStaffEmail().equals(staffEmail) && staff.getStaffPassword().equals(staffPassword)) {
                    
                     session.setAttribute("staffname", staff.getStaffName());
-                    session.setAttribute("staffid", staff.getStaffId());
+                    
+                    session.setAttribute("staffid", staffId);
                     
                     return "redirect:/indexStaff";
                    }
@@ -125,7 +128,7 @@ public String staffLoginError(){
 
 @GetMapping("/staffProfile")
 public String staffProfile(HttpSession session,Model model){
-    session.getAttribute("staffid");
+    Long staffId = (Long) session.getAttribute("staffid");
     
     
 
@@ -135,7 +138,7 @@ public String staffProfile(HttpSession session,Model model){
             String sql = "Select staffname,staffemail,staffphonenum,staffaddress,staffpassword,managerid FROM public.staff WHERE staffid=? ";
             
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setLong(1, (Long) session.getAttribute("staffid"));
+            statement.setLong(1, staffId);
             ResultSet resultSet = statement.executeQuery();
             
             if(resultSet.next()) {
