@@ -8,166 +8,764 @@
     
 </head>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 100px;
-    background: green;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 99;
-}
-
-.logo {
-    font-size: 2em;
-    color: white;
-    user-select: none;
-}
-
-.navigation a {
-    position: relative;
-    font-size: 1.1em;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    margin-left: 40px;
-}
-
-.navigation a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 100%;
-    height: 3px;
-    background: #fff;
-    border-radius: 5px;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform 0.5s;
-}
-
-.navigation a:hover::after {
-    transform-origin: left;
-    transform: scaleX(1);
-}
-
-.navigation .btnlogin-popup {
-    width: 130px;
-    height: 50px;
-    background: transparent;
-    border: 2px solid #fff;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1em;
-    color: #fff;
-    font-weight: 500;
-    margin-left: 40px;
-    transition: 0.5s;
-}
-
-.navigation .btnlogin-popup:hover {
-    background: #fff;
-    color: #162938;
-}
-
-body {
-    display: flex;
-    flex-direction: column; /* Ensure body content stacks vertically */
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    background: #fd2;
-    margin: 0; /* Reset default margin */
-    height: 100vh; /* Ensure full viewport height */
-}
-
-.y {
-    margin-top: 100px; /* Increase margin to prevent overlap with fixed header */
-    font-size: 3em;
-    color: black;
-}
-
-.container {
-    max-width: 600px;
-    width: 100%;
-    background: #fff;
-    padding: 25px 30px;
-    border-radius: 5px;
-    margin-top: 20px; /* Adjust margin for spacing */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
-}
-
-.container .title {
-    font-size: 25px;
-    font-weight: 500;
-    position: relative;
-    margin-left: 145px;
-}
-
-.container form .user-details {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-form .user-details .input-box {
-    margin: 20px 0 12px 0;
-    width: calc(50% - 20px); /* Adjust width calculation for responsiveness */
-}
-
-.user-details .input-box .details {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-
-.user-details .input-box input {
-    height: 45px;
-    width: 100%;
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding-left: 15px;
-    font-size: 16px;
-}
-
-.container form .button {
-    margin-top: 30px; /* Adjust button margin */
-    text-align: center; /* Center button */
-}
-
-.button input {
-    width: 100%; /* Ensure button takes full width */
-    padding: 10px; /* Increase padding for better appearance */
-    background-color: green;
-    color: white;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1.1em;
-    transition: background-color 0.3s;
-}
-
-.button input:hover {
-    background-color: #0a834e; /* Darker shade of green on hover */
-}
-
-</style>
+    @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap");
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+        :root {
+          --primary-color: #0f1a2c;
+          --secondary-color: green;
+          --text-dark: #0f172a;
+          --text-light:#676565;
+          --extra-light: #f8fafc;
+          --white: #ffffff;
+          --max-width: 1200px;
+          --header-font: "Playfair Display", serif;
+        }
+        
+        * {
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+          font-family: 'Poppins', sans-serif;
+        }
+        
+        header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 20px 100px;
+          background: green;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          z-index: 99;
+          font-family: 'Poppins', sans-serif;
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+          font-size: 2em;
+          color:white;
+          user-select: none;
+          
+        }
+        
+        .navigation a {
+          position: relative;
+          font-size: 1.1em;
+          color: white;
+          text-decoration: none;
+          font-weight: 500;
+          margin-left: 40px;
+        }
+        
+        .navigation a::after{
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: -6px;
+          width: 100%;
+          height: 3px;
+          background: #fff;
+          border-radius: 5px;
+          transform-origin: right;
+          transform: scaleX(0);
+          transition: transform .5s;
+        }
+        
+        .navigation a:hover::after {
+          transform-origin: left;
+          transform: scaleX(1);
+        }
+        
+        .navigation .btnlogin-popup {
+          width: 130px;
+          height: 50px;
+          background: transparent;
+          border: 2px solid #fff;
+          outline: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1.1em;
+          color: #fff;
+          font-weight: 500;
+          margin-left: 40px;
+          transition: .5s;
+        }
+        
+        .navigation .btnlogin-popup:hover {
+          background: #fff;
+          color: #162938;
+        }
+    
+    .section__container {
+            max-width: var(--max-width);
+            margin: auto;
+            padding: 5rem 1rem;
+          }
+          
+          .section__subheader {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+          }
+          
+          .section__header {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: var(--header-font);
+            color: var(--text-dark);
+          }
+          
+          .section__description {
+            margin-top: 1rem;
+            color: var(--text-light);
+          }
+          
+          .btn {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            color: black;
+            background-color: var(--secondary-color);
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+          
+          .section__nav {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+          
+          .section__nav span {
+            padding: 10px 15px;
+            font-size: 1.25rem;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+          
+          .section__nav span:hover {
+            background-color: var(--secondary-color);
+          }
+          
+          .nav__links .btnlogin-popup {
+            width: 130px;
+            height: 50px;
+            background: transparent;
+            border: 2px solid black;
+            outline: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            color: black;
+            font-weight: 500;
+            margin-left: 40px;
+            transition: .5s;
+          }
+          
+          .nav__links .btnlogin-popup:hover {
+            background: #fff;
+            color: #162938;
+          }
+          
+    
+          
+          img,
+          video {
+            width: 100%;
+            display: flex;
+          }
+          
+          a {
+            text-decoration: none;
+          }
+          
+          html,
+          body {
+            scroll-behavior: smooth;
+          }
+          
+          body {
+            font-family: "Poppins", sans-serif;
+          }
+          
+          
+          
+          .header1 {
+            padding-block: 11rem;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+          }
+          
+          .header__container .section__subheader {
+            color: var(--white);
+          }
+          
+          .header__container h1 {
+            margin-bottom: 2rem;
+            font-size: 6rem;
+            font-weight: 800;
+            line-height: 7rem;
+            font-family: var(--header-font);
+            color: black;
+          }
+          
+          
+          
+          .about {
+            position: relative;
+            isolation: isolate;
+          }
+          
+          .about::before {
+            position: absolute;
+            content: "";
+            bottom: 0;
+            right: 0;
+            height: 75%;
+            width: 100%;
+            background-image: url("assets/about-bg.jpg");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            z-index: -1;
+          }
+          
+          .about__container {
+            display: grid;
+            gap: 4rem 2rem;
+          }
+          
+          .about__grid {
+            display: grid;
+            gap: 1rem;
+          }
+          
+          .about__card {
+            height: 100%;
+            padding: 2rem;
+            display: grid;
+            place-content: center;
+            text-align: center;
+          }
+          
+          .about__card span {
+            margin-bottom: 1rem;
+            font-size: 3rem;
+            color: var(--secondary-color);
+          }
+          
+          .about__card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: var(--header-font);
+            color: var(--text-dark);
+          }
+          
+          .about__card p {
+            color: var(--text-light);
+          }
+          
+          .about__card:nth-child(4) {
+            background-color: var(--primary-color);
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+          }
+          
+          .about__card:nth-child(4) :is(h4, p) {
+            color: var(--white);
+          }
+          
+          .about__card:nth-child(2) {
+            background-color: var(--primary-color);
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+          }
+          
+          .about__card:nth-child(2) :is(h4, p) {
+            color: var(--white);
+          }
+          .about__image img {
+            height: 100%;
+            object-fit: cover;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+          }
+          
+          .about__content .section__description {
+            margin-bottom: 2rem;
+          }
+          
+          .room__container {
+            padding-block: 5rem;
+          }
+          
+          .room__container :is(.section__subheader, .section__header) {
+            padding-inline: 1rem;
+            text-align: center;
+          }
+          
+          .room__grid {
+            max-width: 1500px;
+            margin-inline: auto;
+            margin-top: 4rem;
+            display: grid;
+            gap: 0 1rem;
+          }
+          
+          .room__card img {
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+          }
+          
+          .room__card__details {
+            margin-inline: 1rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            background-color: var(--white);
+            transform: translateY(-50%);
+            border-radius: 5px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+          }
+          
+          .room__card__details h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            font-family: var(--header-font);
+            color: var(--text-dark);
+          }
+          
+          .room__card__details p {
+            color: var(--text-light);
+          }
+          
+          .room__card__details h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+          }
+          
+          .room__card__details h3 span {
+            font-size: 0.8rem;
+          }
+          
+          
+          
+          .feature__container :is(.section__subheader, .section__header) {
+            text-align: center;
+          }
+          
+          .feature__grid {
+            margin-top: 4rem;
+            display: grid;
+            gap: 2rem;
+          }
+          
+          .feature__card span {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+          }
+          
+          .feature__card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            font-family: var(--header-font);
+            counter-reset: var(--text-dark);
+          }
+          
+          .feature__card p {
+            color: var(--text-light);
+          }
+          
+          .menu {
+            background-color: var(--extra-light);
+          }
+          
+          .menu__header {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+          }
+          
+          .menu__items {
+            list-style: none;
+            margin-block: 4rem;
+            display: grid;
+            gap: 1rem 4rem;
+          }
+          
+          .menu__items li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+          
+          .menu__items li:hover {
+            background-color: var(--primary-color);
+          }
+          
+          .menu__items img {
+            max-width: 100px;
+            border-radius: 2px;
+          }
+          
+          .menu__items h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            font-family: var(--header-font);
+            color: var(--text-dark);
+            transition: 0.3s;
+          }
+          
+          .menu__items p {
+            max-width: 400px;
+            color: var(--text-light);
+            transition: 0.3s;
+          }
+          
+          .menu__items li:hover :is(h4, p) {
+            color: var(--white);
+          }
+          
+          .menu__images {
+            margin-bottom: 4rem;
+            display: grid;
+            gap: 1rem;
+          }
+          
+          .menu__images img {
+            border-radius: 5px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+          }
+          
+          .menu__banner {
+            list-style: none;
+            padding: 4rem 2rem;
+            display: grid;
+            gap: 2rem;
+            text-align: center;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+          }
+          
+          .menu__banner span {
+            font-size: 3.5rem;
+            color: var(--secondary-color);
+          }
+          
+          .menu__banner h4 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+          }
+          
+          .menu__banner p {
+            color: var(--text-light);
+          }
+          
+          .news__header {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+          }
+          
+          .news__grid {
+            margin-top: 4rem;
+            display: grid;
+            gap: 2rem 1rem;
+          }
+          
+          .news__card img {
+            margin-bottom: 2rem;
+            border-radius: 5px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+          }
+          
+          .news__card__title {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+          
+          .news__card__title p {
+            font-weight: 500;
+            color: var(--text-light);
+          }
+          
+          .news__card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            font-family: var(--header-font);
+            color: var(--text-dark);
+          }
+          
+          .news__card p {
+            color: var(--text-light);
+          }
+          
+          .footer {
+            background-color: var(--primary-color);
+          }
+          
+          .footer__container {
+            display: grid;
+            gap: 4rem 2rem;
+          }
+          
+          .footer__logo {
+            margin-bottom: 2rem;
+            color: var(--white);
+          }
+          
+          .footer__logo div {
+            background-color: var(--secondary-color);
+          }
+          
+          .footer__socials {
+            list-style: none;
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+          
+          .footer__socials a {
+            padding: 6px 10px;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            background-color: var(--white);
+            border-radius: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+          
+          .footer__socials a:hover {
+            color: var(--white);
+            background-color: var(--secondary-color);
+          }
+          
+          .footer__col h4 {
+            margin-bottom: 2rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            font-family: var(--header-font);
+            color: var(--white);
+          }
+          
+          .footer__links {
+            list-style: none;
+          }
+          
+          .footer__links li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+          
+          .footer__links a {
+            color: var(--text-light);
+            transition: 0.3s;
+          }
+          
+          .footer__links a:hover {
+            color: var(--secondary-color);
+          }
+          
+          .footer__col:last-child .footer__links li {
+            margin-bottom: 2rem;
+          }
+          
+          .footer__links span {
+            font-size: 2rem;
+            color: var(--secondary-color);
+          }
+          
+          .footer__links h5 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 800;
+            font-family: var(--header-font);
+            color: var(--white);
+          }
+          
+          .footer__links p {
+            color: var(--text-light);
+          }
+          
+          .footer__bar {
+            padding: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: center;
+          }
+          
+          @media (width > 480px) {
+            .about__grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          
+            .about__image:nth-child(1) {
+              grid-area: 1/2/2/3;
+            }
+          
+            .about__image:nth-child(1),
+            .about__card:nth-child(4) {
+              transform: translateY(2rem);
+            }
+          
+            .feature__grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          
+            .menu__images {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          
+            .menu__banner {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          
+            .news__grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          
+            .footer__container {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          
+            .footer__col:first-child {
+              grid-column: 1/3;
+            }
+          }
+          
+          
+            .nav__bar {
+              max-width: var(--max-width);
+              margin: auto;
+              padding: 1rem 2rem;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              background-color: var(--white);
+              border-radius: 5px;
+              transform: translateY(50%);
+            }
+          
+            .nav__header {
+              padding: 0;
+              background-color: transparent;
+            }
+          
+            .nav__menu__btn {
+              display: none;
+            }
+          
+            .nav__links {
+              width: fit-content;
+              padding: 0;
+              position: static;
+              flex-direction: row;
+              transform: none;
+              background-color: transparent;
+            }
+          
+            .booking__container form {
+              max-width: 100%;
+              grid-template-columns: repeat(4, 1fr);
+              align-items: center;
+            }
+          
+            .about::before {
+              height: 75%;
+              width: 75%;
+            }
+          
+            .about__container {
+              grid-template-columns: repeat(2, 1fr);
+              align-items: center;
+            }
+          
+            .room__grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          
+            .intro__container {
+              grid-template-columns: repeat(2, 1fr);
+              align-items: center;
+            }
+          
+            .feature__grid {
+              grid-template-columns: repeat(3, 1fr);
+            }
+          
+            .menu__header {
+              flex-direction: row;
+            }
+          
+            .menu__items {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          
+            .menu__images {grid-template-columns: repeat(3, 1fr);
+            }
+          
+            .menu__banner {
+              grid-template-columns: repeat(4, 1fr);
+            }
+          
+            .news__header {
+              flex-direction: row;
+            }
+          
+            .news__grid {
+              grid-template-columns: repeat(3, 1fr);
+            }
+          
+            .footer__container {
+              grid-template-columns: 2fr repeat(2, 1fr);
+            }
+          
+            .footer__col:first-child {
+              grid-column: unset;
+            }
+          
+          
+          @media (width > 1024px) {
+            .about__grid {
+              gap: 2rem;
+            }
+          
+            .room__grid {
+              grid-template-columns: repeat(3, 1fr);
+              gap: 2rem;
+            }
+          
+            .menu__images {
+              gap: 2rem;
+            }
+          
+            .news__grid {
+              gap: 2rem;
+            }
+        }
+    </style>
 <header>
         <h2 class="logo">Iman's Rabbit Farm</h2>
         <nav class="navigation">
@@ -178,13 +776,171 @@ form .user-details .input-box {
             <a th:href="@{/logoutConfirmation}">Logout</a>
         </nav>
     </header>
+
+
 <body>
+    <section class="header1">
+        <div class="section__container header__container">
+          <h1>Welcome to <br />IMAN's RABBIT FARM </h1>      
+        </div>
+     </section>
+      
+  
+      <section class="about" id="about">
+        <div class="section__container about__container">
+          <div class="about__grid">
+            <div class="about__image">
+              <img th:src="@{stylesheets/img/amoi rabbit.jpg}" alt="about" />
+            </div>
+            <div class="about__card">
+              <span><i class="ri-calendar-check-line"></i></span>
+              <h4>VENUE</h4>
+              <p>PT4891, Jalan Tambak Paya,</p>    
+              <p>Kampung Tambak Paya,</p>
+              <p>75460 Ayer Molek</p>
+              <p>Melaka</p>        
+            </div>
+            <div class="about__image">
+              <img th:src="@{stylesheets/img/rabbi2.jpg}" alt="about" />
+            </div>
+            <div class="about__card">
+              <span><i class="ri-calendar-check-line"></i></span>
+              <h4>Operation Time</h4>
+              <p>MONDAY-SUNDAY</p>
+              <p>9.30AM-6.30PM</p>
+              <p>CLOSED WEDNESDAY</p>
+            </div>
+          </div>
+          <div class="about__content">
+            
+            <h2 class="section__header">Have Fun!</h2>
+            <img th:src="@{stylesheets/img/rabbit.jpg}" alt="about" />
+            
+          </div>
+        </div>
+      </section>
+
+      <section class="section__container feature__container" id="feature">
     
-    
+        <h2 class="section__header">Activities</h2>
+        <div class="feature__grid">
+          <div class="feature__card">
+            <span><i class="ri-thumb-up-line"></i></span>
+            <h4>Feed the Rabbits</h4>
+            <p>
+              Delight in hand-feeding our adorable bunnies and watch them nibble away with joy!
+            </p>
+          </div>
+          <div class="feature__card">
+            <span><i class="ri-time-line"></i></span>
+            <h4>Pet the Rabbits</h4>
+            <p>
+              Enjoy the therapeutic experience of petting our gentle and friendly rabbits.
+            </p>
+          </div>
+          <div class="feature__card">
+            <span><i class="ri-map-pin-line"></i></span>
+            <h4>Learn How to Pick Up Rabbits</h4>
+            <p>
+              Master the correct techniques for safely handling rabbits in our interactive sessions.
+            </p>
+          </div>
+          <div class="feature__card">
+            <span><i class="ri-close-circle-line"></i></span>
+            <h4>Discover Rabbit Breeds</h4>
+            <p>
+              Explore the fascinating world of rabbit breeds and their unique characteristics.
+            </p>
+          </div>
+          <div class="feature__card">
+            <span><i class="ri-wallet-line"></i></span>
+            <h4>Meet Pablo the Giant Rabbit</h4>
+            <p>
+              Be amazed by Pablo, our extraordinary giant rabbit, and learn all about his care.
+            </p>
+          </div>
+          <div class="feature__card">
+            <span><i class="ri-coupon-line"></i></span>
+            <h4>Rabbit Care Tips</h4>
+            <p>
+              Gain valuable insights and tips on how to take care of rabbits, ensuring their health and happiness.
+            </p>
+          </div>
+        </div>
+      </section>
+  
+      <footer class="footer">
+        <div class="section__container footer__container">
+          <div class="footer__col">
+            <div class="logo footer__logo">
+              <div>savannah</div>
+              <span>Iman Rabbit<br />Farm</span>
+            </div>
+            <p class="section__description">
+             visit our social media below!
+            </p>
+            <ul class="footer__socials">
+              <li>
+                <a th:href="@{https://www.tiktok.com/discover/iman-rabbit-farm}"><i class="ri-tiktok-fill"></i></a>
+              </li>
+              <li>
+                <a th:href="@{https://www.instagram.com/imanrabbitfarm/}"><i class="ri-instagram-line"></i></a>
+              </li>
+              <li>
+                <a th:href="@{https://www.facebook.com/imanrabbitfarm/}"><i class="ri-facebook-fill"></i></a>
+              </li>
+              
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>Developers</h4>
+            <div class="footer__links">
+              <li><a href="#">Ahmad Haziq</a></li>
+              <li><a href="#">Arif Azizan</a></li>
+              <li><a href="#">Arif Fauzan</a></li>
+              <li><a href="#">Muhammad Haziq</a></li>
+              <li><a href="#">Adam Ikhwan</a></li>
+            </div>
+          </div>
+          <div class="footer__col">
+            <h4>Contact Us</h4>
+            <div class="footer__links">
+              <li>
+                <span><i class="ri-phone-fill"></i></span>
+                <div>
+                  <h5>Phone Number</h5>
+                  <p>011-16127879</p>
+                </div>
+              </li>
+              <li>
+                <span><i class="ri-record-mail-line"></i></span>
+                <div>
+                  <h5>Email</h5>
+                  <p>imanrabbitfarm@gmail.com</p>
+                </div>
+              </li>
+              <li>
+                <span><i class="ri-map-pin-2-fill"></i></span>
+                <div>
+                  <h5>Location</h5>
+                  <p>PT4891, Jalan Tambak Paya,</p>    
+                  <p>Kampung Tambak Paya,</p>
+                  <p>75460 Ayer Molek</p>
+                  <p>Melaka</p> </p>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bar">
+          Copyright © 2023 Web Design Mastery. All rights reserved.
+        </div>
 
+    </footer>
 
-<h2 class="y">HI</h2>
-
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="main.js"></script>
+   
 
 </div>
 </body>
