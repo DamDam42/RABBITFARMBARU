@@ -180,12 +180,11 @@
 <header>
     <h2 class="logo">Iman's Rabbit Farm</h2>
     <nav class="navigation">
-        <a href="#">Home</a>
-        <a href="Account.html">Account</a>
-        <a href="createBooking.html">Booking</a>
-        <a href="#">Ticket</a>
+        <a th:href="@{/accLogin}">Home</a>
+        <a th:href="@{/customerProfile}">Account</a>
+        <a th:href="@{/bookingTicketList}">Booking</a>
         <a href="AboutUS.html">About Us</a>
-        <button class="btnlogin-popup">Login</button>
+        <a th:href="@{/logoutConfirmation}">Logout</a>
     </nav>
 </header>
 
