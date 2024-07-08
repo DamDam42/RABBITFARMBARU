@@ -126,12 +126,12 @@ public String staffLoginError(){
 @GetMapping("/staffProfile")
 public String staffProfile(HttpSession session,Model model){
     session.getAttribute("staffid");
-    
+    Long staffId = (Long) session.getAttribute("staffid");
 
     
 
         try {
-            Long staffId = (Long) session.getAttribute("staffid");
+            
             Connection conn = dataSource.getConnection();
             String sql = "Select staffname,staffemail,staffphonenum,staffaddress,staffpassword,managerid FROM public.staff WHERE staffid=? ";
             
@@ -172,6 +172,7 @@ return "Staff/StaffProfile";
 
 @GetMapping("/staffUpdate")
 public String staffUpdate(HttpSession session,Model model){
+    session.getAttribute("staffid");
     Long staffId = (Long) session.getAttribute("staffid");
 
     if (staffId == null) {
