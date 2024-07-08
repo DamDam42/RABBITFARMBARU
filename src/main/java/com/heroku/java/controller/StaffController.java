@@ -128,10 +128,16 @@ public String staffLoginError(){
 
 @GetMapping("/staffProfile")
 public String staffProfile(HttpSession session,Model model){
-    Long staffId = (Long) session.getAttribute("staffid");
-    
-    
+    Object staffIdObj = session.getAttribute("staffid");
 
+    if (staffIdObj == null) {
+        // Handle the case where staffid is not found in the session
+        // Redirect to a login page or show an error message
+        return "redirect:/login"; // Change this to your actual login page
+    }
+
+    Long staffId = (Long) staffIdObj;
+    
         try {
             
             Connection conn = dataSource.getConnection();
