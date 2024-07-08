@@ -12,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import jakarta.servlet.http.HttpSession;
+
 @SpringBootApplication
 @Controller
 public class GettingStartedApplication {
@@ -28,7 +30,8 @@ public class GettingStartedApplication {
     }
 
     @GetMapping("/addTicket")
-        public String addticket(){
+        public String addticket(HttpSession session){
+            session.getAttribute("staffid");
             return "Ticket/createTicket";
         }
 
