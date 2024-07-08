@@ -301,7 +301,7 @@
                 <button class="delete-button" th:onclick="'showPopup(' + ${payments.bookingId} + ')'">Verify</button>
                 
                 <div class="button">
-                    <a th:href="@{/InvalidPayment}">Invalid Payment</a>
+                    <a th:href="@{/InvalidPayment?bookingId=}+${payments.bookingId}">Invalid Payment</a>
                 </div>
         
         </div>
