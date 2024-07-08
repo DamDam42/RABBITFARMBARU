@@ -409,9 +409,14 @@ public String checkAvailability(HttpSession session,
                 booking.setTicketType(resultSet.getString("tickettype"));
                 booking.setBookingStatus(resultSet.getString("bookingstatus"));
 
+                String status = resultSet.getString("bookingstatus");
+
+                if(status.equalsIgnoreCase("Unpaid")){
                 model.addAttribute("booking", booking);
                 session.setAttribute("bookingId", bookingid);
-                
+                }else{
+                    return "Booking/InvalidUpdateBooking";
+                }
 			}
 			conn.close();
 			
