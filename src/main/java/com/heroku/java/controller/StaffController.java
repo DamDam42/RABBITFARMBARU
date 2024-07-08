@@ -133,7 +133,7 @@ public String staffProfile(HttpSession session,Model model){
     if (staffIdObj == null) {
         // Handle the case where staffid is not found in the session
         // Redirect to a login page or show an error message
-        return "redirect:/login"; // Change this to your actual login page
+        return "redirect:/staffLogin"; // Change this to your actual login page
     }
 
     Long staffId = (Long) staffIdObj;
