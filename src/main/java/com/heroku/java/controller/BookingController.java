@@ -208,6 +208,14 @@ public String checkAvailability(HttpSession session,
 }
 
 
+    //CALCULATE SUBTOTAL
+
+    public double calculateSubTotal(Long custid, String tickettype, int ticketQuantity) {
+        double ticketprice = retrieveTicketPrice(tickettype);
+        double subtotal = ticketprice * ticketQuantity;
+        
+        return subtotal;
+    }
 
     //calculate totalPrice
     public double calculateTotalPrice(Long custid, String tickettype, int ticketQuantity) {
@@ -236,7 +244,7 @@ public String checkAvailability(HttpSession session,
     public String createBooking(HttpSession session, @ModelAttribute("createBooking") Booking booking,
                                 @RequestParam("ticketType") String tickettype,
                                 @RequestParam("bookingDate") LocalDate bookingDate,
-                                @RequestParam("ticketQuantity") int ticketQuantity) {
+                                @RequestParam("ticketQuantity") int ticketQuantity,Model model) {
     
         Long custid = (Long) session.getAttribute("custid");
         ResultSet resultSet = null;
@@ -256,6 +264,42 @@ public String checkAvailability(HttpSession session,
     
             if (resultSet.next()) {
                 ticketid = resultSet.getInt("ticketid");
+            }
+
+            //RETRIEVE CUSTOMER TYPE
+            String sqlType = "SELECT c.custname, c.custemail, c.custaddress, c.custphonenum, c.custpassword, ct.custicnum, nc.custpassport " +
+                     "FROM public.customers c " +
+                     "LEFT JOIN public.citizen ct ON c.custid = ct.custid " +
+                     "LEFT JOIN public.noncitizen nc ON c.custid = nc.custid " +
+                     "WHERE c.custid = ?";
+            PreparedStatement statementType = conn.prepareStatement(sqlType);
+            statementType.setLong(1,custid);
+            resultSet = statementType.executeQuery();
+            if(resultSet.next()){
+                String custName = resultSet.getString("custname");
+                String custEmail = resultSet.getString("custemail");
+                String custAddress = resultSet.getString("custaddress");
+                String custphonenum= resultSet.getString("custphonenum");
+                String custPassword = resultSet.getString("custpassword");
+                String custic = resultSet.getString("custicnum");
+                String custPassport = resultSet.getString("custpassport");
+                Customer customer = null;
+                String customerType =null;
+
+                if (custic != null){
+
+                    customer = new Citizen(custName, custEmail, custphonenum, custAddress, custPassword, custid, custic);
+                    customerType = "Citizen";
+                    } else if (custPassport!= null){
+                        customer = new NonCitizen(custName, custEmail, custphonenum, custAddress, custPassword, custid, custPassport);
+                        customerType = "NonCitizen";
+                    }
+                    
+                    
+                    
+                    
+                    model.addAttribute("customerType", customerType);
+
             }
     
             // CREATE BOOKING (INSERT TO DATABASE)
@@ -279,6 +323,7 @@ public String checkAvailability(HttpSession session,
                 statementInsert.executeUpdate();
     
                 // Update total price
+                double subtotal = calculateSubTotal(custid, tickettype, ticketQuantity); 
                 double totalPrice = calculateTotalPrice(custid, tickettype, ticketQuantity);
                 String sqlPrice = "UPDATE public.booking SET totalprice=? WHERE bookingid=?";
                 statementUpdate = conn.prepareStatement(sqlPrice);

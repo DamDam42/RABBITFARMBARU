@@ -209,8 +209,10 @@
     <p>Booking Date: <span th:text="${bookingDate}"></span></p>
     <p>Ticket Quantity: <span th:text="${ticketQuantity}"></span></p>
     <p>Ticket Type: <span th:text="${ticketType}"></span></p>
-    <p>Ticket Price: <span th:text="${totalPrice}"></span></p>
-
+    <p>Subtotal : <span th:text="${subtotal}"></span></p>
+    <p th:if="${customerType == 'Citizen'}">Special Offer for Citizens : 5%</p>
+    <p>Total Price : <span th:text="${totalPrice}"></span></p>
+    
     <form th:action="@{/createBooking}" method="post">
         <input type="hidden" name="bookingDate" th:value="${bookingDate}">
         <input type="hidden" name="ticketQuantity" th:value="${ticketQuantity}">
