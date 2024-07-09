@@ -216,8 +216,8 @@
             <div class="input-box">
                 <label for="ticketType" class="details">Ticket Type</label>
                 <select id="ticketType" name="ticketType" required>
-                    <th:block th:each="ticket : ${ticket}">
-                        <option th:value="${ticket.ticketType}"  th:text="${ticket.ticketType} + ' (RM' + #strings.format('%.2f', ticket.ticketPrice) + ')'"></option>
+                    <th:block th:with="formattedPrice = ${#strings.format('%.2f', ticket.ticketPrice)}">
+                    <option th:value="${ticket.ticketType}" th:text="${ticket.ticketType} + ' (RM' + formattedPrice + ')'"></option>
                     </th:block>
                 </select>
             </div>
