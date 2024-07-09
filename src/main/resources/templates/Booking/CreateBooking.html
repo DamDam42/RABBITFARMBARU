@@ -209,7 +209,7 @@
     <p>Booking Date: <span th:text="${bookingDate}"></span></p>
     <p>Ticket Quantity: <span th:text="${ticketQuantity}"></span></p>
     <p>Ticket Type: <span th:text="${ticketType}"></span></p>
-    <p>Subtotal : <span th:text="${subtotal}"></span></p>
+    <p>Subtotal : <span th:text="${#numbers.formatDecimal(subtotal, 1, 'COMMA', 2, 'POINT')}"></span></p>
     <p th:if="${customerType == 'Citizen'}">Special Offer for Citizens : 5%</p>
     <p>Total Price: <span th:text="${#numbers.formatDecimal(totalPrice, 1, 'COMMA', 2, 'POINT')}"></span></p>
     
