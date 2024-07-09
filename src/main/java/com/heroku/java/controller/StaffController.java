@@ -56,9 +56,15 @@ public class StaffController {
 			
 			statement.executeUpdate();
         } catch (SQLException e) {
+            return "redirect:/errorStaff";
             e.printStackTrace();
         }
         return "redirect:/createStaffSuccess";
+    }
+
+    @GetMapping("/errorStaff")
+    public String errorCustomer(){
+        return "Staff/CreateError";
     }
 
     @GetMapping("/createStaffSuccess")
