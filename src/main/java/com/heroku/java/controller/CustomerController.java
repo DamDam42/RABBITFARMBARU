@@ -96,11 +96,16 @@ public class CustomerController {
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/error";
+            return "redirect:/errorCustomer";
         }
         return "redirect:/createAccountSuccess";
     } 
 
+
+    @GetMapping("/errorCustomer")
+    public String errorCustomer(){
+        return "Customer/CreateError";
+    }
 
 
     @GetMapping("/customerLogin")
