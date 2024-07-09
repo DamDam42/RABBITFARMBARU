@@ -129,7 +129,53 @@ public String checkAvailability(HttpSession session,
         int ticketQuantity = (int) session.getAttribute("ticketQuantity");
         LocalDate bookingDate = (LocalDate) session.getAttribute("bookingDate");
         String ticketType = (String) session.getAttribute("ticketType");
-    
+        
+
+        
+            //RETRIEVE CUSTOMER TYPE
+
+            try{Connection conn = dataSource.getConnection();
+            String sqlType = "SELECT c.custname, c.custemail, c.custaddress, c.custphonenum, c.custpassword, ct.custicnum, nc.custpassport " +
+                     "FROM public.customers c " +
+                     "LEFT JOIN public.citizen ct ON c.custid = ct.custid " +
+                     "LEFT JOIN public.noncitizen nc ON c.custid = nc.custid " +
+                     "WHERE c.custid = ?";
+            PreparedStatement statementType = conn.prepareStatement(sqlType);
+            statementType.setLong(1,custid);
+            ResultSet resultSet = statementType.executeQuery();
+            
+            if(resultSet.next()){
+                String custName = resultSet.getString("custname");
+                String custEmail = resultSet.getString("custemail");
+                String custAddress = resultSet.getString("custaddress");
+                String custphonenum= resultSet.getString("custphonenum");
+                String custPassword = resultSet.getString("custpassword");
+                String custic = resultSet.getString("custicnum");
+                String custPassport = resultSet.getString("custpassport");
+                Customer customer = null;
+                String customerType =null;
+
+                if (custic != null){
+
+                    customer = new Citizen(custName, custEmail, custphonenum, custAddress, custPassword, custid, custic);
+                    customerType = "Citizen";
+                    } else if (custPassport!= null){
+                        customer = new NonCitizen(custName, custEmail, custphonenum, custAddress, custPassword, custid, custPassport);
+                        customerType = "NonCitizen";
+                    }
+                    
+                    
+                    
+                    model.addAttribute("customer",customer);
+                    model.addAttribute("customerType", customerType);
+
+            }
+        }catch(SQLException e){
+            
+        }
+
+        double subtotal = calculateSubTotal(custid, ticketType, ticketQuantity);
+        model.addAttribute("subtotal",subtotal);
         model.addAttribute("bookingDate", bookingDate);
         model.addAttribute("ticketQuantity", ticketQuantity);
         model.addAttribute("ticketType", ticketType);
@@ -266,42 +312,7 @@ public String checkAvailability(HttpSession session,
                 ticketid = resultSet.getInt("ticketid");
             }
 
-            //RETRIEVE CUSTOMER TYPE
-            String sqlType = "SELECT c.custname, c.custemail, c.custaddress, c.custphonenum, c.custpassword, ct.custicnum, nc.custpassport " +
-                     "FROM public.customers c " +
-                     "LEFT JOIN public.citizen ct ON c.custid = ct.custid " +
-                     "LEFT JOIN public.noncitizen nc ON c.custid = nc.custid " +
-                     "WHERE c.custid = ?";
-            PreparedStatement statementType = conn.prepareStatement(sqlType);
-            statementType.setLong(1,custid);
-            resultSet = statementType.executeQuery();
-            if(resultSet.next()){
-                String custName = resultSet.getString("custname");
-                String custEmail = resultSet.getString("custemail");
-                String custAddress = resultSet.getString("custaddress");
-                String custphonenum= resultSet.getString("custphonenum");
-                String custPassword = resultSet.getString("custpassword");
-                String custic = resultSet.getString("custicnum");
-                String custPassport = resultSet.getString("custpassport");
-                Customer customer = null;
-                String customerType =null;
-
-                if (custic != null){
-
-                    customer = new Citizen(custName, custEmail, custphonenum, custAddress, custPassword, custid, custic);
-                    customerType = "Citizen";
-                    } else if (custPassport!= null){
-                        customer = new NonCitizen(custName, custEmail, custphonenum, custAddress, custPassword, custid, custPassport);
-                        customerType = "NonCitizen";
-                    }
-                    
-                    
-                    
-                    
-                    model.addAttribute("customerType", customerType);
-
-            }
-    
+            
             // CREATE BOOKING (INSERT TO DATABASE)
             String sql = "INSERT INTO public.booking(custid, bookingdate, totalprice, bookingstatus) VALUES (?, ?, ?, ?) RETURNING bookingid";
             statementCreate = conn.prepareStatement(sql);
@@ -323,13 +334,15 @@ public String checkAvailability(HttpSession session,
                 statementInsert.executeUpdate();
     
                 // Update total price
-                double subtotal = calculateSubTotal(custid, tickettype, ticketQuantity); 
+                
                 double totalPrice = calculateTotalPrice(custid, tickettype, ticketQuantity);
                 String sqlPrice = "UPDATE public.booking SET totalprice=? WHERE bookingid=?";
                 statementUpdate = conn.prepareStatement(sqlPrice);
                 statementUpdate.setDouble(1, totalPrice);
                 statementUpdate.setInt(2, bookingid);
                 statementUpdate.executeUpdate();
+
+                
             }
     
         } catch (SQLException e) {
