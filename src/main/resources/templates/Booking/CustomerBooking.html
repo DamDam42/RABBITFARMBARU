@@ -217,7 +217,7 @@
                 <label for="ticketType" class="details">Ticket Type</label>
                 <select id="ticketType" name="ticketType" required>
                     <th:block th:each="ticket : ${ticket}">
-                    <<option th:value="${ticket.ticketType}" th:text="${ticket.ticketType} + ' (RM' + ${ticket.ticketPrice} + ')'"></option>
+                    <option th:value="${ticket.ticketType}" th:text="${ticket.ticketType} + ' (RM' + ${ticket.ticketPrice} + ')'"></option>
                     </th:block>
                 </select>
             </div>
