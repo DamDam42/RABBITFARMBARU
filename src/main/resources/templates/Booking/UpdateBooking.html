@@ -202,7 +202,7 @@
             <a th:href="@{/logoutConfirmation}">Logout</a>
         </nav>
     </header>
-    
+
 <h2 class="y">Update Booking</h2>
 <div class="container">
     <div class="title">Update Your Booking</div>
@@ -237,4 +237,16 @@
 </div>
 
 </body>
+<script>
+    // Get today's date
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+
+    // Set min attribute of the date input to today
+    document.getElementById('bookingDate').setAttribute('min', today);
+</script>
 </html>
