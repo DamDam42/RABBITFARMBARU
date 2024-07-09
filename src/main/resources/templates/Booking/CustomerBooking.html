@@ -217,7 +217,8 @@
                 <label for="ticketType" class="details">Ticket Type</label>
                 <select id="ticketType" name="ticketType" required>
                     <th:block th:each="ticket : ${ticket}">
-                        <option th:value="${ticket.ticketType}" th:text="${ticket.ticketType} + ' (RM' + #numbers.formatDecimal(ticket.ticketPrice, 1, 'COMMA', 2, 'POINT') + ')'"></option>
+                        <th:block th:with="formattedPrice = #numbers.formatDecimal(ticket.ticketPrice, 2, '.', ',')">
+                    <option th:value="${ticket.ticketType}" th:text="${ticket.ticketType} + ' (RM' + formattedPrice + ')'"></option>
                     </th:block>
                 </select>
             </div>
