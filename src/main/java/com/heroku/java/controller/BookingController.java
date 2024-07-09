@@ -170,11 +170,7 @@ public String checkAvailability(HttpSession session,
                     model.addAttribute("customerType", customerType);
 
             }
-        }catch(SQLException e){
-            
-        }
-
-        double subtotal = calculateSubTotal(custid, ticketType, ticketQuantity);
+             double subtotal = calculateSubTotal(custid, ticketType, ticketQuantity);
         model.addAttribute("subtotal",subtotal);
         model.addAttribute("bookingDate", bookingDate);
         model.addAttribute("ticketQuantity", ticketQuantity);
@@ -182,7 +178,10 @@ public String checkAvailability(HttpSession session,
     
         double totalPrice = calculateTotalPrice(custid, ticketType, ticketQuantity);
         model.addAttribute("totalPrice", totalPrice);
-    
+        }catch(SQLException e){
+
+        }
+
         return "Booking/CreateBooking";
     }
     
