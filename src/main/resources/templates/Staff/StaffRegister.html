@@ -236,13 +236,16 @@
                         <input type="password" id="staffPassword" name="staffPassword">
                     </div>
                 </div> 
-
                 <div class="user-details">
-                <div class="input-box">
-                    <label for="custName" class="details">Manager ID</label>
-                    <input type="text" id="custName" name="managerId">
+                    <div class="input-box">
+                        <label for="managerId" class="details">Manager ID</label>
+                        <select id="managerId" name="managerId">
+                            <option value="" selected disabled>Select Manager ID</option>
+                            <option th:each="staff : ${staffid}" th:value="${staff}" th:text="${staff}"></option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+
             </div>
 
 

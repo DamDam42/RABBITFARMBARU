@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.security.auth.login.LoginException;
 import javax.sql.DataSource;
@@ -31,13 +33,27 @@ public class StaffController {
     }
 
     @GetMapping("/staffRegister")
-    public String staffRegister(){
+    public String staffRegister(Model model){
+        List<Integer> staffs = new ArrayList<>();
+        try {
+            
+            Connection conn = dataSource.getConnection();
+            String sql = "SELECT staffid FROM public.staff WHERE managerid IS Null";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                int staffid = resultSet.getInt("staffid");
+                staffs.add(staffid);
+            }
+            model.addAttribute("staffid", staffs);
+        } catch (SQLException e) {
+        }
         return "Staff/StaffRegister";
     }
 
     @PostMapping("/staffRegisters")
     public String staffRegisters(@ModelAttribute("staffRegisters") Staff staff) {
-
         try {
             Connection conn = dataSource.getConnection();
             String sql = "INSERT INTO public.staff (staffname,staffemail,staffphonenum,staffaddress,staffpassword,managerid) VALUES (?,?,?,?,?,?)";
