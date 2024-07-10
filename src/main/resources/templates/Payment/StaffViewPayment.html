@@ -304,53 +304,41 @@
             </div>
         </div>
     
-                    <!-- Verify button styled in green -->
-                    <button class="delete-button verify-button" onclick="showPopup('${payments.bookingId}', 'verify')">Verify</button>
+                <button class="delete-button" th:onclick="'showPopup(' + ${payments.bookingId} + ')'">Verify</button>
                 
-                    <!-- Invalid Payment button styled in red -->
-                    <div class="button">
-                        <button class="delete-button invalid-button" onclick="showPopup('${payments.bookingId}', 'invalid')">Invalid Payment</button>
-                    </div>
-            
-            </div>
-    
-            <!-- Confirmation Popup -->
-            <div class="overlay" id="overlay">
-                <div class="popup" id="popup">
-                    <h3 id="popupMessage"></h3>
-                    <div class="btn-container">
-                        <a id="confirmLink" class="button primary">Confirm</a>
-                        <button onclick="hidePopup()" class="button secondary">Cancel</button>
-                    </div>
+                <div class="button">
+                    <a th:href="@{/InvalidPayment?bookingId=}+${payments.bookingId}">Invalid Payment</a>
+                </div>
+        
+        </div>
+
+        <!-- Confirmation Popup -->
+        <div class="overlay" id="overlay">
+            <div class="popup" id="popup">
+                <h3>Are you sure you want to verify the payment?</h3>
+                <div class="btn-container">
+                    <a id="deleteLink" class="button primary">Verify</a>
+                    <button onclick="hidePopup()" class="button secondary">Cancel</button>
                 </div>
             </div>
-        </main>
-    
-        <script>
-            function showPopup(bookingId, type) {
-                var overlay = document.getElementById("overlay");
-                var popup = document.getElementById("popup");
-                var confirmLink = document.getElementById("confirmLink");
-                var popupMessage = document.getElementById("popupMessage");
-    
-                if (type === 'verify') {
-                    popupMessage.textContent = "Are you sure you want to verify the payment?";
-                    confirmLink.href = "/verifyPayment?bookingId=" + bookingId;
-                    popup.style.borderColor = "#4CAF50"; // Green border for Verify
-                } else if (type === 'invalid') {
-                    popupMessage.textContent = "Are you sure this payment is invalid?";
-                    confirmLink.href = "/invalidPayment?bookingId=" + bookingId;
-                    popup.style.borderColor = "#f44336"; // Red border for Invalid Payment
-                }
-    
-                overlay.style.display = "flex";
-            }
-    
-            function hidePopup() {
-                var overlay = document.getElementById("overlay");
-                overlay.style.display = "none";
-            }
-        </script>
+        </div>
+    </main>
+
+    <script>
+        function showPopup(bookingId) {
+            console.log("Showing popup for booking ID: " + bookingId); // Debugging line
+            var overlay = document.getElementById("overlay");
+            var popup = document.getElementById("popup");
+            var deleteLink = document.getElementById("deleteLink");
+            deleteLink.href = "/verifyPayment?bookingId=" + bookingId;
+            overlay.style.display = "flex";
+        }
+
+        function hidePopup() {
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "none";
+        }
+   </script>
 
 </body>
 </html>
