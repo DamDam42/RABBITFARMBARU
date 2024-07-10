@@ -290,7 +290,7 @@
                     <td th:text="${ticket.ticketPrice}"></td>
                     <td>
                     <a th:href="@{/updateTicketGet?ticketId=}+${ticket.ticketId}" th:value="${ticket.ticketId}">
-                        <button class="update-button">Edit</button>
+                        <button class="update-button">Update</button>
                     </a>
 
                     <button class="delete-button" th:onclick="'showPopup(' + ${ticket.ticketId} + ')'">Delete</button>
