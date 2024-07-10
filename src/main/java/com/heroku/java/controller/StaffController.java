@@ -277,9 +277,18 @@ public String staffDelete(HttpSession session){
 
         statement.executeUpdate();
     } catch (SQLException e) {
+        e.printStackTrace();
+        return "redirect:/deleteStaffFail";
     } return "redirect:/deleteStaffSuccess";
 
 }
+
+@GetMapping("/deleteStaffFail")
+    public String deleteStaffFail(HttpSession session){
+        session.getAttribute("staffid");
+        return "Staff/StaffDeleteFail";
+
+    }
 
 @GetMapping("/deleteStaffSuccess")
 public String deleteStaffSuccess(){
