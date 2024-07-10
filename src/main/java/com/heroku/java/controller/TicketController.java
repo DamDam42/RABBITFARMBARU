@@ -181,4 +181,12 @@ public String deleteTicket(HttpSession session,@RequestParam("ticketId") Long ti
     }
     return "redirect:/ticketList";
 }
+
+@GetMapping("/errorDelete")
+public String errorDelete(HttpSession session){
+    session.getAttribute("staffid");
+    return "Ticket/ErrorDelete";
+
+}
+
 }
