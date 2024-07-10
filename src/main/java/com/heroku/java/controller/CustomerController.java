@@ -308,10 +308,22 @@ public class CustomerController {
             Long custId = (Long) session.getAttribute("custid");
             try {
                 Connection conn= dataSource.getConnection();
+
+                // Check if the customer has related records in the booking table
+             String checkSql = "SELECT COUNT(*) FROM public.booking WHERE custid = ?";
+            PreparedStatement checkStatement = conn.prepareStatement(checkSql);
+            checkStatement.setLong(1, custId);
+            ResultSet rs = checkStatement.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+            // Related records found in the booking table, abort deletion
+            conn.close();
+            return "redirect:/deleteAccountFail"; // Redirect to failure page
+            }
+
+            
                 String sql = "Delete From public.customers WHERE custid=?";
                 PreparedStatement statementcust = conn.prepareStatement(sql);
-                
-                
+
                 
                 statementcust.setLong(1, custId);
                 
@@ -335,11 +347,12 @@ public class CustomerController {
                 
                 conn.close();
                 
-            }catch(Exception e) {
+            }catch(SQLException e) {
                  e.printStackTrace();
                  return "redirect:/deleteAccountFail";
                
-            } return "redirect:/deleteAccountSuccess";
+            }
+        return "redirect:/deleteAccountSuccess";
         }
                 
 
