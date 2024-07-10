@@ -164,13 +164,14 @@ public String staffProfile(HttpSession session,Model model){
         try {
             
             Connection conn = dataSource.getConnection();
-            String sql = "Select staffname,staffemail,staffphonenum,staffaddress,staffpassword,managerid FROM public.staff WHERE staffid=? ";
+            String sql = "Select staffid,staffname,staffemail,staffphonenum,staffaddress,staffpassword,managerid FROM public.staff WHERE staffid=? ";
             
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setLong(1, staffId);
             ResultSet resultSet = statement.executeQuery();
             
             if(resultSet.next()) {
+                Long staffid = resultSet.getLong("staffid");
                 String staffname = resultSet.getString("staffname");
                 String staffemail = resultSet.getString("staffemail");
                 String staffphonenum = resultSet.getString("staffphonenum");
@@ -184,6 +185,7 @@ public String staffProfile(HttpSession session,Model model){
 
                 Staff staff= new Staff();
                 
+                staff.setStaffId(staffid);
                 staff.setStaffName(staffname);
                 staff.setStaffEmail(staffemail);
                 staff.setStaffPhoneNum(staffphonenum);
