@@ -1,35 +1,36 @@
-package com.heroku.java.staffapi.controller;
+package com.heroku.java.controller;
 
-import com.heroku.java.model.Booking;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.sql.DataSource;
-import jakarta.servlet.http.HttpSession;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.heroku.java.model.Booking;
+
 @RestController
-@RequestMapping("/api/staff")
+@RequestMapping("/api")
 public class ListApiController {
 
+    @Autowired
     private final DataSource dataSource;
 
-    @Autowired
-    public ListApiController(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public ListApiController() {
+        this.dataSource = null;
     }
 
     @GetMapping("/staffBookingList")
-    public ResponseEntity<?> staffBookingList(HttpSession session, 
-                                              @RequestParam(value = "status", required = false) String status) {
-        // Check if user is logged in
-        if (session.getAttribute("staffid") == null) {
-            return ResponseEntity.status(401).body("Unauthorized: Please log in");
-        }
-
+    public ResponseEntity<?> staffBookingList(@RequestParam(value = "status", required = false) String status) {
         List<Booking> bookings = new ArrayList<>();
 
         try (Connection conn = dataSource.getConnection()) {
@@ -66,7 +67,7 @@ public class ListApiController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("An error occurred while fetching data: " + e.getMessage());
+            return ResponseEntity.status(500).body("An error occurred while fetching data");
         }
 
         return ResponseEntity.ok(bookings);
