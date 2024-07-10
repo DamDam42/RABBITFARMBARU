@@ -336,7 +336,9 @@ public class CustomerController {
                 conn.close();
                 
             }catch(Exception e) {
-                e.printStackTrace();
+                 e.printStackTrace();
+                 return "redirect:/deleteAccountFail";
+               
             } return "redirect:/deleteAccountSuccess";
         }
                 
@@ -351,6 +353,13 @@ public class CustomerController {
     public String deleteAccSuccess(){
         return "Customer/DeleteAccountSuccess";
     }    
+
+    @GetMapping("/deleteAccountFail")
+    public String deleteAccountFail(HttpSession session){
+        session.getAttribute("custid");
+        return "Customer/CustomerDeleteFail";
+
+    }
 
     @GetMapping("/customerLoginError")
     public String customerLoginError(){
