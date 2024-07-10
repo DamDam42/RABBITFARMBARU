@@ -118,7 +118,7 @@ public class PaymentController {
                             statementStatus.setString(1, "Paid");
                             statementStatus.executeUpdate();
                         }else{  
-                            
+
                             PreparedStatement paymentStatement = conn.prepareStatement(paymentSql);
                             paymentStatement.setDouble(1, totalAmount);
                             paymentStatement.setBytes(2, receiptData);
@@ -183,7 +183,7 @@ public class PaymentController {
 
         @GetMapping("/verifyPayment")
         public String verifyPayment(HttpSession session,@RequestParam("bookingId") int bookingId){
-            session.getAttribute("staffid");
+            Long staffId = (Long) session.getAttribute("staffid");
 
             try {
                 Connection conn = dataSource.getConnection();
@@ -197,10 +197,11 @@ public class PaymentController {
                     if(status.equalsIgnoreCase("Approved")){
                         return "Payment/VerifyPaymentInvalid";
                     }else{
-                        String sqlUpdate = "UPDATE public.booking SET bookingstatus=? WHERE bookingid=?";
+                        String sqlUpdate = "UPDATE public.booking SET bookingstatus=?,staffid=? WHERE bookingid=?";
                         PreparedStatement statement = conn.prepareStatement(sqlUpdate);
-                        statement.setInt(2, bookingId);
+                        statement.setInt(3, bookingId);
                         statement.setString(1, "Approved");
+                        statement.setLong(2, staffId);
                         statement.executeUpdate();
 
                     }

@@ -291,6 +291,7 @@
                     <th>Ticket Quantity</th>
                     <th>Total Price</th>
                     <th>Status</th>
+                    <th>Staff ID</th>
                     <th>Verify</th>
                 </tr>
             </thead>
@@ -303,6 +304,7 @@
                     <td th:text="${booking.ticketQuantity}"></td>
                     <td th:text="${booking.totalPrice}"></td>
                     <td th:text="${booking.bookingStatus}"></td>
+                    <td th:text="${booking.staffId}"></td>
                     <td>
                         <a th:href="@{/viewPayment?bookingId=}+${booking.bookingId}">
                         <button class="update-button">Verify Payment</button>

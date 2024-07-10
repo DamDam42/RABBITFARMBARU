@@ -686,7 +686,7 @@ public String checkAvailability(HttpSession session,
 
             try {
                 Connection conn = dataSource.getConnection();
-                String sql ="SELECT b.bookingid,b.bookingdate,b.totalprice,b.bookingstatus,bt.ticketquantity,t.tickettype"
+                String sql ="SELECT b.bookingid,b.bookingdate,b.totalprice,b.bookingstatus,b.staffid,bt.ticketquantity,t.tickettype"
             + " FROM public.booking b JOIN public.booking_ticket bt "
             + " ON b.bookingid=bt.bookingid JOIN public.ticket t"
             + " ON bt.ticketid = t.ticketid";
@@ -711,6 +711,7 @@ public String checkAvailability(HttpSession session,
                 int ticketQuantity = resultSet.getInt("ticketquantity");
                 String ticketType = resultSet.getString("tickettype");
                 String bookingStatus = resultSet.getString("bookingstatus");
+                int staffId = resultSet.getInt("staffid");
 
                 Booking booking = new Booking();
                 booking.setBookingId(bookingid);
@@ -719,6 +720,7 @@ public String checkAvailability(HttpSession session,
                 booking.setTicketQuantity(ticketQuantity);
                 booking.setBookingStatus(bookingStatus);
                 booking.setTicketType(ticketType);
+                booking.setStaffId(staffId);
 
                 bookings.add(booking);
                 model.addAttribute("booking", bookings);
