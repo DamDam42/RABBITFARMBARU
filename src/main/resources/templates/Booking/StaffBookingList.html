@@ -108,6 +108,31 @@
             text-align: center;
         }
 
+        .filter-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-form select {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .filter-form button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
         table {
             width: 100%;
             max-width: 800px; /* Limit table width for larger screens */
@@ -244,6 +269,17 @@
         <div>
             <h1>Booking List</h1>
         </div>
+
+        <form class="filter-form" th:action="@{/staffBookingList}" method="get">
+            <select name="status">
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
+                <option value="Approved">Approved</option>
+                <option value="Invalid">Invalid</option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
         <table>
             <thead>
                 <tr>

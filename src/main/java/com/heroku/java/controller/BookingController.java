@@ -680,7 +680,7 @@ public String checkAvailability(HttpSession session,
         }
 
         @GetMapping("/staffBookingList")
-        public String staffBookingList(HttpSession session,Model model){
+        public String staffBookingList(HttpSession session,@RequestParam(value = "status", required = false) String status,Model model){
             
             List<Booking> bookings = new ArrayList<>();
 
@@ -690,7 +690,18 @@ public String checkAvailability(HttpSession session,
             + " FROM public.booking b JOIN public.booking_ticket bt "
             + " ON b.bookingid=bt.bookingid JOIN public.ticket t"
             + " ON bt.ticketid = t.ticketid";
-            PreparedStatement statement = conn.prepareStatement(sql);
+
+            // Add status filter if provided
+        if (status != null && !status.isEmpty()) {
+            sql += " WHERE b.bookingstatus = ?";
+        }
+
+        PreparedStatement statement = conn.prepareStatement(sql);
+
+        // Set status parameter if provided
+        if (status != null && !status.isEmpty()) {
+            statement.setString(1, status);
+        }
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()){
