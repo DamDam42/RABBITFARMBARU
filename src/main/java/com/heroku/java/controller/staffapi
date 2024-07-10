@@ -1,4 +1,4 @@
-package com.heroku.java.controller;
+package com.heroku.java.staffapi.controller;
 
 import com.heroku.java.model.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
