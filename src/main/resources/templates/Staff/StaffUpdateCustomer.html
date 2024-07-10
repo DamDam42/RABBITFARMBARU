@@ -251,42 +251,42 @@
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custID" class="details">Customer ID</label>
-                        <input type="text" id="custID" name="custId" th:value="${customer.custID}">
+                        <input type="text" id="custID" name="custId" th:value="${customer.custID}" readonly>
                     </div>
                 </div>
                 
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custName" class="details">Name</label>
-                        <input type="text" id="custName" name="custName" th:value="${customer.custName}">
+                        <input type="text" id="custName" name="custName" th:value="${customer.custName}" readonly>
                     </div>
                 </div>
 
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custEmail" class="details">Email</label>
-                        <input type="text" id="custEmail" name="custEmail" th:value="${customer.custEmail}">
+                        <input type="text" id="custEmail" name="custEmail" th:value="${customer.custEmail}" readonly>
                     </div>
                 </div>
 
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custPhone" class="details">Phone No.</label>
-                        <input type="text" id="custPhone" name="custPhoneNum" th:value="${customer.custPhoneNum}">
+                        <input type="text" id="custPhone" name="custPhoneNum" th:value="${customer.custPhoneNum}" readonly>
                     </div>
                 </div>
 
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custAddress" class="details">Address</label>
-                        <input type="text" id="custAddress" name="custAddress" th:value="${customer.custAddress}">
+                        <input type="text" id="custAddress" name="custAddress" th:value="${customer.custAddress}" readonly>
                     </div>
                 </div>
 
                 <div class="user-details">
                     <div class="input-box">
                         <label for="custPassword" class="details">Password</label>
-                        <input type="password" id="custPassword" name="custPassword" th:value="${customer.custPassword}">
+                        <input type="password" id="custPassword" name="custPassword" th:value="${customer.custPassword}" readonly>
                     </div>
                 </div>
 
@@ -295,13 +295,13 @@
                 <div th:if="${customerType == 'Citizen'}" class="user-details">
                     <div class="input-box">
                         <label for="custIC" class="details">IC Number</label>
-                        <input type="text" id="custIC" name="custIcNum" th:value="${customer.custIcNum}">
+                        <input type="text" id="custIC" name="custIcNum" th:value="${customer.custIcNum}" readonly>
                     </div>
                 </div>
                 <div th:if="${customerType == 'NonCitizen'}" class="user-details">
                     <div class="input-box">
                         <label for="passportNumber" class="details">Passport Number</label>
-                        <input type="text" id="passportNumber" name="custPassport" th:value="${customer.custPassport}">
+                        <input type="text" id="passportNumber" name="custPassport" th:value="${customer.custPassport}" readonly>
                     </div>
                 </div>
 
@@ -309,25 +309,7 @@
                     <input type="submit" value="Save">
                 </div>
 
-                
-                <a class="button" href="#" onclick="showPopup()">
-                    <button type="button">Delete</button>
-                </a>
-                
-                <!-- Confirmation Popup -->
-                <div class="overlay">
-                    <div class="popup">
-                        <h3>Are you sure you want to delete customer account?</h3>
-                        <div class="btn-container">
-                            <a class="button" th:href="@{/staffDeleteCustomer(custType=${customerType}, custId=${customer.custID})}"> <button type="button">Delete</button>
-                    </a>
-                            <button onclick="hidePopup()" class="secondary">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </main>
+    
 
 
     <script>
