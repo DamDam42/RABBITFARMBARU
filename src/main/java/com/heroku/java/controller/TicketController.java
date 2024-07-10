@@ -163,7 +163,7 @@ public String updateTicket(HttpSession session,@ModelAttribute("updateTickets") 
     return "redirect:/ticketList";
 }
 
-@PostMapping("/deleteTicket")
+@GetMapping("/deleteTicket")
 public String deleteTicket(HttpSession session,@RequestParam("ticketId") Long ticketId){
     session.getAttribute("staffid");
     try {
