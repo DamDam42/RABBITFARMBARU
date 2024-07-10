@@ -271,12 +271,15 @@
             </div>
         </div> 
 
-          <div class="user-details">
-            <div class="input-box">
-                <label for="custPassword" class="details">Manager ID</label>
-                <input type="number" id="managerid" name="managerId"  th:value="${staff.managerId}">
-            </div>
-        </div> 
+        div class="user-details">
+        <div class="input-box">
+            <label for="managerId" class="details">Manager ID</label>
+            <select id="managerId" name="managerId">
+                <option value="" th:if="${staff.managerId == null}" selected disabled>Select Manager ID</option>
+                <option th:each="manager : ${staffs}" th:value="${manager}" th:text="${manager}" th:selected="${staff.managerId == manager}"></option>
+            </select>
+        </div>
+    </div>
    
 
         <div class="button">

@@ -240,9 +240,23 @@ public String staffUpdate(HttpSession session,Model model){
                 staff.setManagerId(managerid);
 
                  model.addAttribute("staff",staff);
+
+                 List<Integer> staffs = new ArrayList<>();
+
+                 String sqlManager = "SELECT staffid FROM public.staff WHERE managerid IS Null";
+                 PreparedStatement statementId = conn.prepareStatement(sqlManager);
+                 resultSet = statementId.executeQuery();
+     
+                 while(resultSet.next()){
+                     int staffid = resultSet.getInt("staffid");
+                     staffs.add(staffid);
+                 }
+                 model.addAttribute("staffid", staffs);
             }
 
             conn.close();
+
+            
   
 }catch(SQLException e){
 } 
