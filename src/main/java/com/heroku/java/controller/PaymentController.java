@@ -156,7 +156,7 @@ public class PaymentController {
 
             try {
                 Connection conn = dataSource.getConnection();
-                String sql = "SELECT paymentid,paymentreceipt,bookingid FROM public.payment WHERE bookingid=?";
+                String sql = "SELECT paymentid,paymentreceipt,bookingid,paymentamount FROM public.payment WHERE bookingid=?";
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setInt(1, bookingId);
                 ResultSet resultSet = statement.executeQuery();
@@ -166,7 +166,9 @@ public class PaymentController {
                     payment.setPaymentId(resultSet.getInt("paymentid"));
                     payment.setBookingId(resultSet.getInt("bookingid"));
                     payment.setPaymentReceipt(resultSet.getBytes("paymentreceipt"));
+                    payment.setAmount(resultSet.getDouble("paymentamount"));
 
+                    
                     model.addAttribute("payments", payment);
 
                 }else{
