@@ -52,12 +52,23 @@ public class TicketController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/error";
+            return "redirect:/addTicketError";
         }
     
-        return "redirect:/indexStaff";
+        return "redirect:/addTicketSuccess";
     }
 
+    @GetMapping("/addTicketSuccess")
+    public String addTicketSuccess(HttpSession session){
+        session.getAttribute("staffid");
+        return "Ticket/AddTicketSuccess";
+    }
+
+    @GetMapping("/addTicketError")
+    public String addTicketError(HttpSession session){
+        session.getAttribute("staffid");
+        return "Ticket/AddTicketError";
+    }
 
 
     @GetMapping("/ticketList")
