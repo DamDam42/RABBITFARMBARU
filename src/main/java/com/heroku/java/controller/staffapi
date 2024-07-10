@@ -16,9 +16,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class ListApiController {
 
-    @Autowired
     private final DataSource dataSource;
-
+ @Autowired
+    public ListApiController(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     
    
 
