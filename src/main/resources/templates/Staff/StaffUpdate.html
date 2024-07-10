@@ -275,7 +275,7 @@
         <div class="input-box">
             <label for="managerId" class="details">Manager ID</label>
             <select id="managerId" name="managerId">
-                <option value="" th:if="${staff.managerId == null}" selected>Select Manager ID</option>
+                <option value="" th:if="${staff.managerId}" selected>Select Manager ID</option>
                 <option th:each="manager : ${staffid}" th:value="${manager}" th:text="${manager}" th:selected="${staff.managerId == manager}"></option>
             </select>
         </div>
