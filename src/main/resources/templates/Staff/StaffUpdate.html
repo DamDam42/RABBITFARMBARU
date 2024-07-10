@@ -270,18 +270,19 @@
                 <input type="password" id="staffPassword" name="staffPassword"  th:value="${staff.staffPassword}"  >
             </div>
         </div> 
-        
+
         <div class="user-details">
-            <div class="input-box">
-                <label for="managerId" class="details">Manager ID</label>
-                <select id="managerId" name="managerId">
-                    <option value="">None</option> <!-- Static option for "None" -->
-                    <option th:each="manager : ${staffid}" th:value="${manager}" 
-                        th:text="${manager}" th:selected="${manager == staff.managerId}">
-                    </option>
-                </select>
-            </div>
-        </div>
+    <div class="input-box">
+        <label for="managerId" class="details">Manager ID</label>
+        <select id="managerId" name="managerId">
+            <option value="">None</option> <!-- Static option for "None" -->
+            <option th:each="manager : ${staffid}" th:value="${manager}" 
+                th:text="${manager}" th:selected="${manager == staff.managerId}">
+            </option>
+        </select>
+    </div>
+</div>
+
         
         
    
