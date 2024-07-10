@@ -296,6 +296,17 @@
         <a th:href="@{/addTicket}">
             <button class="update-button">Create Ticket</button>
         </a>
+
+        <!-- Confirmation Popup -->
+<div class="overlay">
+    <div class="popup">
+        <h3>Are you sure you want to delete the ticket?</h3>
+        <div class="btn-container">
+            <button id="confirmDelete" class="primary">Delete</button>
+            <button onclick="hidePopup()" class="secondary">Cancel</button>
+        </div>
+    </div>
+</div>
     </main>
 
 
