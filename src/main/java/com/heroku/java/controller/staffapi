@@ -10,16 +10,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @RestController
 @RequestMapping("/api")
-public class BookingController {
-
-    private final DataSource dataSource;
+public class ListApiController {
 
     @Autowired
-    public BookingController(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private final DataSource dataSource;
+
+    
+   
 
     @GetMapping("/staffBookingList")
     public ResponseEntity<?> staffBookingList(@RequestParam(value = "status", required = false) String status) {
