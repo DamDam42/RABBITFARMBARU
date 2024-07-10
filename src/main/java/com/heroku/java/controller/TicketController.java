@@ -175,7 +175,7 @@ public String deleteTicket(HttpSession session,@RequestParam("ticketId") Long ti
 
         connection.close();
 
-    } catch (Exception e) {
+    } catch (SQLException e) {
         e.printStackTrace();
         return "redirect:/errorDelete";
     }
