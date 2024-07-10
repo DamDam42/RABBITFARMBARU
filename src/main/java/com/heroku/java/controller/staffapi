@@ -1,4 +1,4 @@
-package com.heroku.java.controller;
+package com.heroku.java.staffapi.controller;
 
 import com.heroku.java.model.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,26 +6,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
+import jakarta.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 @RestController
 @RequestMapping("/api")
 public class ListApiController {
 
     private final DataSource dataSource;
- @Autowired
+
+    @Autowired
     public ListApiController(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-    
-   
 
     @GetMapping("/staffBookingList")
-    public ResponseEntity<?> staffBookingList(@RequestParam(value = "status", required = false) String status) {
+    public ResponseEntity<?> staffBookingList(HttpSession session, 
+                                              @RequestParam(value = "status", required = false) String status) {
+        // Check if user is logged in
+        if (session.getAttribute("staffid") == null) {
+            return ResponseEntity.status(401).body("Unauthorized: Please log in");
+        }
+
         List<Booking> bookings = new ArrayList<>();
 
         try (Connection conn = dataSource.getConnection()) {
@@ -62,7 +66,7 @@ public class ListApiController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("An error occurred while fetching data");
+            return ResponseEntity.status(500).body("An error occurred while fetching data: " + e.getMessage());
         }
 
         return ResponseEntity.ok(bookings);
