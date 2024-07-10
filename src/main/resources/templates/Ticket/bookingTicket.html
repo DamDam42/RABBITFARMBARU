@@ -300,30 +300,22 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            const deleteLinks = document.querySelectorAll('.deleteTicketButton');
-            deleteLinks.forEach(link => {
-                link.addEventListener('click', function(event){
-                    event.preventDefault();
-                    const url = link.getAttribute('data-url');
-                    showPopup(url);
-                });
-            });
-        });
-    
-        function showPopup(url) {
-            const overlay = document.querySelector('.overlay');
-            overlay.style.display = 'flex';
-            const confirmButton = document.getElementById('confirmDelete');
-            confirmButton.onclick = function() {
-                window.location.href = url;
-            };
-        }
-    
-        function hidePopup() {
-            const overlay = document.querySelector('.overlay');
-            overlay.style.display = 'none';
-        }
+         function showPopup() {
+        var overlay = document.querySelector('.overlay');
+        overlay.style.display = 'flex'; // Display overlay
+
+        // Disable scroll when popup is open
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Function to hide the confirmation popup
+    function hidePopup() {
+        var overlay = document.querySelector('.overlay');
+        overlay.style.display = 'none'; // Hide overlay
+
+        // Enable scroll when popup is closed
+        document.body.style.overflow = 'auto';
+    }
     </script>
 </body>
 </html>
