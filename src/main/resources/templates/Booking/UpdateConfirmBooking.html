@@ -209,7 +209,7 @@
     <p>Booking Date: <span th:text="${bookingDate}"></span></p>
     <p>Ticket Quantity: <span th:text="${ticketQuantity}"></span></p>
     <p>Ticket Type: <span th:text="${ticketType}"></span></p>
-    <p>Ticket Price: <span th:text="${totalPrice}"></span></p>
+    <p>Total Price : RM<span th:text="${#numbers.formatDecimal(totalPrice, 1, 'COMMA', 2, 'POINT')}"></span></p>
 
     <form th:action="@{/customerUpdateBooking}" method="post">
         <input type="hidden" name="bookingId" th:value="${bookingId}">
