@@ -125,6 +125,7 @@ public String checkAvailability(HttpSession session,
     
     @GetMapping("/customerBooking")
     public String customerBooking(HttpSession session, Model model) {
+        
         Long custid = (Long) session.getAttribute("custid");
         int ticketQuantity = (int) session.getAttribute("ticketQuantity");
         LocalDate bookingDate = (LocalDate) session.getAttribute("bookingDate");
