@@ -233,23 +233,23 @@
 
 
                 <div class = "radioCitizen">
-                    <input type="radio" value="Citizen" name="Citizen" id="citizen" onclick="toggleInputBox()">
+                    <input type="radio" value="Citizen" name="Citizen" id="citizen" onclick="toggleInputBox()" required>
                     <label for="citizen">Citizen</label>
-                    <input type="radio" value="Non-Citizen" name="Citizen" id="noncitizen" onclick="toggleInputBox()">
+                    <input type="radio" value="Non-Citizen" name="Citizen" id="noncitizen" onclick="toggleInputBox()" required>
                     <label for="noncitizen">Non-Citizen</label>
                 </div>
 
                 <div class="user-details hidden-input-box" id="citizenBox">
                     <div class="input-box">
                         <label for="custIC" class="details">IC Number</label>
-                        <input type="text" id="custIC" name="custIcNum" required>
+                        <input type="text" id="custIC" name="custIcNum">
                     </div>
                 </div> 
 
                 <div class="user-details hidden-input-box" id="nonCitizenBox">
                     <div class="input-box">
                         <label for="passportNumber" class="details">Passport Number</label>
-                        <input type="text" id="passportNumber" name="custPassport" required>
+                        <input type="text" id="passportNumber" name="custPassport">
                     </div>
                 </div> 
 
