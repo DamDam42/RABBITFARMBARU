@@ -235,7 +235,7 @@
                 <div class="user-details">
                     <div class="input-box">
                         <label for="managerId" class="details">Manager ID</label>
-                        <select id="managerId" name="managerId" required>
+                        <select id="managerId" name="managerId">
                             <option value="" selected >None</option>
                             <option th:each="staff : ${staffid}" th:value="${staff}" th:text="${staff}"></option>
                         </select>
